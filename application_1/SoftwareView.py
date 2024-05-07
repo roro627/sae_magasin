@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import pyqtSignal
+from newProjectDialog import newProjectDialog
 
 class SoftwareView(QMainWindow):
     
@@ -36,6 +37,8 @@ class SoftwareView(QMainWindow):
     # Methods
     def newProject(self):
         self.newClicked.emit()
+        dial = newProjectDialog()
+        dial.exec()
 
     def openProject(self):
         self.openClicked.emit()
