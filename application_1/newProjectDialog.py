@@ -14,39 +14,47 @@ class newProjectDialog(QDialog):
 
         horizontalLayoutName = QHBoxLayout()
         horizontalLayoutAutor = QHBoxLayout()
+        horizontalLayoutDate = QHBoxLayout()
         horizontalLayoutShopName = QHBoxLayout()
         horizontalLayoutShopAdd = QHBoxLayout()
 
         verticalLayout = QVBoxLayout()
 
         # Widgets
-        ProjectNameText = QLabel("Nom du projet")
-        ProjectNameLine = QLineEdit()
+        projectNameText = QLabel("Nom du projet")
+        projectNameLine = QLineEdit()
 
-        AutorNameText = QLabel("Auteur(s)")
-        AutorNameLine = QLineEdit()
+        autorNameText = QLabel("Auteur(s)")
+        autorNameLine = QLineEdit()
 
-        ShopNameText = QLabel("Nom du magasin")
-        ShopNameLine = QLineEdit()
+        projectDateText = QLabel("Date de création")
+        projectDateCreate = QDateEdit()
 
-        ShopAddText = QLabel("Addresse du magasin")
-        ShopAddLine = QLineEdit()
+        shopNameText = QLabel("Nom du magasin")
+        shopNameLine = QLineEdit()
+
+        shopAddText = QLabel("Addresse du magasin")
+        shopAddLine = QLineEdit()
 
         # Add the widgets and layouts
-        horizontalLayoutName.addWidget(ProjectNameText)
-        horizontalLayoutName.addWidget(ProjectNameLine)
+        horizontalLayoutName.addWidget(projectNameText)
+        horizontalLayoutName.addWidget(projectNameLine)
         verticalLayout.addLayout(horizontalLayoutName)
 
-        horizontalLayoutAutor.addWidget(AutorNameText)
-        horizontalLayoutAutor.addWidget(AutorNameLine)
+        horizontalLayoutAutor.addWidget(autorNameText)
+        horizontalLayoutAutor.addWidget(autorNameLine)
         verticalLayout.addLayout(horizontalLayoutAutor)
 
-        horizontalLayoutShopName.addWidget(ShopNameText)
-        horizontalLayoutShopName.addWidget(ShopNameLine)
+        horizontalLayoutDate.addWidget(projectDateText)
+        horizontalLayoutDate.addWidget(projectDateCreate)
+        verticalLayout.addLayout(horizontalLayoutDate)
+
+        horizontalLayoutShopName.addWidget(shopNameText)
+        horizontalLayoutShopName.addWidget(shopNameLine)
         verticalLayout.addLayout(horizontalLayoutShopName)
 
-        horizontalLayoutShopAdd.addWidget(ShopAddText)
-        horizontalLayoutShopAdd.addWidget(ShopAddLine)
+        horizontalLayoutShopAdd.addWidget(shopAddText)
+        horizontalLayoutShopAdd.addWidget(shopAddLine)
         verticalLayout.addLayout(horizontalLayoutShopAdd)
 
         mainLayout.addLayout(verticalLayout)
