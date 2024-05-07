@@ -1,5 +1,6 @@
 import sys
 from PyQt6.QtWidgets import *
+from PyQt6.QtCore import pyqtSignal
 
 class SoftwareView(QMainWindow):
     
@@ -27,15 +28,20 @@ class SoftwareView(QMainWindow):
 
         self.show()
     
+    # Signals
+    newClicked = pyqtSignal()
+    openClicked = pyqtSignal()
+    saveClicked = pyqtSignal()
+    
     # Methods
     def newProject(self):
-        pass
+        self.newClicked.emit()
 
     def openProject(self):
-        pass
+        self.openClicked.emit()
 
     def saveProject(self):
-        pass
+        self.saveClicked.emit()
 
 # Main
 if __name__ == "__main__":  
