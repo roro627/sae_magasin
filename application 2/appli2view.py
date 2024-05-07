@@ -1,15 +1,14 @@
 import sys
 import json
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QComboBox, QPushButton, QLabel
+from PyQt6.QtWidgets import *
 
-# Définition de la classe principale de l'application
 class Application(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Choix du Magasin")
         self.resize(400, 200)
 
-        # Chargement des magasins depuis le fichier JSON avec un fichier test
+        # Chargement des magasins depuis le fichier JSON
         with open("magasins.json", "r") as f:
             self.magasins_disponibles = json.load(f)
 
@@ -28,16 +27,36 @@ class Application(QWidget):
         self.btn_selectionner.clicked.connect(self.selectionner_magasin)
         layout.addWidget(self.btn_selectionner)
 
+        self.label_adresse = QLabel("")
+        layout.addWidget(self.label_adresse)
+
         self.setLayout(layout)
 
-    # Méthode pour gérer la sélection du magasin
     def selectionner_magasin(self):
-        index = self.combo_magasin.currentIndex()
-        magasin_selectionne = self.magasins_disponibles[index]
-        print("Magasin sélectionné:", magasin_selectionne["nom"])
-        print("Adresse:", magasin_selectionne["adresse"])
+        confirmation_box = QMessageBox(self)
+        confirmation_box.setText('Etes-vous sur de prendre ce magasin ?')
+        confirmation_box.setWindowTitle("Confirmation")
+        confirmation_box.setIcon(QMessageBox.Icon.Information)
+        confirmation_box.addButton(QMessageBox.StandardButton.Cancel)
+        confirmation_box.addButton(QMessageBox.StandardButton.Ok)
+        confirmation_box.setDefaultButton(QMessageBox.StandardButton.Cancel)
+        confirmation_box.buttonClicked.connect(self.confirmation_button_clicked)
+        confirmation_box.exec()
 
-# Point d'entrée de l'application
+    def confirmation_button_clicked(self, button):
+        if button.text() == "OK":
+            print("L'utilisateur a confirmé la sélection.")
+            index = self.combo_magasin.currentIndex()
+            magasin_selectionne = self.magasins_disponibles[index]
+            nom_magasin = magasin_selectionne["nom"]
+            adresse_magasin = magasin_selectionne["adresse"]
+            message = f"Vous avez sélectionné le magasin {nom_magasin} situé à l'adresse suivante :\n{adresse_magasin}"
+            self.label_adresse.setText(message)
+            
+            
+        elif button.text() == "Cancel":
+            print("L'utilisateur a annulé la sélection.")
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Application()
