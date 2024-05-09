@@ -1,4 +1,4 @@
-import sys
+import os
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import pyqtSignal
 
@@ -17,6 +17,7 @@ class newProjectDialog(QDialog):
         horizontalLayoutDate = QHBoxLayout()
         horizontalLayoutShopName = QHBoxLayout()
         horizontalLayoutShopAdd = QHBoxLayout()
+        horizontalLayoutShopPlan = QHBoxLayout()
 
         verticalLayout = QVBoxLayout()
 
@@ -35,6 +36,14 @@ class newProjectDialog(QDialog):
 
         shopAddText = QLabel("Addresse du magasin")
         shopAddLine = QLineEdit()
+
+        shopPlanButton = QPushButton("Choisir un plan")
+        self.shopPlanText = QLabel("Pas de plan sélectionné")
+
+        projectFinishButton = QPushButton("Créer mon projet")
+
+        shopPlanButton.clicked.connect(self.openPlan)
+        projectFinishButton.clicked.connect(self.finishProject)
 
         # Add the widgets and layouts
         horizontalLayoutName.addWidget(projectNameText)
@@ -57,7 +66,25 @@ class newProjectDialog(QDialog):
         horizontalLayoutShopAdd.addWidget(shopAddLine)
         verticalLayout.addLayout(horizontalLayoutShopAdd)
 
+        horizontalLayoutShopPlan.addWidget(shopPlanButton)
+        horizontalLayoutShopPlan.addWidget(self.shopPlanText)
+        verticalLayout.addLayout(horizontalLayoutShopPlan)
+
+        verticalLayout.addWidget(projectFinishButton)
+
         mainLayout.addLayout(verticalLayout)
 
         self.setLayout(mainLayout)
+    
+    # Signal
+    planButtonClicked = pyqtSignal()
 
+    # Methods
+    def openPlan(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.png *.jpg *.gif *.jpeg")[0]
+        self.planButtonClicked.emit()
+        # A mettre dans un autre fichier pour respecter modèle MVC
+        self.shopPlanText.setText(os.path.basename(fname))
+    
+    def finishProject(self):
+        pass
