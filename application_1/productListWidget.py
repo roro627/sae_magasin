@@ -1,4 +1,4 @@
-import sys
+import sys,json
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
@@ -7,6 +7,10 @@ class productListWidget(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.tree  = QTreeWidget()
+
+        with open("/Liste_de_produits/liste_produits.json", "r") as f:
+            data = json.load(f)
+            print(data)
 
         self.add_tree_item("Fruit", ["Pomme", "Banane", "Orange"])
         self.add_tree_item("Légume", ["Carotte", "Pomme de terre", "Tomate"])
