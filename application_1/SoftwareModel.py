@@ -18,6 +18,8 @@ class projet():
         self.nom: str = ""
         self.magasin: str = ""
         self.liste: list[str] = []
+        self.postion_produit: dict = {}
+        self.position_grille:dict = {}
         
         self.filePath:str = ""
         
@@ -30,7 +32,9 @@ class projet():
                         "date": self.date,
                         "nom": self.nom,
                         "magasin": self.magasin,
-                        "liste": self.liste}
+                        "liste": self.liste,
+                        "position_produit": self.postion_produit,
+                        "position_grille": self.position_grille}
             json.dump(content, f)
             
     # charger les informations du projet en cours depuis un fichier json.
