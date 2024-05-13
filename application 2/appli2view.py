@@ -1,5 +1,6 @@
 import sys
 import json
+import os
 from PyQt6.QtWidgets import *
 
 class Application(QWidget):
@@ -9,7 +10,7 @@ class Application(QWidget):
         self.resize(400, 200)
 
         # Chargement des magasins depuis le fichier JSON
-        with open("magasins.json", "r") as f:
+        with open(sys.path[0] + "/magasins.json", "r") as f:
             self.magasins_disponibles = json.load(f)
 
         # Interface utilisateur
@@ -34,26 +35,29 @@ class Application(QWidget):
 
     def selectionner_magasin(self):
         confirmation_box = QMessageBox(self)
-        confirmation_box.setText('Etes-vous sur de prendre ce magasin ?')
+        confirmation_box.setText('Etes-vous sûr de prendre ce magasin ?')
         confirmation_box.setWindowTitle("Confirmation")
         confirmation_box.setIcon(QMessageBox.Icon.Information)
         confirmation_box.addButton(QMessageBox.StandardButton.Cancel)
         confirmation_box.addButton(QMessageBox.StandardButton.Ok)
         confirmation_box.setDefaultButton(QMessageBox.StandardButton.Cancel)
         confirmation_box.buttonClicked.connect(self.confirmation_button_clicked)
-        confirmation_box.exec()
+        confirmation_result = confirmation_box.exec()
 
-    def confirmation_button_clicked(self, button):
-        if button.text() == "OK":
-            print("L'utilisateur a confirmé la sélection.")
+        if confirmation_result == QMessageBox.StandardButton.Ok:
             index = self.combo_magasin.currentIndex()
             magasin_selectionne = self.magasins_disponibles[index]
             nom_magasin = magasin_selectionne["nom"]
             adresse_magasin = magasin_selectionne["adresse"]
+            image_nom = magasin_selectionne["image"]  # Obtient le nom de l'image du JSON
+            ##(sys.path[1] + "/Exemples de plan/", image_nom)
+            ##mettre le programme pour afficher l'image
             message = f"Vous avez sélectionné le magasin {nom_magasin} situé à l'adresse suivante :\n{adresse_magasin}"
             self.label_adresse.setText(message)
-            
-            
+
+    def confirmation_button_clicked(self, button):
+        if button.text() == "OK":
+            print("L'utilisateur a confirmé la sélection.")
         elif button.text() == "Cancel":
             print("L'utilisateur a annulé la sélection.")
 
