@@ -1,7 +1,9 @@
 import sys
 from PyQt6.QtWidgets import *
+from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
 from newProjectDialog import newProjectDialog
+from productListWidget import productListWidget
 
 class SoftwareView(QMainWindow):
     
@@ -26,6 +28,10 @@ class SoftwareView(QMainWindow):
         menu_file.addAction('Ouvrir',self.openProject)
         menu_file.addSeparator()
         menu_file.addAction('Enregistrer',self.saveProject)
+
+        # Dock
+        pr = productListWidget()
+        mainlayout.addWidget(pr,alignment=Qt.AlignmentFlag.AlignRight)
 
         self.show()
     

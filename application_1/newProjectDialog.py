@@ -1,11 +1,17 @@
 import os
+from PyQt6 import QtCore
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import pyqtSignal
 
 class newProjectDialog(QDialog):
 
     # Constructor
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        This constructor is use for create widgets and layouts. 
+        Params : self
+        Return : None
+        """
         super().__init__()
         self.setWindowTitle("Nouveau projet")
 
@@ -30,6 +36,7 @@ class newProjectDialog(QDialog):
 
         projectDateText = QLabel("Date de création")
         projectDateCreate = QDateEdit()
+        projectDateCreate.setDateTime(QtCore.QDateTime.currentDateTime())
 
         shopNameText = QLabel("Nom du magasin")
         shopNameLine = QLineEdit()
