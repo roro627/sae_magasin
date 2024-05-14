@@ -25,7 +25,7 @@ class projet():
         
     
     # sauvegarder les informations du projet en cours dans un fichier ecrit en json.
-    def saveFile(self) -> None :
+    def enregistrerProjet(self) -> None :
         with open(self.filePath, 'w', encoding='utf-8') as f:
             content = {"nom_projet": self.nom_projet,
                         "auteur": self.auteur,
@@ -38,7 +38,7 @@ class projet():
             json.dump(content, f)
             
     # charger les informations du projet en cours depuis un fichier json.
-    def loadFile(self) -> None :
+    def ouvrirProjet(self) -> None :
         with open(self.filePath, 'r', encoding='utf-8') as f:
             content = json.load(f)
             self.nom_projet = content["nom_projet"]
