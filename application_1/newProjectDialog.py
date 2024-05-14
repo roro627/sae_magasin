@@ -28,70 +28,82 @@ class newProjectDialog(QDialog):
         verticalLayout = QVBoxLayout()
 
         # Widgets
-        projectNameText = QLabel("Nom du projet")
-        projectNameLine = QLineEdit()
+        self.projectNameText = QLabel("Nom du projet")
+        self.projectNameLine = QLineEdit()
 
-        autorNameText = QLabel("Auteur(s)")
-        autorNameLine = QLineEdit()
+        self.autorNameText = QLabel("Auteur(s)")
+        self.autorNameLine = QLineEdit()
 
-        projectDateText = QLabel("Date de création")
-        projectDateCreate = QDateEdit()
-        projectDateCreate.setDateTime(QtCore.QDateTime.currentDateTime())
+        self.projectDateText = QLabel("Date de création")
+        self.projectDateCreate = QDateEdit()
+        self.projectDateCreate.setDateTime(QtCore.QDateTime.currentDateTime())
 
-        shopNameText = QLabel("Nom du magasin")
-        shopNameLine = QLineEdit()
+        self.shopNameText = QLabel("Nom du magasin")
+        self.shopNameLine = QLineEdit()
 
-        shopAddText = QLabel("Addresse du magasin")
-        shopAddLine = QLineEdit()
+        self.shopAddText = QLabel("Addresse du magasin")
+        self.shopAddLine = QLineEdit()
 
-        shopPlanButton = QPushButton("Choisir un plan")
+        self.shopPlanButton = QPushButton("Choisir un plan")
         self.shopPlanText = QLabel("Pas de plan sélectionné")
 
-        projectFinishButton = QPushButton("Créer mon projet")
+        self.projectFinishButton = QPushButton("Créer mon projet")
 
-        shopPlanButton.clicked.connect(self.openPlan)
-        projectFinishButton.clicked.connect(self.finishProject)
+        self.shopPlanButton.clicked.connect(self.openPlan)
+        self.projectFinishButton.clicked.connect(self.finishProject)
 
         # Add the widgets and layouts
-        horizontalLayoutName.addWidget(projectNameText)
-        horizontalLayoutName.addWidget(projectNameLine)
+        horizontalLayoutName.addWidget(self.projectNameText)
+        horizontalLayoutName.addWidget(self.projectNameLine)
         verticalLayout.addLayout(horizontalLayoutName)
 
-        horizontalLayoutAutor.addWidget(autorNameText)
-        horizontalLayoutAutor.addWidget(autorNameLine)
+        horizontalLayoutAutor.addWidget(self.autorNameText)
+        horizontalLayoutAutor.addWidget(self.autorNameLine)
         verticalLayout.addLayout(horizontalLayoutAutor)
 
-        horizontalLayoutDate.addWidget(projectDateText)
-        horizontalLayoutDate.addWidget(projectDateCreate)
+        horizontalLayoutDate.addWidget(self.projectDateText)
+        horizontalLayoutDate.addWidget(self.projectDateCreate)
         verticalLayout.addLayout(horizontalLayoutDate)
 
-        horizontalLayoutShopName.addWidget(shopNameText)
-        horizontalLayoutShopName.addWidget(shopNameLine)
+        horizontalLayoutShopName.addWidget(self.shopNameText)
+        horizontalLayoutShopName.addWidget(self.shopNameLine)
         verticalLayout.addLayout(horizontalLayoutShopName)
 
-        horizontalLayoutShopAdd.addWidget(shopAddText)
-        horizontalLayoutShopAdd.addWidget(shopAddLine)
+        horizontalLayoutShopAdd.addWidget(self.shopAddText)
+        horizontalLayoutShopAdd.addWidget(self.shopAddLine)
         verticalLayout.addLayout(horizontalLayoutShopAdd)
 
-        horizontalLayoutShopPlan.addWidget(shopPlanButton)
+        horizontalLayoutShopPlan.addWidget(self.shopPlanButton)
         horizontalLayoutShopPlan.addWidget(self.shopPlanText)
         verticalLayout.addLayout(horizontalLayoutShopPlan)
 
-        verticalLayout.addWidget(projectFinishButton)
+        verticalLayout.addWidget(self.projectFinishButton)
 
         mainLayout.addLayout(verticalLayout)
 
         self.setLayout(mainLayout)
     
-    # Signal
-    planButtonClicked = pyqtSignal()
+    # Signals
+    planButtonClicked = pyqtSignal(str)
+    finishButtonClicked = pyqtSignal()
 
     # Methods
-    def openPlan(self):
+    def getAllInfo(self) -> dict:
+        dictionary = {}
+        dictionary["nom_projet"] = self.projectNameLine.text()
+        dictionary["auteur"] = self.autorNameLine.text()
+        dictionary["date"] = self.projectDateCreate.date()
+        dictionary["nom"] = self.shopNameLine.text()
+        dictionary["magasin"] = self.shopAddLine.text()
+        return dictionary
+
+    def openPlan(self) -> None:
         fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.png *.jpg *.gif *.jpeg")[0]
-        self.planButtonClicked.emit()
-        # A mettre dans un autre fichier pour respecter modèle MVC
-        self.shopPlanText.setText(os.path.basename(fname))
+        self.planButtonClicked.emit(fname)
     
-    def finishProject(self):
-        pass
+    def finishProject(self) -> None:
+        if self.projectNameLine.text() == "" or self.autorNameLine.text() == "" or self.shopNameLine.text() == "" or self.shopAddLine.text() == "":
+            invalid_box = QMessageBox(QMessageBox.Icon.Critical,"Erreur","Erreur, au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné.")
+            invalid_box.exec()
+        else :
+            self.finishButtonClicked.emit()
