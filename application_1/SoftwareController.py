@@ -14,14 +14,15 @@ class SoftwareController(QObject):
         self.model = SoftwareModel()
 
         # Connecter les signaux de la vue aux slots du contrôleur
-        # self.view.newClicked.connect(self.nouveauProjet)
+        self.view.dial.finishButtonClicked.connect(self.nouveauProjet)
         self.view.openClicked.connect(self.ouvrirProjet)
         self.view.saveClicked.connect(self.enregistrerProjet)
 
-    # @pyqtSlot()
-    # def nouveauProjet(self):
-    #     # Gérer l'action nouveau projet
-    #     self.model.nouveauProjet()
+    @pyqtSlot()
+    def nouveauProjet(self):
+        # Gérer l'action nouveau projet
+        info = self.view.dial.getAllInfo()
+        self.model.update(info)
 
     @pyqtSlot()
     def ouvrirProjet(self):

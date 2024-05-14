@@ -77,13 +77,16 @@ class SoftwareModel:
         self.liste.remove(product)
 
     def update(self, objet):
-        self.nom_projet = objet.nom_projet
-        self.auteur = objet.auteur
-        self.date = objet.date
-        self.nom = objet.nom
-        self.magasin = objet.magasin
-        self.liste = objet.liste
-        self.filePath = objet.filePath
+        print("update", objet)
+        self.nom_projet = objet['nom_projet']
+        self.auteur = objet['auteur']
+        self.date = objet['date']
+        self.nom = objet['nom']
+        self.magasin = objet['magasin']
+        
+        # Pas demander où l'utilisateur veux sauvegarder le fichier donc crash si décommenter
+        # self.filePath = objet['filePath']
+        
 
 
 if __name__ == "__main__":

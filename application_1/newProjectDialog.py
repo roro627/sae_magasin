@@ -85,7 +85,7 @@ class newProjectDialog(QDialog):
     
     # Signals
     planButtonClicked = pyqtSignal(str)
-    finishButtonClicked = pyqtSignal(dict)
+    finishButtonClicked = pyqtSignal()
 
     # Methods
     def getAllInfo(self) -> dict:
@@ -106,4 +106,4 @@ class newProjectDialog(QDialog):
             invalid_box = QMessageBox(QMessageBox.Icon.Critical,"Erreur","Erreur, au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné.")
             invalid_box.exec()
         else :
-            self.finishButtonClicked.emit(self.getAllInfo())
+            self.finishButtonClicked.emit()
