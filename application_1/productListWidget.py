@@ -10,7 +10,7 @@ class productListWidget(QWidget):
         current_directory = sys.path[0]
         parent_directory = os.path.dirname(current_directory)
 
-        with open(f"{parent_directory}//Liste_de_produits//liste_produits.json", "r") as f:
+        with open(f"{parent_directory}//Liste_de_produits//liste_produits.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             for key in data.keys():
                 self.add_tree_item(key, data[key])
