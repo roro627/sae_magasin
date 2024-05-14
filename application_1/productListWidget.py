@@ -12,10 +12,9 @@ class productListWidget(QWidget):
 
         with open(f"{parent_directory}//Liste_de_produits//liste_produits.json", "r") as f:
             data = json.load(f)
-            print(data)
+            for key in data.keys():
+                self.add_tree_item(key, data[key])
 
-        self.add_tree_item("Fruit", ["Pomme", "Banane", "Orange"])
-        self.add_tree_item("Légume", ["Carotte", "Pomme de terre", "Tomate"])
         self.tree.setHeaderLabels(["Liste des produits"])
 
         mainlayout = QVBoxLayout()

@@ -83,15 +83,24 @@ class newProjectDialog(QDialog):
 
         self.setLayout(mainLayout)
     
-    # Signal
-    planButtonClicked = pyqtSignal()
+    # Signals
+    planButtonClicked = pyqtSignal(str)
+    finishButtonClicked = pyqtSignal(dict)
 
     # Methods
-    def openPlan(self):
+    def getAllInfo(self) -> dict:
+        dictionary = {}
+        dictionary["nom_projet"] = self.projectNameLine.text()
+        # TO BE CONTINUED
+        return dictionary
+
+    def openPlan(self) -> None:
         fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.png *.jpg *.gif *.jpeg")[0]
-        self.planButtonClicked.emit()
-        # A mettre dans un autre fichier pour respecter modèle MVC
-        self.shopPlanText.setText(os.path.basename(fname))
+        self.planButtonClicked.emit(fname)
     
-    def finishProject(self):
-        pass
+    def finishProject(self) -> None:
+        if self.projectNameLine.text() == "" or self.autorNameLine.text() == "" or self.shopNameLine.text() == "" or self.shopAddLine.text() == "":
+            invalid_box = QMessageBox(QMessageBox.Icon.Critical,"Erreur","Erreur, au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné.")
+            invalid_box.exec()
+        else :
+            self.finishButtonClicked.emit(self.getAllInfo())
