@@ -91,7 +91,10 @@ class newProjectDialog(QDialog):
     def getAllInfo(self) -> dict:
         dictionary = {}
         dictionary["nom_projet"] = self.projectNameLine.text()
-        # TO BE CONTINUED
+        dictionary["auteur"] = self.autorNameLine.text()
+        dictionary["date"] = self.projectDateCreate.date()
+        dictionary["nom"] = self.shopNameLine.text()
+        dictionary["magasin"] = self.shopAddLine.text()
         return dictionary
 
     def openPlan(self) -> None:
