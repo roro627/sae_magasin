@@ -1,38 +1,52 @@
 import sys
 import json
-import os
-from PyQt6.QtWidgets import *
+from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QMessageBox, QWidget
+from PyQt6.QtGui import QPixmap
 
-class Application(QWidget):
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Choix du Magasin")
-        self.resize(400, 200)
+        self.resize(800, 200)  # Ajuster la taille pour laisser de l'espace à l'image
 
         # Chargement des magasins depuis le fichier JSON
         with open(sys.path[0] + "/magasins.json", "r") as f:
             self.magasins_disponibles = json.load(f)
 
         # Interface utilisateur
-        layout = QVBoxLayout()
+        main_widget = QWidget()
+        self.setCentralWidget(main_widget)
 
+        main_layout = QHBoxLayout()  # Utiliser un layout horizontal pour placer les éléments côte à côte
+        main_widget.setLayout(main_layout)
+
+        magasin_layout = QVBoxLayout()
         self.label_magasin = QLabel("Sélectionnez un magasin:")
-        layout.addWidget(self.label_magasin)
+        magasin_layout.addWidget(self.label_magasin)
 
         self.combo_magasin = QComboBox()
         for magasin in self.magasins_disponibles:
             self.combo_magasin.addItem(magasin["nom"])
-        layout.addWidget(self.combo_magasin)
+        magasin_layout.addWidget(self.combo_magasin)
 
         self.btn_selectionner = QPushButton("Sélectionner")
         self.btn_selectionner.clicked.connect(self.selectionner_magasin)
-        layout.addWidget(self.btn_selectionner)
+        magasin_layout.addWidget(self.btn_selectionner)
 
         self.label_adresse = QLabel("")
-        layout.addWidget(self.label_adresse)
+        magasin_layout.addWidget(self.label_adresse)
 
-        self.setLayout(layout)
+        main_layout.addLayout(magasin_layout)
 
+        # Ajout d'une image à droite
+        image_layout = QVBoxLayout()
+        self.label_image = QLabel()
+        pixmap = QPixmap(sys.path[0]+ "/Exemples de plans" + "/plan1.png")  
+        self.label_image.setPixmap(pixmap)
+        image_layout.addWidget(self.label_image)
+
+        main_layout.addLayout(image_layout)
+        main_widget.setLayout(main_layout)
     def selectionner_magasin(self):
         confirmation_box = QMessageBox(self)
         confirmation_box.setText('Etes-vous sûr de prendre ce magasin ?')
@@ -49,9 +63,7 @@ class Application(QWidget):
             magasin_selectionne = self.magasins_disponibles[index]
             nom_magasin = magasin_selectionne["nom"]
             adresse_magasin = magasin_selectionne["adresse"]
-            image_nom = magasin_selectionne["image"]  # Obtient le nom de l'image du JSON
-            ##(sys.path[1] + "/Exemples de plan/", image_nom)
-            ##mettre le programme pour afficher l'image
+
             message = f"Vous avez sélectionné le magasin {nom_magasin} situé à l'adresse suivante :\n{adresse_magasin}"
             self.label_adresse.setText(message)
 
@@ -63,6 +75,6 @@ class Application(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Application()
+    window = MainWindow()
     window.show()
     sys.exit(app.exec())
