@@ -86,6 +86,9 @@ class SoftwareModel:
         
         # Pas demander où l'utilisateur veux sauvegarder le fichier donc crash si décommenter
         # self.filePath = objet['filePath']
+    
+    def setfilepath(self,fname):
+        self.filePath = fname
         
 
 
