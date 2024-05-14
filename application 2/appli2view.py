@@ -1,4 +1,5 @@
 import sys
+import os
 import json
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QMessageBox, QWidget
 from PyQt6.QtGui import QPixmap
@@ -41,7 +42,13 @@ class MainWindow(QMainWindow):
         # Ajout d'une image à droite
         image_layout = QVBoxLayout()
         self.label_image = QLabel()
-        pixmap = QPixmap(sys.path[0]+ "/Exemples de plans" + "/plan1.png")  
+        
+        
+        current_dir = os.path.abspath(os.path.dirname(__file__))
+        parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+
+
+        pixmap = QPixmap(parent_dir + "./Exemples de plans" + "/plan1.jpg")  
         self.label_image.setPixmap(pixmap)
         image_layout.addWidget(self.label_image)
 
