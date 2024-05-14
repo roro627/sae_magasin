@@ -18,23 +18,27 @@ class projet():
         self.nom: str = ""
         self.magasin: str = ""
         self.liste: list[str] = []
+        self.postion_produit: dict = {}
+        self.position_grille:dict = {}
         
         self.filePath:str = ""
         
     
     # sauvegarder les informations du projet en cours dans un fichier ecrit en json.
-    def saveFile(self) -> None :
+    def enregistrerProjet(self) -> None :
         with open(self.filePath, 'w', encoding='utf-8') as f:
             content = {"nom_projet": self.nom_projet,
                         "auteur": self.auteur,
                         "date": self.date,
                         "nom": self.nom,
                         "magasin": self.magasin,
-                        "liste": self.liste}
+                        "liste": self.liste,
+                        "position_produit": self.postion_produit,
+                        "position_grille": self.position_grille}
             json.dump(content, f)
             
     # charger les informations du projet en cours depuis un fichier json.
-    def loadFile(self) -> None :
+    def ouvrirProjet(self) -> None :
         with open(self.filePath, 'r', encoding='utf-8') as f:
             content = json.load(f)
             self.nom_projet = content["nom_projet"]

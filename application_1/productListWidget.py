@@ -1,4 +1,4 @@
-import sys,json
+import sys,json,os
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
@@ -7,8 +7,10 @@ class productListWidget(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.tree  = QTreeWidget()
+        current_directory = sys.path[0]
+        parent_directory = os.path.dirname(current_directory)
 
-        with open("/Liste_de_produits/liste_produits.json", "r") as f:
+        with open(f"{parent_directory}//Liste_de_produits//liste_produits.json", "r") as f:
             data = json.load(f)
             print(data)
 
