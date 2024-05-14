@@ -1,16 +1,17 @@
 from PyQt6.QtCore import QObject, pyqtSlot
-from SoftwareModel import projet
+from SoftwareModel import SoftwareModel
 from SoftwareView import SoftwareView
 from PyQt6.QtWidgets import QApplication
 import sys
-    
+
+
 class SoftwareController(QObject):
     def __init__(self):
         super().__init__()
 
         # Initialiser la vue et le modèle
         self.view = SoftwareView()
-        self.model = projet()
+        self.model = SoftwareModel()
 
         # Connecter les signaux de la vue aux slots du contrôleur
         # self.view.newClicked.connect(self.nouveauProjet)
@@ -35,9 +36,8 @@ class SoftwareController(QObject):
     def show(self):
         # Afficher la vue
         self.view.show()
-        
-        
-        
+
+
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
