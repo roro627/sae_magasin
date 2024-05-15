@@ -14,7 +14,6 @@ class SoftwareModel:
 
         self.nom_projet: str = ""
         self.auteur: str = ""
-        # TODO: METTRE TYPE DATE
         self.date = ""
         self.nom: str = ""
         self.magasin: str = ""
@@ -22,7 +21,8 @@ class SoftwareModel:
         self.postion_produit: dict = {}
         self.position_grille: dict = {}
 
-        self.filePath: str = ""
+        self.filePathPlan : str = ""
+        self.filePath: str = os.path.dirname(sys.path[0]) + "/Espace_de_travail" + self.nom_projet
 
     # sauvegarder les informations du projet en cours dans un fichier ecrit en json.
     def enregistrerProjet(self) -> None:
@@ -80,12 +80,15 @@ class SoftwareModel:
         print("update", objet)
         self.nom_projet = objet['nom_projet']
         self.auteur = objet['auteur']
-        self.date = objet['date']
+        #self.date = objet['date']
         self.nom = objet['nom']
         self.magasin = objet['magasin']
         
         # Pas demander où l'utilisateur veux sauvegarder le fichier donc crash si décommenter
         # self.filePath = objet['filePath']
+    
+    def setfilepath(self,fname):
+        self.filePath = fname
         
 
 

@@ -31,6 +31,7 @@ class SoftwareView(QMainWindow):
 
         # Dock
         pr = productListWidget()
+
         self.dial = newProjectDialog()
         mainlayout.addWidget(pr,alignment=Qt.AlignmentFlag.AlignRight)
 
@@ -43,9 +44,7 @@ class SoftwareView(QMainWindow):
     
     # Methods
     def newProject(self):
-        self.newClicked.emit()
-        self.dial.exec()
-        
+        self.dial.exec() 
 
     def openProject(self):
         self.openClicked.emit()

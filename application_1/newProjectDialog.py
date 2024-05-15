@@ -1,4 +1,4 @@
-import os
+import os,sys
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import pyqtSignal
@@ -99,11 +99,14 @@ class newProjectDialog(QDialog):
 
     def openPlan(self) -> None:
         fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.png *.jpg *.gif *.jpeg")[0]
-        self.planButtonClicked.emit(fname)
+        if fname != "": # If the user don't open any files.
+            self.shopPlanText.setText(os.path.basename(fname))
+            self.planButtonClicked.emit(fname)
     
     def finishProject(self) -> None:
-        if self.projectNameLine.text() == "" or self.autorNameLine.text() == "" or self.shopNameLine.text() == "" or self.shopAddLine.text() == "":
+        if self.projectNameLine.text() == "" or self.autorNameLine.text() == "" or self.shopNameLine.text() == "" or self.shopAddLine.text() == "" or self.shopPlanText.text() == "Pas de plan sélectionné":
             invalid_box = QMessageBox(QMessageBox.Icon.Critical,"Erreur","Erreur, au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné.")
             invalid_box.exec()
         else :
             self.finishButtonClicked.emit()
+            self.close()
