@@ -8,8 +8,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Choix du Magasin")
-        self.resize(800, 200)  # Ajuster la taille pour laisser de l'espace à l'image
-
+        
         # Chargement des magasins depuis le fichier JSON
         with open(sys.path[0] + "/magasins.json", "r") as f:
             self.magasins_disponibles = json.load(f)
@@ -18,10 +17,11 @@ class MainWindow(QMainWindow):
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
 
-        main_layout = QHBoxLayout()  # Utiliser un layout horizontal pour placer les éléments côte à côte
+        main_layout = QVBoxLayout()  # Utiliser un layout vertical pour placer les éléments en haut
         main_widget.setLayout(main_layout)
 
-        magasin_layout = QVBoxLayout()
+        # Layout pour les éléments de magasin
+        magasin_layout = QHBoxLayout()
         self.label_magasin = QLabel("Sélectionnez un magasin:")
         magasin_layout.addWidget(self.label_magasin)
 
@@ -34,26 +34,19 @@ class MainWindow(QMainWindow):
         self.btn_selectionner.clicked.connect(self.selectionner_magasin)
         magasin_layout.addWidget(self.btn_selectionner)
 
-        self.label_adresse = QLabel("")
-        magasin_layout.addWidget(self.label_adresse)
-
         main_layout.addLayout(magasin_layout)
 
-        # Ajout d'une image à droite
-        image_layout = QVBoxLayout()
+        # Label pour afficher l'adresse
+        self.label_adresse = QLabel("")
+        main_layout.addWidget(self.label_adresse)
+
+        # Layout pour afficher l'image
         self.label_image = QLabel()
-        
-        
-        current_dir = os.path.abspath(os.path.dirname(__file__))
-        parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+        main_layout.addWidget(self.label_image)
 
+        # Montrer la fenêtre maximisée
+        self.showMaximized()
 
-        pixmap = QPixmap(parent_dir + "./Exemples de plans" + "/plan1.jpg")  
-        self.label_image.setPixmap(pixmap)
-        image_layout.addWidget(self.label_image)
-
-        main_layout.addLayout(image_layout)
-        main_widget.setLayout(main_layout)
     def selectionner_magasin(self):
         confirmation_box = QMessageBox(self)
         confirmation_box.setText('Etes-vous sûr de prendre ce magasin ?')
@@ -70,9 +63,22 @@ class MainWindow(QMainWindow):
             magasin_selectionne = self.magasins_disponibles[index]
             nom_magasin = magasin_selectionne["nom"]
             adresse_magasin = magasin_selectionne["adresse"]
+            plan_magasin = magasin_selectionne["image"]
 
             message = f"Vous avez sélectionné le magasin {nom_magasin} situé à l'adresse suivante :\n{adresse_magasin}"
             self.label_adresse.setText(message)
+        
+            current_dir = sys.path[0]
+            parent_dir = os.path.dirname(current_dir)
+
+            # Chargement de l'image
+            image_path = os.path.join(parent_dir, "Exemples de plans", plan_magasin)
+            pixmap = QPixmap(image_path)
+
+            # Redimensionnement de l'image à 300x300
+            pixmap = pixmap.scaled(1000, 700)
+
+            self.label_image.setPixmap(pixmap)
 
     def confirmation_button_clicked(self, button):
         if button.text() == "OK":
