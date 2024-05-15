@@ -29,6 +29,7 @@ class SoftwareController(QObject):
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
+        self.enregistrerProjet()
 
     @pyqtSlot()
     def ouvrirProjet(self):

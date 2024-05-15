@@ -99,7 +99,7 @@ class newProjectDialog(QDialog):
 
     def openPlan(self) -> None:
         fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.png *.jpg *.gif *.jpeg")[0]
-        if fname != "":
+        if fname != "": # If the user don't open any files.
             self.shopPlanText.setText(os.path.basename(fname))
             self.planButtonClicked.emit(fname)
     
@@ -109,3 +109,4 @@ class newProjectDialog(QDialog):
             invalid_box.exec()
         else :
             self.finishButtonClicked.emit()
+            self.close()
