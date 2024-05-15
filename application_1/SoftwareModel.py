@@ -80,7 +80,6 @@ class SoftwareModel:
         self.liste.remove(product)
 
     def update(self, objet):
-        print("update", objet)
         self.nom_projet = objet['nom_projet']
         self.auteur = objet['auteur']
         self.date = objet['date']
