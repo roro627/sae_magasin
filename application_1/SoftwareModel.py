@@ -1,4 +1,4 @@
-import os, json, sys
+import os, json, sys, PyQt6.QtCore
 
 # -----------------------------------------------------------------------------
 # --- class Outil
@@ -14,7 +14,7 @@ class SoftwareModel:
 
         self.nom_projet: str = ""
         self.auteur: str = ""
-        self.date = ""
+        self.date : PyQt6.QtCore.QDate = PyQt6.QtCore.QDate(0, 0, 0)
         self.nom: str = ""
         self.magasin: str = ""
         self.liste: list[str] = []
@@ -22,7 +22,7 @@ class SoftwareModel:
         self.position_grille: dict = {}
 
         self.filePathPlan : str = ""
-        self.filePath: str = os.path.dirname(sys.path[0]) + "/Espace_de_travail" + self.nom_projet
+        self.filePath: str = ""
 
     # sauvegarder les informations du projet en cours dans un fichier ecrit en json.
     def enregistrerProjet(self) -> None:
@@ -30,12 +30,15 @@ class SoftwareModel:
             content = {
                 "nom_projet": self.nom_projet,
                 "auteur": self.auteur,
-                "date": self.date,
+                "date": str(self.date),
                 "nom": self.nom,
                 "magasin": self.magasin,
                 "liste": self.liste,
                 "position_produit": self.postion_produit,
                 "position_grille": self.position_grille,
+
+                "fichier_plan_chemin": self.filePathPlan,
+                "fichier_chemin": self.filePath
             }
             json.dump(content, f)
 
@@ -80,18 +83,14 @@ class SoftwareModel:
         print("update", objet)
         self.nom_projet = objet['nom_projet']
         self.auteur = objet['auteur']
-        #self.date = objet['date']
+        self.date = objet['date']
         self.nom = objet['nom']
         self.magasin = objet['magasin']
-        
-        # Pas demander où l'utilisateur veux sauvegarder le fichier donc crash si décommenter
-        # self.filePath = objet['filePath']
+        self.filePath = os.path.dirname(sys.path[0]) + "/Espace_de_travail/" + self.nom_projet+".json"
     
-    def setfilepath(self,fname):
-        self.filePath = fname
+    def setFilePathPlan(self,fname):
+        self.filePathPlan = fname
         
-
-
 if __name__ == "__main__":
     # test de la classe SoftwareModel
     print("TEST: class SoftwareModel")

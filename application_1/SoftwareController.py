@@ -20,11 +20,9 @@ class SoftwareController(QObject):
         self.view.openClicked.connect(self.ouvrirProjet)
         self.view.saveClicked.connect(self.enregistrerProjet)
 
-    #@pyqtSlot()
     def nouveauPlanProjet(self,fname):
-        self.model.setfilepath(fname)
+        self.model.setFilePathPlan(fname)
 
-    @pyqtSlot()
     def nouveauProjet(self):
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
@@ -36,7 +34,6 @@ class SoftwareController(QObject):
         # Gérer l'action ouvrir projet
         self.model.ouvrirProjet()
 
-    @pyqtSlot()
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
         self.model.enregistrerProjet()
