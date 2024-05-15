@@ -3,6 +3,7 @@ import os
 import json
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QMessageBox, QWidget
 from PyQt6.QtGui import QPixmap
+from application_1.productListWidget import productListWidget
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -34,6 +35,9 @@ class MainWindow(QMainWindow):
         self.btn_selectionner.clicked.connect(self.selectionner_magasin)
         magasin_layout.addWidget(self.btn_selectionner)
 
+        # Ajouter un étirement à gauche pour aligner à droite
+        magasin_layout.addStretch()
+
         main_layout.addLayout(magasin_layout)
 
         # Label pour afficher l'adresse
@@ -43,6 +47,13 @@ class MainWindow(QMainWindow):
         # Layout pour afficher l'image
         self.label_image = QLabel()
         main_layout.addWidget(self.label_image)
+
+        # Widget productListWidget aligné à droite
+        product_list_layout = QHBoxLayout()
+        product_list_layout.addStretch()
+        self.product_list_widget = productListWidget()
+        product_list_layout.addWidget(self.product_list_widget)
+        main_layout.addLayout(product_list_layout)
 
         # Montrer la fenêtre maximisée
         self.showMaximized()
@@ -75,7 +86,7 @@ class MainWindow(QMainWindow):
             image_path = os.path.join(parent_dir, "Exemples de plans", plan_magasin)
             pixmap = QPixmap(image_path)
 
-            # Redimensionnement de l'image à 300x300
+            # Redimensionnement de l'image à 1000x700
             pixmap = pixmap.scaled(1000, 700)
 
             self.label_image.setPixmap(pixmap)
