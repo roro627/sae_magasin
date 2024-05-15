@@ -16,9 +16,17 @@ class SoftwareController(QObject):
         # Connecter les signaux de la vue aux slots du contrôleur
         self.view.dial.planButtonClicked.connect(self.nouveauPlanProjet)
         self.view.dial.finishButtonClicked.connect(self.nouveauProjet)
+        self.view.pr.itemAdded.connect(self.newItem)
+        self.view.pr.itemDelet.connect()
 
         self.view.openClicked.connect(self.ouvrirProjet)
         self.view.saveClicked.connect(self.enregistrerProjet)
+
+    def newItem(self, item):
+        self.model.addProduct(item)
+
+    def itemRemove(self, item):
+        self.model.removeProduct(item)
 
     def nouveauPlanProjet(self,fname):
         self.model.setFilePathPlan(fname)
@@ -29,7 +37,7 @@ class SoftwareController(QObject):
         self.model.update(info)
         self.enregistrerProjet()
 
-    @pyqtSlot()
+
     def ouvrirProjet(self):
         # Gérer l'action ouvrir projet
         self.model.ouvrirProjet()

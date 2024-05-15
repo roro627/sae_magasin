@@ -29,14 +29,11 @@ class SoftwareView(QMainWindow):
         menu_file.addAction('Enregistrer',self.saveProject)
 
         # Dock
-        pr = productListWidget()
-        
-        # Ajout d'une image au millieu de la fenetre si il existe un chemin d'accès
-        
+        self.pr = productListWidget()
         
 
         self.dial = newProjectDialog()
-        mainlayout.addWidget(pr,alignment=Qt.AlignmentFlag.AlignRight)
+        mainlayout.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
 
 
         # affiche en plein écran
