@@ -30,6 +30,10 @@ class SoftwareView(QMainWindow):
 
         # Dock
         pr = productListWidget()
+        
+        # Ajout d'une image au millieu de la fenetre si il existe un chemin d'accès
+        
+        
 
         self.dial = newProjectDialog()
         mainlayout.addWidget(pr,alignment=Qt.AlignmentFlag.AlignRight)
