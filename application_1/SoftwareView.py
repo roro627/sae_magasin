@@ -10,6 +10,7 @@ class SoftwareView(QMainWindow):
     # Constructor
     def __init__(self):
         super().__init__()
+        
 
         # Central widget
         central_widget = QWidget()
@@ -18,8 +19,6 @@ class SoftwareView(QMainWindow):
         # Layout vertical --> principal layout
         mainlayout = QVBoxLayout()
         central_widget.setLayout(mainlayout)
-
-        mainlayout.addWidget(QLabel("Texte de test"))
 
         # Menu bar
         menu_bar = self.menuBar()
@@ -35,7 +34,9 @@ class SoftwareView(QMainWindow):
         self.dial = newProjectDialog()
         mainlayout.addWidget(pr,alignment=Qt.AlignmentFlag.AlignRight)
 
-        self.show()
+
+        # affiche en plein écran
+        self.showMaximized()
     
     # Signals
     newClicked = pyqtSignal()
