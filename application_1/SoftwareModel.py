@@ -86,7 +86,7 @@ class SoftwareModel:
         self.date = objet['date']
         self.nom = objet['nom']
         self.magasin = objet['magasin']
-        self.filePath = os.path.dirname(sys.path[0]) + "\\Espace_de_travail\\" + self.nom_projet+".json"
+        self.filePath = os.path.dirname(sys.path[0]) + "//Espace_de_travail//" + self.nom_projet+".json"
     
     def setFilePathPlan(self,fname):
         self.filePathPlan = fname
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     # test de la classe SoftwareModel
     print("TEST: class SoftwareModel")
     mon_projet_test = SoftwareModel()
-    mon_projet_test.filePath = sys.path[0] + "\\projet_test.json"
+    mon_projet_test.filePath = sys.path[0] + "//projet_test.json"
     mon_projet_test.nom_projet = "Projet de test"
     mon_projet_test.auteur = "Moi"
     mon_projet_test.date = "2021-10-01"

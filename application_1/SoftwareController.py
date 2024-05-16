@@ -17,7 +17,7 @@ class SoftwareController(QObject):
         self.view.dial.planButtonClicked.connect(self.nouveauPlanProjet)
         self.view.dial.finishButtonClicked.connect(self.nouveauProjet)
         self.view.pr.itemAdded.connect(self.newItem)
-        self.view.pr.itemDelet.connect()
+        self.view.pr.itemDelet.connect(self.itemRemove)
 
         self.view.openClicked.connect(self.ouvrirProjet)
         self.view.saveClicked.connect(self.enregistrerProjet)
