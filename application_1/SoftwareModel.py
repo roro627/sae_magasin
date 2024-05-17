@@ -52,6 +52,7 @@ class SoftwareModel:
             self.nom = content["nom"]
             self.magasin = content["magasin"]
             self.liste = content["liste"]
+        
 
     # supprimer le fichier du projet en cours en vérifiant qu'il existe.
     def deleteFile(self) -> None:
@@ -90,6 +91,9 @@ class SoftwareModel:
     
     def setFilePathPlan(self,fname):
         self.filePathPlan = fname
+        
+    def setFilePath(self,fname):
+        self.filePath = fname
         
 if __name__ == "__main__":
     # test de la classe SoftwareModel

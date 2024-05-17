@@ -19,7 +19,8 @@ class SoftwareController(QObject):
         self.view.pr.itemAdded.connect(self.newItem)
         self.view.pr.itemDelet.connect(self.itemRemove)
 
-        self.view.openClicked.connect(self.ouvrirProjet)
+        self.view.openProjectDialog.openClicked.connect(self.ouvrirProjet)
+
         self.view.saveClicked.connect(self.enregistrerProjet)
 
     def newItem(self, item):
@@ -38,8 +39,9 @@ class SoftwareController(QObject):
         self.enregistrerProjet()
 
 
-    def ouvrirProjet(self):
+    def ouvrirProjet(self, fname):
         # Gérer l'action ouvrir projet
+        self.model.setFilePath(fname)
         self.model.ouvrirProjet()
 
     def enregistrerProjet(self):

@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
 from newProjectDialog import newProjectDialog
 from productListWidget import productListWidget
+from openProject import openProject
 
 class SoftwareView(QMainWindow):
     
@@ -35,13 +36,13 @@ class SoftwareView(QMainWindow):
         self.dial = newProjectDialog()
         mainlayout.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
 
+        self.openProjectDialog = openProject()
 
         # affiche en plein écran
         self.showMaximized()
     
     # Signals
     newClicked = pyqtSignal()
-    openClicked = pyqtSignal()
     saveClicked = pyqtSignal()
     
     # Methods
@@ -49,7 +50,7 @@ class SoftwareView(QMainWindow):
         self.dial.exec() 
 
     def openProject(self):
-        self.openClicked.emit()
+        self.openProjectDialog.exec()
 
     def saveProject(self):
         self.saveClicked.emit()
