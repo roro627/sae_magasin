@@ -1,8 +1,10 @@
 import sys
 import os
 import json
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QMessageBox, QWidget
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+from productListWidget import productListWidget
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -16,9 +18,12 @@ class MainWindow(QMainWindow):
         # Interface utilisateur
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
-
-        main_layout = QVBoxLayout()  # Utiliser un layout vertical pour placer les éléments en haut
+        
+        main_layout = QHBoxLayout()  # Utiliser un layout horizontal pour placer les éléments côté à côte
         main_widget.setLayout(main_layout)
+        
+        left_layout = QVBoxLayout()  # Layout pour les éléments de gauche
+        main_layout.addLayout(left_layout)
 
         # Layout pour les éléments de magasin
         magasin_layout = QHBoxLayout()
@@ -34,15 +39,23 @@ class MainWindow(QMainWindow):
         self.btn_selectionner.clicked.connect(self.selectionner_magasin)
         magasin_layout.addWidget(self.btn_selectionner)
 
+        # Ajouter un étirement à gauche pour aligner à droite
+        magasin_layout.addStretch()
+
+        left_layout.addLayout(magasin_layout)
         main_layout.addLayout(magasin_layout)
 
         # Label pour afficher l'adresse
         self.label_adresse = QLabel("")
-        main_layout.addWidget(self.label_adresse)
+        left_layout.addWidget(self.label_adresse)
 
         # Layout pour afficher l'image
         self.label_image = QLabel()
-        main_layout.addWidget(self.label_image)
+        left_layout.addWidget(self.label_image)
+
+        # Ajout du productListWidget à droite
+        pr = productListWidget()
+        main_layout.addWidget(pr)
 
         # Montrer la fenêtre maximisée
         self.showMaximized()
