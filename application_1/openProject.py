@@ -8,9 +8,11 @@ class openProject(QDialog):
         super().__init__()
         self.setWindowTitle("Ouvrir projet")
         
+        
         current_directory = sys.path[0]
         self.parent_directory = os.path.dirname(current_directory)
         
+        self.setWindowIcon(QIcon(self.parent_directory+"//icons//open_file.svg"))
         
         self.tree  = QTreeWidget()
         self.search = QLineEdit()
