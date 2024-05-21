@@ -30,14 +30,12 @@ class SoftwareView(QMainWindow):
         menu_file.addSeparator()
         menu_file.addAction('Enregistrer',self.saveProject)
 
-        # Dock
+        # Widgets
         self.pr = productListWidget()
         self.grid = GridViewWidget()
-        self.grid.createGrid()
         self.dial = newProjectDialog()
         mainlayout.addWidget(self.grid)
         mainlayout.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
-
         self.openProjectDialog = openProject()
 
         # affiche en plein écran

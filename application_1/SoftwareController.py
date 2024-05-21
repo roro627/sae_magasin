@@ -36,13 +36,14 @@ class SoftwareController(QObject):
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
+        self.view.grid.setPixmap(self.model.filePathPlan)
         self.enregistrerProjet()
-
 
     def ouvrirProjet(self, fname):
         # Gérer l'action ouvrir projet
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
+        self.view.grid.setPixmap(self.model.filePathPlan)
 
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
