@@ -5,6 +5,7 @@ from PyQt6.QtCore import pyqtSignal
 from newProjectDialog import newProjectDialog
 from productListWidget import productListWidget
 from openProject import openProject
+from GridViewWidget import *
 
 class SoftwareView(QMainWindow):
     
@@ -18,7 +19,7 @@ class SoftwareView(QMainWindow):
         self.setCentralWidget(central_widget)
   
         # Layout vertical --> principal layout
-        mainlayout = QVBoxLayout()
+        mainlayout = QHBoxLayout()
         central_widget.setLayout(mainlayout)
 
         # Menu bar
@@ -31,9 +32,10 @@ class SoftwareView(QMainWindow):
 
         # Dock
         self.pr = productListWidget()
-        
-
+        self.grid = GridViewWidget()
+        self.grid.createGrid()
         self.dial = newProjectDialog()
+        mainlayout.addWidget(self.grid)
         mainlayout.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
 
         self.openProjectDialog = openProject()
