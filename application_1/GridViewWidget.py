@@ -12,6 +12,7 @@ class GridViewWidget(QGraphicsView):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scene = QGraphicsScene()
+        self.scene.addText("Aucun projet n'est actuellement ouvert.")
 
         #self.scene.setBackgroundBrush(QBrush(pixmap))
         #self.scene.setForegroundBrush()
@@ -31,16 +32,19 @@ class GridViewWidget(QGraphicsView):
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)
 
-    def createGrid(self):
+    def createGrid(self,square_size : int):
+        self.scene.clear()
+        image_item = QGraphicsPixmapItem(self.pixmap)
+        self.scene.addItem(image_item)
         group = QGraphicsItemGroup()
         group.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsMovable, True)
 
-        nb_square1 = int(self.pixmap_height/40)+1
-        nb_square2 = int(self.pixmap_width/40)+1
+        nb_square1 = int(self.pixmap_height/square_size)+1
+        nb_square2 = int(self.pixmap_width/square_size)+1
 
         for i in range(nb_square1):
             for j in range(nb_square2):
-                square = QGraphicsRectItem(0+j*40,0+i*40,40,40) 
+                square = QGraphicsRectItem(0+j*square_size,0+i*square_size,square_size,square_size) 
                 square.setPen(QColor("black"))
                 group.addToGroup(square)
             self.scene.addItem(group)
