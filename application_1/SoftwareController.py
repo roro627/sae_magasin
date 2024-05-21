@@ -25,9 +25,11 @@ class SoftwareController(QObject):
 
     def newItem(self, item):
         self.model.addProduct(item)
+        self.updateProductList()
 
     def itemRemove(self, item):
         self.model.removeProduct(item)
+        self.updateProductList()
 
     def nouveauPlanProjet(self,fname):
         self.model.setFilePathPlan(fname)
@@ -48,6 +50,10 @@ class SoftwareController(QObject):
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
         self.model.enregistrerProjet()
+
+    def updateProductList(self):
+        products = self.model.getProducts()
+        self.view.product.update_Product(products)
 
     def show(self):
         # Afficher la vue

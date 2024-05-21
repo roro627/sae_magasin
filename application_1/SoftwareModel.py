@@ -18,7 +18,7 @@ class SoftwareModel:
         self.nom: str = ""
         self.magasin: str = ""
         self.liste: list[str] = []
-        self.postion_produit: dict = {}
+        self.position_produit: dict = {}
         self.position_grille: dict = {}
 
         self.filePathPlan : str = ""
@@ -34,7 +34,7 @@ class SoftwareModel:
                 "nom": self.nom,
                 "magasin": self.magasin,
                 "liste": self.liste,
-                "position_produit": self.postion_produit,
+                "position_produit": self.position_produit,
                 "position_grille": self.position_grille,
 
                 "fichier_plan_chemin": self.filePathPlan,
@@ -95,6 +95,9 @@ class SoftwareModel:
         
     def setFilePath(self,fname):
         self.filePath = fname
+       
+    def getProducts(self):
+        return self.liste
        
     def toString(self) -> str:
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n"

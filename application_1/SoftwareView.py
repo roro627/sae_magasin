@@ -2,10 +2,12 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
+from GridViewWidget import *
+
 from newProjectDialog import newProjectDialog
 from productListWidget import productListWidget
 from openProject import openProject
-from GridViewWidget import *
+from placement_Product import placement_Product
 
 class SoftwareView(QMainWindow):
     
@@ -34,6 +36,8 @@ class SoftwareView(QMainWindow):
         self.pr = productListWidget()
         self.grid = GridViewWidget()
         self.dial = newProjectDialog()
+        self.product = placement_Product()
+        mainlayout.addWidget(self.product,alignment=Qt.AlignmentFlag.AlignLeft)
         mainlayout.addWidget(self.grid)
         mainlayout.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
         self.openProjectDialog = openProject()
