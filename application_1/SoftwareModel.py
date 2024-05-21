@@ -94,7 +94,7 @@ class SoftwareModel:
         
     def setFilePath(self,fname):
         self.filePath = fname
-    
+       
     def toString(self) -> str:
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n"
         return string
