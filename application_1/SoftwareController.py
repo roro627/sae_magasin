@@ -19,14 +19,17 @@ class SoftwareController(QObject):
         self.view.pr.itemAdded.connect(self.newItem)
         self.view.pr.itemDelet.connect(self.itemRemove)
 
-        self.view.openClicked.connect(self.ouvrirProjet)
+        self.view.openProjectDialog.openClicked.connect(self.ouvrirProjet)
+
         self.view.saveClicked.connect(self.enregistrerProjet)
 
     def newItem(self, item):
         self.model.addProduct(item)
+        self.updateProductList()
 
     def itemRemove(self, item):
         self.model.removeProduct(item)
+        self.updateProductList()
 
     def nouveauPlanProjet(self,fname):
         self.model.setFilePathPlan(fname)
@@ -35,16 +38,22 @@ class SoftwareController(QObject):
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
+        self.view.grid.setPixmap(self.model.filePathPlan)
         self.enregistrerProjet()
 
-
-    def ouvrirProjet(self):
+    def ouvrirProjet(self, fname):
         # Gérer l'action ouvrir projet
+        self.model.setFilePath(fname)
         self.model.ouvrirProjet()
+        self.view.grid.setPixmap(self.model.filePathPlan)
 
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
         self.model.enregistrerProjet()
+
+    def updateProductList(self):
+        products = self.model.getProducts()
+        self.view.product.update_Product(products)
 
     def show(self):
         # Afficher la vue

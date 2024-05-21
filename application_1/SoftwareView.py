@@ -2,8 +2,12 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
+from GridViewWidget import *
+
 from newProjectDialog import newProjectDialog
 from productListWidget import productListWidget
+from openProject import openProject
+from placement_Product import placement_Product
 
 class SoftwareView(QMainWindow):
     
@@ -17,7 +21,7 @@ class SoftwareView(QMainWindow):
         self.setCentralWidget(central_widget)
   
         # Layout vertical --> principal layout
-        mainlayout = QVBoxLayout()
+        mainlayout = QHBoxLayout()
         central_widget.setLayout(mainlayout)
 
         # Menu bar
@@ -28,20 +32,21 @@ class SoftwareView(QMainWindow):
         menu_file.addSeparator()
         menu_file.addAction('Enregistrer',self.saveProject)
 
-        # Dock
+        # Widgets
         self.pr = productListWidget()
-        
-
+        self.grid = GridViewWidget()
         self.dial = newProjectDialog()
+        self.product = placement_Product()
+        mainlayout.addWidget(self.product,alignment=Qt.AlignmentFlag.AlignLeft)
+        mainlayout.addWidget(self.grid)
         mainlayout.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
-
+        self.openProjectDialog = openProject()
 
         # affiche en plein écran
         self.showMaximized()
     
     # Signals
     newClicked = pyqtSignal()
-    openClicked = pyqtSignal()
     saveClicked = pyqtSignal()
     
     # Methods
@@ -49,7 +54,7 @@ class SoftwareView(QMainWindow):
         self.dial.exec() 
 
     def openProject(self):
-        self.openClicked.emit()
+        self.openProjectDialog.exec()
 
     def saveProject(self):
         self.saveClicked.emit()

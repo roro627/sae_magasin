@@ -2,6 +2,7 @@ import os,sys
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtGui import QIcon
 
 class newProjectDialog(QDialog):
 
@@ -14,6 +15,12 @@ class newProjectDialog(QDialog):
         """
         super().__init__()
         self.setWindowTitle("Nouveau projet")
+        
+        current_directory = sys.path[0]
+        parent_directory = os.path.dirname(current_directory)
+        
+        self.setWindowIcon(QIcon(parent_directory+"//icons//new_file.svg"))
+        
 
         # Layouts
         mainLayout = QVBoxLayout()
@@ -110,3 +117,10 @@ class newProjectDialog(QDialog):
         else :
             self.finishButtonClicked.emit()
             self.close()
+            
+            
+if __name__ == "__main__":
+    app = QApplication(sys.argv)  
+    window = newProjectDialog()  
+    window.show()
+    sys.exit(app.exec())
