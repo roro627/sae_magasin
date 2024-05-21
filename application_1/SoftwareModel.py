@@ -52,6 +52,7 @@ class SoftwareModel:
             self.nom = content["nom"]
             self.magasin = content["magasin"]
             self.liste = content["liste"]
+            self.filePathPlan = content["fichier_plan_chemin"]
         
 
     # supprimer le fichier du projet en cours en vérifiant qu'il existe.

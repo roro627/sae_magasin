@@ -7,19 +7,11 @@ from PyQt6.QtCore import pyqtSignal
 class GridViewWidget(QGraphicsView):
     def __init__(self):
         super().__init__()
-        file_path = "/Users/Alexis/Desktop/Mes fichiers SAE/sae_magasin/Exemples de plans/plan3.png"
         self.setMouseTracking(True)
         #self.view.setEnabled(False)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scene = QGraphicsScene()
-
-        # Load and display the image
-        self.pixmap = QPixmap(file_path)
-        self.pixmap_height = self.pixmap.height()
-        self.pixmap_width = self.pixmap.width()
-        image_item = QGraphicsPixmapItem(self.pixmap)
-        self.scene.addItem(image_item)
 
         #self.scene.setBackgroundBrush(QBrush(pixmap))
         #self.scene.setForegroundBrush()
@@ -31,6 +23,13 @@ class GridViewWidget(QGraphicsView):
     def mousePressEvent(self, event):
         print(f"Mouse pressed at position: {event.position().toPoint()}")
         super().mousePressEvent(event)
+    
+    def setPixmap(self,fname):
+        self.pixmap = QPixmap(fname)
+        self.pixmap_height = self.pixmap.height()
+        self.pixmap_width = self.pixmap.width()
+        image_item = QGraphicsPixmapItem(self.pixmap)
+        self.scene.addItem(image_item)
 
     def createGrid(self):
         group = QGraphicsItemGroup()
@@ -45,9 +44,3 @@ class GridViewWidget(QGraphicsView):
                 square.setPen(QColor("black"))
                 group.addToGroup(square)
             self.scene.addItem(group)
-
-if __name__ == "__main__":  
-    app = QApplication(sys.argv)  
-    window = GridViewWidget("Users/Alexis/Desktop/Mes fichiers SAE/sae_magasin/Exemples de plans/plan3.png") 
-    window.show()
-    sys.exit(app.exec())
