@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import *
+from PyQt6.QtCore import Qt
 from productListWidget import productListWidget
 
 class MainWindow(QMainWindow):
@@ -15,8 +16,20 @@ class MainWindow(QMainWindow):
         main_layout = QHBoxLayout()
         main_widget.setLayout(main_layout)
         
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+        main_layout.addWidget(splitter)
+
+        left_widget = QWidget()
         left_layout = QVBoxLayout()
-        main_layout.addLayout(left_layout)
+        left_widget.setLayout(left_layout)
+        splitter.addWidget(left_widget)
+
+        right_widget = QWidget()
+        right_layout = QVBoxLayout()
+        right_widget.setLayout(right_layout)
+        splitter.addWidget(right_widget)
+
+        splitter.setSizes([int(self.width() * 0.5), int(self.width() * 0.5)])  # Diviser la fenêtre également
 
         self.label_magasin = QLabel("Sélectionnez un magasin:")
         left_layout.addWidget(self.label_magasin)
@@ -35,12 +48,12 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(self.label_image)
 
         self.product_list_widget = productListWidget()
-        main_layout.addWidget(self.product_list_widget)
+        right_layout.addWidget(self.product_list_widget)
 
         self.selected_items_label = QLabel("Produits sélectionnés:")
-        left_layout.addWidget(self.selected_items_label)
+        right_layout.addWidget(self.selected_items_label)
         self.selected_items = QListWidget()
-        left_layout.addWidget(self.selected_items)
+        right_layout.addWidget(self.selected_items)
 
         self.product_list_widget.itemAdded.connect(self.controller.add_item)
         self.product_list_widget.itemDeleted.connect(self.controller.delete_item)
