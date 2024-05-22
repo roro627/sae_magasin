@@ -14,6 +14,7 @@ class SoftwareController(QObject):
         self.model = SoftwareModel()
 
         # Connecter les signaux de la vue aux slots du contrôleur
+        self.view.sliderMoved.connect(self.updateGrid)
         self.view.dial.planButtonClicked.connect(self.nouveauPlanProjet)
         self.view.dial.finishButtonClicked.connect(self.nouveauProjet)
         self.view.pr.itemAdded.connect(self.newItem)
@@ -39,6 +40,7 @@ class SoftwareController(QObject):
         info = self.view.dial.getAllInfo()
         self.model.update(info)
         self.view.grid.setPixmap(self.model.filePathPlan)
+        self.view.grid.createGrid(10)
         self.enregistrerProjet()
 
     def ouvrirProjet(self, fname):
@@ -46,6 +48,10 @@ class SoftwareController(QObject):
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
         self.view.grid.setPixmap(self.model.filePathPlan)
+        self.view.grid.createGrid(10)
+        products = self.model.getProducts()
+        self.view.product.update_Product(products)
+        self.view.pr.updateCheckbox(products)
 
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
@@ -54,6 +60,9 @@ class SoftwareController(QObject):
     def updateProductList(self):
         products = self.model.getProducts()
         self.view.product.update_Product(products)
+    
+    def updateGrid(self,size):
+        self.view.grid.createGrid(size)
 
     def show(self):
         # Afficher la vue

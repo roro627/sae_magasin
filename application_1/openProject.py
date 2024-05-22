@@ -53,7 +53,6 @@ class openProject(QDialog):
             selected_file = selected_item[0].text(0)
             selected_file = f"{self.parent_directory}//Espace_de_travail//{selected_file}"
             self.openClicked.emit(selected_file)
-            print(selected_file)
             self.close()
 
 if __name__ == "__main__":

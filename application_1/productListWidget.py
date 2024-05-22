@@ -44,6 +44,15 @@ class productListWidget(QWidget):
         else:
             self.itemDelet.emit(item.text(column))
 
+    def updateCheckbox(self, products):
+        # parcourir les items de l'arbre pour trouver et checker les item de la liste products
+        for i in range(self.tree.topLevelItemCount()):
+            parent = self.tree.topLevelItem(i)
+            for j in range(parent.childCount()):
+                child = parent.child(j)
+                if child.text(0) in products:
+                    child.setCheckState(0, Qt.CheckState.Checked)
+
 if __name__ == "__main__":  
     app = QApplication(sys.argv)  
     window = productListWidget()  

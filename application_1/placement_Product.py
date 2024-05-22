@@ -19,7 +19,8 @@ class placement_Product(QWidget):
         
         layout = QVBoxLayout()
 
-        self.list_widget = QListWidget()
+        self.list_widget = QListWidget()        
+        
         self.list_items = []        
 
         self.list_widget.itemChanged.connect(self.Box_Change)
