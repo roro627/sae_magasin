@@ -2,8 +2,8 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
-from GridViewWidget import *
 
+from GridView import GridView
 from newProjectDialog import newProjectDialog
 from productListWidget import productListWidget
 from openProject import openProject
@@ -37,11 +37,11 @@ class SoftwareView(QMainWindow):
 
         # Widgets
         self.pr = productListWidget()
-        self.grid = GridViewWidget()
+        self.grid = GridView()
         self.dial = newProjectDialog()
         self.product = placement_Product()
 
-        self.btn1 = QPushButton("Boutton 1")
+        self.btn1 = QPushButton("Paramétrer la grille")
         self.btn2 = QPushButton("Boutton 2")
         self.btn3 = QPushButton("Boutton 3")
         self.min = QLabel("1")

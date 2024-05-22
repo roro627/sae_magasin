@@ -4,11 +4,11 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtCore import pyqtSignal
 
-class GridViewWidget(QGraphicsView):
+class GridView(QGraphicsView):
     def __init__(self):
         super().__init__()
         self.setMouseTracking(True)
-        #self.view.setEnabled(False)
+        #self.setEnabled(False)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scene = QGraphicsScene()
@@ -20,11 +20,18 @@ class GridViewWidget(QGraphicsView):
         self.setScene(self.scene)
         #self.setFixedSize(QSize(600,hauteur))
         self.setWindowTitle("QGraphicsView")
+    
+    mouseClicked = pyqtSignal(tuple)
 
     def mousePressEvent(self, event):
-        print(f"Mouse pressed at position: {event.position().toPoint()}")
+        items = self.items(event.pos())
+        for item in items:
+            if type(item) is QGraphicsPixmapItem:
+                pos = item.mapFromScene(self.mapToScene(event.pos()))
+                pos = (int(pos.x()),int(pos.y()))
+                self.mouseClicked.emit(pos)
         super().mousePressEvent(event)
-    
+
     def setPixmap(self,fname):
         self.pixmap = QPixmap(fname)
         self.pixmap_height = self.pixmap.height()
@@ -37,7 +44,7 @@ class GridViewWidget(QGraphicsView):
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)
         group = QGraphicsItemGroup()
-        group.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsMovable, True)
+        #group.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsMovable, True)
 
         nb_square1 = int(self.pixmap_height/square_size)+1
         nb_square2 = int(self.pixmap_width/square_size)+1

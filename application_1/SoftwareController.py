@@ -1,6 +1,7 @@
 from PyQt6.QtCore import QObject, pyqtSlot
 from SoftwareModel import SoftwareModel
 from SoftwareView import SoftwareView
+from GridModel import GridModel
 from PyQt6.QtWidgets import QApplication
 import sys
 
@@ -12,6 +13,7 @@ class SoftwareController(QObject):
         # Initialiser la vue et le modèle
         self.view = SoftwareView()
         self.model = SoftwareModel()
+        self.grid_model = GridModel()
 
         # Connecter les signaux de la vue aux slots du contrôleur
         self.view.sliderMoved.connect(self.updateGrid)
@@ -19,6 +21,7 @@ class SoftwareController(QObject):
         self.view.dial.finishButtonClicked.connect(self.nouveauProjet)
         self.view.pr.itemAdded.connect(self.newItem)
         self.view.pr.itemDelet.connect(self.itemRemove)
+        self.view.grid.mouseClicked.connect(self.mouseItemGrid)
 
         self.view.openProjectDialog.openClicked.connect(self.ouvrirProjet)
 
@@ -34,13 +37,17 @@ class SoftwareController(QObject):
 
     def nouveauPlanProjet(self,fname):
         self.model.setFilePathPlan(fname)
+    
+    def mouseItemGrid(self,pos):
+       self.grid_model.addItems(self.view.product.list_items,pos)
 
     def nouveauProjet(self):
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
         self.view.grid.setPixmap(self.model.filePathPlan)
-        self.view.grid.createGrid(10)
+        self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
+        self.view.grid.createGrid(50)
         self.enregistrerProjet()
 
     def ouvrirProjet(self, fname):
@@ -48,7 +55,8 @@ class SoftwareController(QObject):
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
         self.view.grid.setPixmap(self.model.filePathPlan)
-        self.view.grid.createGrid(10)
+        self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
+        self.view.grid.createGrid(50)
         products = self.model.getProducts()
         self.view.product.update_Product(products)
         self.view.pr.updateCheckbox(products)
@@ -62,7 +70,9 @@ class SoftwareController(QObject):
         self.view.product.update_Product(products)
     
     def updateGrid(self,size):
-        self.view.grid.createGrid(size)
+        if self.model.filePathPlan != "":
+            self.grid_model.updateSquareSize(size)
+            self.view.grid.createGrid(size)
 
     def show(self):
         # Afficher la vue
