@@ -1,0 +1,22 @@
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+from PyQt6.QtCore import pyqtSignal
+
+class pictureView(QGraphicsView):
+    def __init__(self):
+        super().__init__()
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.scene = QGraphicsScene()
+        self.scene.addText("Aucun projet n'est actuellement ouvert.")
+
+        self.setScene(self.scene)
+        self.setWindowTitle("QGraphicsView")
+
+    def setPixmap(self,fname):
+        self.pixmap = QPixmap(fname)
+        self.pixmap_height = self.pixmap.height()
+        self.pixmap_width = self.pixmap.width()
+        image_item = QGraphicsPixmapItem(self.pixmap)
+        self.scene.addItem(image_item)
