@@ -7,7 +7,7 @@ import sys, os
 # TODO restant:
 # - Connecter le fichier avec le model pour charger toute la liste des produits
 # - Mettre en place la fonctionnalité de recherche
-# - Mettre en place la fonctionnalité de placement des produits dans la grille
+# - Mettre en place la fonctionnalité de placement des produits dans la grille (Fait dans le fichier GridModel mais qql bugs à corriger)
 # - Mettre en place la fonctionnalité de suppression des produits de la grille
 # - Mettre en place la fonctionnalité de grisage des produits non disponibles (déjà placés dans une autre case de la grille)
 
