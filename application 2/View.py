@@ -1,6 +1,8 @@
 from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import *
 from productListWidget import productListWidget
+from openProject import openProject
+
 
 class MainWindow(QMainWindow):
     def __init__(self, controller):
@@ -9,6 +11,13 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Choix du Magasin")
         self.showMaximized()
         self.setFixedSize(self.size())  
+        
+        self.openProjectDialog = openProject()
+
+        menu = self.menuBar()
+        menu_fichier = menu.addMenu('&Fichier')
+        menu_fichier.addAction('Ouvrir',self.openProject)
+
 
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
@@ -31,16 +40,6 @@ class MainWindow(QMainWindow):
 
         splitter.setSizes([int(self.width() * 0.5), int(self.width() * 0.5)])  # Diviser la fenêtre également
 
-        self.label_magasin = QLabel("Sélectionnez un magasin:")
-        left_layout.addWidget(self.label_magasin)
-
-        self.combo_magasin = QComboBox()
-        left_layout.addWidget(self.combo_magasin)
-
-        self.btn_selectionner = QPushButton("Sélectionner")
-        self.btn_selectionner.clicked.connect(self.controller.selectionner_magasin)
-        left_layout.addWidget(self.btn_selectionner)
-
         self.label_adresse = QLabel("")
         left_layout.addWidget(self.label_adresse)
 
@@ -54,6 +53,13 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(self.selected_items_label)
         self.selected_items = QListWidget()
         right_layout.addWidget(self.selected_items)
+        
+        self.btn_chemin = QPushButton("Chemin")
+        right_layout.addWidget(self.btn_chemin)
+
 
         self.product_list_widget.itemAdded.connect(self.controller.add_item)
         self.product_list_widget.itemDeleted.connect(self.controller.delete_item)
+        
+    def openProject(self):
+        self.openProjectDialog.exec()

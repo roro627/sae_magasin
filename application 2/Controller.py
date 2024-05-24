@@ -9,7 +9,6 @@ class MagasinController:
     def __init__(self):
         self.model = MagasinModel()
         self.view = MainWindow(self)
-        self.view.combo_magasin.addItems([magasin["nom"] for magasin in self.model.get_magasins()])
 
     def selectionner_magasin(self):
         confirmation_box = QMessageBox(self.view)
