@@ -1,7 +1,7 @@
 import os, json, sys, PyQt6.QtCore
 
 # -----------------------------------------------------------------------------
-# --- class Outil
+# --- class Model
 # -----------------------------------------------------------------------------
 
 
@@ -23,6 +23,9 @@ class SoftwareModel:
 
         self.filePathPlan : str = ""
         self.filePath: str = ""
+        
+        current_directory = sys.path[0]
+        self.parent_directory = os.path.dirname(current_directory)
 
     # sauvegarder les informations du projet en cours dans un fichier ecrit en json.
     def enregistrerProjet(self) -> None:
@@ -56,7 +59,7 @@ class SoftwareModel:
         
 
     # supprimer le fichier du projet en cours en vérifiant qu'il existe.
-    def deleteFile(self) -> None:
+    def supprimerProjet(self) -> None:
         if self.filePath != "" and os.path.exists(self.filePath):
             os.remove(self.filePath)
 
@@ -88,7 +91,7 @@ class SoftwareModel:
         self.date = objet['date']
         self.nom = objet['nom']
         self.magasin = objet['magasin']
-        self.filePath = os.path.dirname(sys.path[0]) + "//Espace_de_travail//" + self.nom_projet+".json"
+        self.filePath = self.parent_directory + "//Espace_de_travail//" + self.nom_projet+".json"
     
     def setFilePathPlan(self,fname):
         self.filePathPlan = fname
@@ -98,6 +101,10 @@ class SoftwareModel:
        
     def getProducts(self):
         return self.liste
+       
+    def getFullPathImage(self):
+        full_path = self.parent_directory + "//Exemples de plans//" + self.filePathPlan
+        return full_path
        
     def toString(self) -> str:
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n"

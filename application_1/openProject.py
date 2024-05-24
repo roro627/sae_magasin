@@ -35,6 +35,7 @@ class openProject(QDialog):
         self.tree.itemDoubleClicked.connect(self.open_selected_file)
         self.button.clicked.connect(self.open_selected_file)
 
+        
     openClicked = pyqtSignal(str)
 
     def search_files(self):
@@ -50,10 +51,15 @@ class openProject(QDialog):
     def open_selected_file(self):
         selected_item = self.tree.selectedItems()
         if selected_item:
-            selected_file = selected_item[0].text(0)
-            selected_file = f"{self.parent_directory}//Espace_de_travail//{selected_file}"
+            selected_file = f"{self.parent_directory}//Espace_de_travail//{selected_item[0].text(0)}"
             self.openClicked.emit(selected_file)
             self.close()
+            
+            
+    # fonction de Qdialog qui permet de lancer la fonction search_files() dès que la fenêtre est affichée
+    def showEvent(self, event):
+        self.search_files()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)  

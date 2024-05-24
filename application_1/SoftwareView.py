@@ -3,11 +3,15 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
 
-from GridView import GridView
 from newProjectDialog import newProjectDialog
-from productListWidget import productListWidget
 from openProject import openProject
+from deletProject import deletProject
+
+from GridView import GridView
+
+from productListWidget import productListWidget
 from placement_Product import placement_Product
+
 
 class SoftwareView(QMainWindow):
     
@@ -28,6 +32,7 @@ class SoftwareView(QMainWindow):
         menu_file = menu_bar.addMenu('&Fichier')
         menu_file.addAction('Nouveau',self.newProject)
         menu_file.addAction('Ouvrir',self.openProject)
+        menu_file.addAction('Supprimer',self.deletProject)
         menu_file.addSeparator()
         menu_file.addAction('Enregistrer',self.saveProject)
 
@@ -36,9 +41,12 @@ class SoftwareView(QMainWindow):
         layout_menu = QHBoxLayout()
 
         # Widgets
+        self.dial = newProjectDialog()
+        self.openProjectDialog = openProject()
+        self.deletProjectDialog = deletProject()
+        
         self.pr = productListWidget()
         self.grid = GridView()
-        self.dial = newProjectDialog()
         self.product = placement_Product()
 
         self.btn1 = QPushButton("Paramétrer la grille")
@@ -63,8 +71,7 @@ class SoftwareView(QMainWindow):
         layout_menu.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
         mainlayout.addLayout(layout_menu)
 
-        self.openProjectDialog = openProject()
-
+        
         # affiche en plein écran
         self.showMaximized()
     
@@ -79,6 +86,9 @@ class SoftwareView(QMainWindow):
 
     def openProject(self):
         self.openProjectDialog.exec()
+        
+    def deletProject(self):
+        self.deletProjectDialog.exec()
 
     def saveProject(self):
         self.saveClicked.emit()

@@ -17,9 +17,9 @@ class newProjectDialog(QDialog):
         self.setWindowTitle("Nouveau projet")
         
         current_directory = sys.path[0]
-        parent_directory = os.path.dirname(current_directory)
+        self.parent_directory = os.path.dirname(current_directory)
         
-        self.setWindowIcon(QIcon(parent_directory+"//icons//new_file.svg"))
+        self.setWindowIcon(QIcon(self.parent_directory+"//icons//new_file.svg"))
         
 
         # Layouts
@@ -105,9 +105,10 @@ class newProjectDialog(QDialog):
         return dictionary
 
     def openPlan(self) -> None:
-        fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.png *.jpg *.gif *.jpeg")[0]
-        if fname != "": # If the user don't open any files.
-            self.shopPlanText.setText(os.path.basename(fname))
+        fpath = QFileDialog.getOpenFileName(self, 'Open file',self.parent_directory+"//Exemples de plans","*.png *.jpg *.gif *.jpeg")[0]
+        if fpath != "": # If the user don't open any files.
+            fname = os.path.basename(fpath)
+            self.shopPlanText.setText(fname)
             self.planButtonClicked.emit(fname)
     
     def finishProject(self) -> None:

@@ -16,16 +16,20 @@ class SoftwareController(QObject):
         self.grid_model = GridModel()
 
         # Connecter les signaux de la vue aux slots du contrôleur
-        self.view.sliderMoved.connect(self.updateGrid)
-        self.view.dial.planButtonClicked.connect(self.nouveauPlanProjet)
+        
         self.view.dial.finishButtonClicked.connect(self.nouveauProjet)
+        self.view.openProjectDialog.openClicked.connect(self.ouvrirProjet)
+        self.view.deletProjectDialog.deletClicked.connect(self.supprimerProjet)
+        self.view.saveClicked.connect(self.enregistrerProjet)
+        
+        self.view.sliderMoved.connect(self.updateGrid)
+        self.view.grid.mouseClicked.connect(self.mouseItemGrid)
+        
         self.view.pr.itemAdded.connect(self.newItem)
         self.view.pr.itemDelet.connect(self.itemRemove)
-        self.view.grid.mouseClicked.connect(self.mouseItemGrid)
-
-        self.view.openProjectDialog.openClicked.connect(self.ouvrirProjet)
-
-        self.view.saveClicked.connect(self.enregistrerProjet)
+        
+        self.view.dial.planButtonClicked.connect(self.nouveauPlanProjet)
+                
 
     def newItem(self, item):
         self.model.addProduct(item)
@@ -45,7 +49,7 @@ class SoftwareController(QObject):
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
-        self.view.grid.setPixmap(self.model.filePathPlan)
+        self.view.grid.setPixmap(self.model.getFullPathImage())
         self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
         self.view.grid.createGrid(50)
         self.enregistrerProjet()
@@ -54,12 +58,18 @@ class SoftwareController(QObject):
         # Gérer l'action ouvrir projet
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
-        self.view.grid.setPixmap(self.model.filePathPlan)
+        self.view.grid.setPixmap(self.model.getFullPathImage())
         self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
         self.view.grid.createGrid(50)
         products = self.model.getProducts()
         self.view.product.update_Product(products)
         self.view.pr.updateCheckbox(products)
+
+    def supprimerProjet(self, fname):
+        # Gérer l'action supprimer projet
+        self.model.setFilePath(fname)
+        self.model.supprimerProjet()
+        self.updateProductList()
 
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
