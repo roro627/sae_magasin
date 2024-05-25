@@ -10,14 +10,23 @@ class GridModel:
         self.square_size = 50
     
     # Methods
+    def getIndex(self, pos : tuple) -> tuple :
+        return (int(pos[1]//self.square_size),int(pos[0]//self.square_size))
+
     def getCase(self, pos : tuple):
-        return self.grid_position[int(pos[1]//self.square_size)][int(pos[0]//self.square_size)]
+        (x,y) = self.getIndex(pos)
+        return self.grid_position[y][x]
 
     def addItems(self,items_list,pos):
-        items = []
-        for item in items_list:
-            items.append(item)
-        self.grid_position[pos[1]//self.square_size][pos[0]//self.square_size] = items
+        (x,y) = self.getIndex(pos)
+        if type(self.grid_position[y][x]) == list:
+            for item in items_list:
+                self.grid_position[y][x].append(item.text())
+        else :
+            items = []
+            for item in items_list:
+                items.append(item.text())
+            self.grid_position[y][x] = items
         print(self.grid_position)
 
     def updateSquareSize(self, size : int):

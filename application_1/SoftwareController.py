@@ -6,9 +6,8 @@ from PyQt6.QtWidgets import QApplication
 import sys
 
 
-class SoftwareController(QObject):
+class SoftwareController():
     def __init__(self):
-        super().__init__()
 
         # Initialiser la vue et le modèle
         self.view = SoftwareView()
@@ -43,7 +42,9 @@ class SoftwareController(QObject):
         self.model.setFilePathPlan(fname)
     
     def mouseItemGrid(self,pos):
-       self.grid_model.addItems(self.view.product.list_items,pos)
+        self.grid_model.addItems(self.view.product.list_checked_items,pos)
+        self.view.product.set_Unchecked_Items()
+        self.view.product.clear_Checked_Items()
 
     def nouveauProjet(self):
         # Gérer l'action nouveau projet

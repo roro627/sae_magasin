@@ -7,9 +7,9 @@ import sys, os
 # TODO restant:
 # - Connecter le fichier avec le model pour charger toute la liste des produits
 # - Mettre en place la fonctionnalité de recherche
-# - Mettre en place la fonctionnalité de placement des produits dans la grille (Fait dans le fichier GridModel mais qql bugs à corriger)
+# - Mettre en place la fonctionnalité de placement des produits dans la grille (FAIT)
 # - Mettre en place la fonctionnalité de suppression des produits de la grille
-# - Mettre en place la fonctionnalité de grisage des produits non disponibles (déjà placés dans une autre case de la grille)
+# - Mettre en place la fonctionnalité de grisage des produits non disponibles (FAIT)
 
 
 class placement_Product(QWidget):
@@ -21,25 +21,35 @@ class placement_Product(QWidget):
 
         self.list_widget = QListWidget()        
         
-        self.list_items = []        
+        self.list_items = []  
+        self.list_checked_items = []       
 
         self.list_widget.itemChanged.connect(self.Box_Change)
 
         layout.addWidget(self.list_widget)
         self.setLayout(layout)
 
-
     def Box_Change(self, item):
         if item.checkState() == Qt.CheckState.Checked:
+            self.list_checked_items.append(item)
             print(f"Item {item.text()} is checked")
-        else:
+        elif (item.checkState() == Qt.CheckState.Unchecked) and (item in self.list_checked_items):
+            self.list_checked_items.remove(item)
             print(f"Item {item.text()} is unchecked")
+        print(self.list_checked_items)
             
+    def set_Unchecked_Items(self):
+        for index in range(self.list_widget.count()):
+            item = self.list_widget.item(index)
+            if item in self.list_checked_items:
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
     
+    def clear_Checked_Items(self):
+        self.list_checked_items = []     
+
     def update_Product(self, products):
         self.list_items = products
         self.update_Product_List()
-        
     
     def update_Product_List(self):
         self.list_widget.clear()
