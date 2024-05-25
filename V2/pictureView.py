@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
-from PyQt6.QtCore import pyqtSignal
 
 class pictureView(QGraphicsView):
     def __init__(self):
@@ -15,8 +14,12 @@ class pictureView(QGraphicsView):
         self.setWindowTitle("QGraphicsView")
 
     def setPixmap(self,fname):
+        self.scene.clear()
+        
         self.pixmap = QPixmap(fname)
+        self.pixmap = self.pixmap.scaled(int(self.width()), int(self.height()), Qt.AspectRatioMode.KeepAspectRatio)
         self.pixmap_height = self.pixmap.height()
         self.pixmap_width = self.pixmap.width()
+        
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)

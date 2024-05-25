@@ -6,6 +6,7 @@ from PyQt6.QtCore import pyqtSignal
 from productListWidget import *
 from placementProducts import *
 from pictureView import *
+from openProject import openProject
 
 class ClientSoftwareView(QMainWindow):
     
@@ -34,6 +35,7 @@ class ClientSoftwareView(QMainWindow):
         self.picture = pictureView()
         self.productList = productListWidget()
         self.productPlacement = placementProducts()
+        self.openProjectDialog = openProject()
 
         self.button_path = QPushButton("Afficher le plus court chemin")
         self.button_path.clicked.connect(self.path)
@@ -56,9 +58,8 @@ class ClientSoftwareView(QMainWindow):
     dijkstraClicked = pyqtSignal()
 
     # Methods
-    def openProject(self) -> None:
-        fname = QFileDialog.getOpenFileName(self, 'Open file', '.',"*.json")[0]
-        self.openClicked.emit(fname)
+    def openProject(self):
+        self.openProjectDialog.exec()
     
     def path(self) -> None:
         self.dijkstraClicked.emit()
