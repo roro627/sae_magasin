@@ -3,7 +3,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 import sys, os
 
-class placementProducts(QWidget):
+class shoppingList(QWidget):
     def __init__(self) -> None:
         super().__init__()
         
@@ -12,7 +12,9 @@ class placementProducts(QWidget):
         self.title = QLabel("Liste de course")
         self.list_widget = QListWidget()        
         
-        self.list_items = []        
+        self.list_items = []    
+        
+        self.updateWorking = False    
 
         self.list_widget.itemChanged.connect(self.Box_Change)
 
@@ -36,10 +38,20 @@ class placementProducts(QWidget):
         
         # mettre les checkbox pour chaque item et griser les items utilisés
         for index in range(self.list_widget.count()):
-            item = self.list_widget.item(index)
-            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
-            
-            item.setCheckState(Qt.CheckState.Unchecked)
+            self.list_widget.item(index)
 
-            # test de griser un item :
-            # item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
+
+    def add_product(self, product):
+        self.list_items.append(product)
+        self.update_Product_List()
+        
+    def remove_product(self, product):
+        self.list_items.remove(product)
+        self.update_Product_List()
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = shoppingList()
+    window.update_Product(["item1","item2","item3"])
+    window.show()
+    sys.exit(app.exec())

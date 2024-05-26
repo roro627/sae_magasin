@@ -10,6 +10,8 @@ class productListWidget(QWidget):
         
         self.liste_produits_disponibles = []
         
+        self.upadateWorking = False
+        
         self.tree  = QTreeWidget()
         current_directory = sys.path[0]
         self.parent_directory = os.path.dirname(current_directory)
@@ -46,10 +48,12 @@ class productListWidget(QWidget):
 
     def checkboxChanged(self, item, column):
         # le bouton est checké
+        if self.upadateWorking:
+            return
         if item.checkState(column) == Qt.CheckState.Checked:
             self.itemAdded.emit(item.text(column))
         else:
-            self.itemDelet.emit(item.text(column))
+           self.itemDelet.emit(item.text(column))
 
     def updateCheckbox(self, products):
         # parcourir les items de l'arbre pour trouver et checker les item de la liste products
@@ -61,7 +65,9 @@ class productListWidget(QWidget):
                     child.setCheckState(0, Qt.CheckState.Checked)
                     
     def updateAvailableProducts(self, products):
-        # clear all items
+        
+        self.upadateWorking = True
+        
         self.tree.clear()
         
         self.liste_produits_disponibles = products
@@ -69,10 +75,12 @@ class productListWidget(QWidget):
             data = json.load(f)
             for key in data.keys():
                 self.add_tree_item(key, data[key])
+        self.upadateWorking = False
 
 
 if __name__ == "__main__":  
     app = QApplication(sys.argv)  
-    window = productListWidget()  
+    window = productListWidget()
+    window.updateAvailableProducts(["Carotte"])
     window.show()
     sys.exit(app.exec())
