@@ -34,6 +34,7 @@ class GridView(QGraphicsView):
 
     def setPixmap(self,fname):
         self.pixmap = QPixmap(fname)
+        self.pixmap = self.pixmap.scaled(int(self.width()), int(self.height()), Qt.AspectRatioMode.KeepAspectRatio)
         self.pixmap_height = self.pixmap.height()
         self.pixmap_width = self.pixmap.width()
         image_item = QGraphicsPixmapItem(self.pixmap)
