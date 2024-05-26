@@ -3,9 +3,9 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
 
-from productListWidget import *
-from placementProducts import *
-from pictureView import *
+from productListWidget import productListWidget
+from shoppingList import shoppingList
+from pictureView import pictureView
 from openProject import openProject
 
 class ClientSoftwareView(QMainWindow):
@@ -34,7 +34,7 @@ class ClientSoftwareView(QMainWindow):
         # Widgets
         self.picture = pictureView()
         self.productList = productListWidget()
-        self.productPlacement = placementProducts()
+        self.listShopping = shoppingList()
         self.openProjectDialog = openProject()
 
         self.button_path = QPushButton("Afficher le plus court chemin")
@@ -43,7 +43,7 @@ class ClientSoftwareView(QMainWindow):
         # Add widgets in the layouts
         layout_left.addWidget(self.picture)
         layout_right.addWidget(self.productList,alignment=Qt.AlignmentFlag.AlignRight)
-        layout_right.addWidget(self.productPlacement,alignment=Qt.AlignmentFlag.AlignRight)
+        layout_right.addWidget(self.listShopping,alignment=Qt.AlignmentFlag.AlignRight)
         layout_right.addWidget(self.button_path)
 
         # Add layouts in the mainlayout 

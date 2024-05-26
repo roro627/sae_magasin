@@ -5,6 +5,9 @@ from PyQt6.QtCore import *
 class pictureView(QGraphicsView):
     def __init__(self):
         super().__init__()
+        
+        self.fpath = ""
+        
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scene = QGraphicsScene()
@@ -15,11 +18,22 @@ class pictureView(QGraphicsView):
 
     def setPixmap(self,fname):
         self.scene.clear()
+        self.fpath = fname
         
-        self.pixmap = QPixmap(fname)
+        self.pixmap = QPixmap(self.fpath)
         self.pixmap = self.pixmap.scaled(int(self.width()), int(self.height()), Qt.AspectRatioMode.KeepAspectRatio)
         self.pixmap_height = self.pixmap.height()
         self.pixmap_width = self.pixmap.width()
         
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)
+        
+    # fonctionne mais pas très bien
+    # def resizeEvent(self, event):
+    #     if self.fpath != "":
+    #         self.scene.clear()
+    #         self.pixmap = QPixmap(self.fpath)
+    #         self.pixmap = self.pixmap.scaled(int(self.width()), int(self.height()), Qt.AspectRatioMode.KeepAspectRatio)
+            
+    #         image_item = QGraphicsPixmapItem(self.pixmap)
+    #         self.scene.addItem(image_item)

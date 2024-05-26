@@ -11,10 +11,12 @@ TODO Pour tout les fichier:
 - ouvir un fichier json grace à openproject et update le model
    - implémenter la méthode openProject et supprimer le systeme actuel. fait
    - dans l'update mettre à jour le model.fait et les widgets. fait
-- relier la liste de course à chaque sélection de produit dans la liste de produit dispo du magasin
+- relier la liste de course à chaque sélection de produit dans la liste de produit dispo du magasin. fait
 - afficher un point sur chaque position de produit sélectionné dans la liste de course
 - supprimer un point sur chaque position de produit désélectionné dans la liste de course
 - implémenter dijkstra pour trouver le plus court chemin
+
+- si le temps le permet, détecter le changement de taille de la fenetre pour redimensionner l'image. plus ou moins fait
 """
 
 class ClientSoftwareController():
@@ -26,9 +28,8 @@ class ClientSoftwareController():
 
       # Connecter les signaux de la vue aux slots du contrôleur
       self.view.openProjectDialog.openClicked.connect(self.openProject)
-      
-      
-      
+      self.view.productList.itemAdded.connect(self.newItem)
+      self.view.productList.itemDelet.connect(self.itemRemove)
       
       
       
@@ -38,12 +39,19 @@ class ClientSoftwareController():
       self.updateProductList()
       self.view.picture.setPixmap(self.model.getFullPathImage())
       
-      
-   def dijkstra():
-      pass
+   
+   def newItem(self, item):
+      self.view.listShopping.add_product(item)
+
+   def itemRemove(self, item):
+      self.view.listShopping.remove_product(item)
    
    def updateProductList(self):
       self.view.productList.updateAvailableProducts(self.model.getProducts())
+   
+   
+   def dijkstra():
+      pass
    
    def show(self):
       self.view.show()
