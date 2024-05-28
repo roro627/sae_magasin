@@ -7,8 +7,10 @@ from PyQt6.QtCore import pyqtSignal
 class GridModel:
     #Constructeur
     def __init__(self):
-        self.gride_Moved = False
+        self.gridMoved = False
+        self.gridStart = (0,0)
         self.square_size = 50
+        self.grid_position = []
     
     # Methodes
     def getIndex(self, pos : tuple) -> tuple :
@@ -29,16 +31,23 @@ class GridModel:
         (x,y) = self.getIndex(pos)
         return self.grid_position[x][y]
 
-    def addItems(self,items_list,pos):
-        (x,y) = self.getIndex(pos)
-        if type(self.grid_position[x][y]) == list:
-            for item in items_list:
-                self.grid_position[x][y].append(item.text())
-        else :
-            items = []
-            for item in items_list:
-                items.append(item.text())
-            self.grid_position[x][y] = items
+    def addItems(self,items_list : list ,pos : tuple) -> None :
+        """
+        Cette méthode permet d'ajouter le ou les élèments de items_list dans une case de la grille
+        self.grid_position.
+        Paramètres : self, items_list : list, pos : tuple de forme (x : int, y : int)
+        Return : None
+        """
+        if items_list != []:
+            (x,y) = self.getIndex(pos)
+            if type(self.grid_position[x][y]) == list:
+                for item in items_list:
+                    self.grid_position[x][y].append(item.text())
+            else :
+                items = []
+                for item in items_list:
+                    items.append(item.text())
+                self.grid_position[x][y] = items
         print(self.grid_position)
 
     def updateSquareSize(self, size : int) -> None :

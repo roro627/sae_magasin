@@ -8,7 +8,6 @@ class productListWidget(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.tree  = QTreeWidget()
-        self.tree.setEnabled(False)
         current_directory = sys.path[0]
         parent_directory = os.path.dirname(current_directory)
 

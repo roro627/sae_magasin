@@ -23,6 +23,10 @@ class SoftwareModel:
 
         self.filePathPlan : str = ""
         self.filePath: str = ""
+
+        self.gridConfigured : bool = False
+        self.gridConfiguredFinish : bool = False
+        self.itemsPlaced : bool = False
         
         current_directory = sys.path[0]
         self.parent_directory = os.path.dirname(current_directory)
@@ -41,7 +45,12 @@ class SoftwareModel:
                 "position_grille": self.position_grille,
 
                 "fichier_plan_chemin": self.filePathPlan,
-                "fichier_chemin": self.filePath
+                "fichier_chemin": self.filePath,
+
+                "grille_configure": self.gridConfigured,
+                "grille_configure_finit": self.gridConfiguredFinish,
+                "elements_places": self.itemsPlaced
+
             }
             json.dump(content, f)
 
@@ -56,6 +65,9 @@ class SoftwareModel:
             self.magasin = content["magasin"]
             self.liste = content["liste"]
             self.filePathPlan = content["fichier_plan_chemin"]
+            self.gridConfigured = content["grille_configure"]
+            self.gridConfiguredFinish = content["grille_configure_finit"]
+            self.itemsPlaced = content["elements_places"]
         
 
     # supprimer le fichier du projet en cours en vérifiant qu'il existe.

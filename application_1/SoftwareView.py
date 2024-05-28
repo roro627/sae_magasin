@@ -46,20 +46,25 @@ class SoftwareView(QMainWindow):
         self.deletProjectDialog = deletProject()
         
         self.pr = productListWidget()
+        self.pr.setEnabled(False)
+
         self.grid = GridView()
         self.product = placement_Product()
 
         self.btn1 = QPushButton("Paramétrer la grille")
+        self.btn1.clicked.connect(self.beginConfigGrid)
 
-        self.btn2 = QPushButton("Arrêter le paramétrage")
+        self.btn2 = QPushButton("Terminer le paramétrage")
         self.btn2.setEnabled(False)
+        self.btn2.clicked.connect(self.endConfigGrid)
 
         self.btn3 = QPushButton("Placer les produits")
-        self.btn2.clicked.connect(self.beginPlacement)
+        self.btn3.clicked.connect(self.beginPlacement)
 
         self.min = QLabel("1")
         self.slider = QSlider(Qt.Orientation.Horizontal)
         self.slider.setEnabled(False)
+        self.slider.setValue(5)
         self.slider.setMinimum(1)
         self.slider.setMaximum(5)
         self.max = QLabel("5")
@@ -85,6 +90,9 @@ class SoftwareView(QMainWindow):
     newClicked = pyqtSignal()
     saveClicked = pyqtSignal()
     sliderMoved = pyqtSignal(int)
+
+    confGridClicked = pyqtSignal()
+    confGridFinishClicked = pyqtSignal()
     placementClicked = pyqtSignal()
 
     # Methods
@@ -104,6 +112,12 @@ class SoftwareView(QMainWindow):
         val = 10*(self.slider.value())
         self.sliderMoved.emit(val)
     
+    def beginConfigGrid(self):
+        self.confGridClicked.emit()
+    
+    def endConfigGrid(self):
+        self.confGridFinishClicked.emit()
+
     def beginPlacement(self):
         self.placementClicked.emit()
 
