@@ -50,10 +50,16 @@ class SoftwareView(QMainWindow):
         self.product = placement_Product()
 
         self.btn1 = QPushButton("Paramétrer la grille")
-        self.btn2 = QPushButton("Boutton 2")
-        self.btn3 = QPushButton("Boutton 3")
+
+        self.btn2 = QPushButton("Arrêter le paramétrage")
+        self.btn2.setEnabled(False)
+
+        self.btn3 = QPushButton("Placer les produits")
+        self.btn2.clicked.connect(self.beginPlacement)
+
         self.min = QLabel("1")
         self.slider = QSlider(Qt.Orientation.Horizontal)
+        self.slider.setEnabled(False)
         self.slider.setMinimum(1)
         self.slider.setMaximum(5)
         self.max = QLabel("5")
@@ -79,7 +85,8 @@ class SoftwareView(QMainWindow):
     newClicked = pyqtSignal()
     saveClicked = pyqtSignal()
     sliderMoved = pyqtSignal(int)
-    
+    placementClicked = pyqtSignal()
+
     # Methods
     def newProject(self):
         self.dial.exec() 
@@ -96,6 +103,9 @@ class SoftwareView(QMainWindow):
     def sliderValue(self):
         val = 10*(self.slider.value())
         self.sliderMoved.emit(val)
+    
+    def beginPlacement(self):
+        self.placementClicked.emit()
 
 # Main
 if __name__ == "__main__":  
