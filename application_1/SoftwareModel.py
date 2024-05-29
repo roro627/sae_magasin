@@ -64,6 +64,7 @@ class SoftwareModel:
             self.nom = content["nom"]
             self.magasin = content["magasin"]
             self.liste = content["liste"]
+            self.position_produit = content["position_produit"]
             self.filePathPlan = content["fichier_plan_chemin"]
             self.gridConfigured = content["grille_configure"]
             self.gridConfiguredFinish = content["grille_configure_finit"]

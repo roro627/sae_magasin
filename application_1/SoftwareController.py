@@ -66,6 +66,7 @@ class SoftwareController():
         self.view.grid.gridIsNotMovable()
     
     def productListEnabled(self):
+        self.model.itemsPlaced = True
         self.view.btn1.setEnabled(False)
         self.view.pr.setEnabled(True)
 
@@ -85,6 +86,7 @@ class SoftwareController():
         self.model.update(info)
         self.view.grid.setPixmap(self.model.getFullPathImage())
         self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
+        self.grid_model.grid_position = self.model.position_produit
         self.view.grid.createGrid(self.view.slider.value()*10,self.grid_model.gridMoved)
         self.enregistrerProjet()
 
@@ -114,6 +116,7 @@ class SoftwareController():
             print("Bougement de la grille")
             self.grid_model.gridMoved = True
         self.grid_model.addItems(self.view.product.list_checked_items,pos)
+        self.model.position_produit = self.grid_model.grid_position
         self.view.product.set_Unchecked_Items()
         self.view.product.clear_Checked_Items()
 
