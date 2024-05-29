@@ -47,7 +47,7 @@ class SoftwareController():
         if self.model.filePathPlan != "":
             self.grid_model.updateSquareSize(size)
             self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
-            self.view.grid.createGrid(size,self.model.gridConfigured)
+            self.view.grid.createGrid(size,self.model.gridConfigured,self.grid_model.gridStart)
             
     def confGridBegin(self):
         self.view.slider.setEnabled(True)
@@ -84,9 +84,12 @@ class SoftwareController():
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
+
         self.view.grid.setPixmap(self.model.getFullPathImage())
         self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
-        self.view.grid.createGrid(self.view.slider.value()*10,self.grid_model.gridMoved)
+        self.view.grid.createGrid(self.view.slider.value()*10,self.grid_model.gridMoved,self.grid_model.gridStart)
+        self.view.btn1.setEnabled(True)
+        self.view.btn3.setEnabled(True)
         self.enregistrerProjet()
 
     def nouveauPlanProjet(self,fname):
@@ -98,13 +101,19 @@ class SoftwareController():
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
         self.view.grid.setPixmap(self.model.getFullPathImage())
+
+        self.grid_model.grid_position = self.model.position_produit
+        self.grid_model.gridStart = self.model.position_grille
+        self.grid_model.square_size = self.model.case_taille
+
         self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
-        self.view.grid.createGrid(self.view.slider.value()*10,self.grid_model.gridMoved)
+        self.view.grid.createGrid(self.grid_model.square_size,self.grid_model.gridMoved,self.model.position_grille)
 
         # Configuration des bouttons en fonction de l'état d'avancement du projet.
         if self.model.itemsPlaced : self.productListEnabled()
         elif self.model.gridConfiguredFinish : self.confGridEnd()
         elif self.model.gridConfigured : self.confGridBegin()
+        else : self.view.btn1.setEnabled(True), self.view.btn3.setEnabled(True)
 
         products = self.model.getProducts()
         self.view.product.update_Product(products,self.model.getPlacedProducts())
@@ -115,6 +124,7 @@ class SoftwareController():
         if self.model.gridConfigured and not self.model.gridConfiguredFinish:
             print("Bougement de la grille")
             self.grid_model.gridMoved = True
+            self.grid_model.gridStart = (self.view.grid.group.pos().x(),self.view.grid.group.pos().y())
         self.grid_model.addItems(self.view.product.list_checked_items,pos)
         self.model.position_produit = self.grid_model.grid_position
         self.view.product.set_Unchecked_Items()
@@ -129,6 +139,11 @@ class SoftwareController():
 
     def enregistrerProjet(self):
         # Gérer l'action enregistrer projet
+
+        self.model.position_produit = self.grid_model.grid_position
+        self.model.position_grille = self.grid_model.gridStart
+        self.model.case_taille = self.grid_model.square_size
+
         self.model.enregistrerProjet()
 
     def updateProductList(self):

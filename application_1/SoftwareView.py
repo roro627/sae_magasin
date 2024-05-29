@@ -52,6 +52,7 @@ class SoftwareView(QMainWindow):
         self.product = placement_Product()
 
         self.btn1 = QPushButton("Paramétrer la grille")
+        self.btn1.setEnabled(False)
         self.btn1.clicked.connect(self.beginConfigGrid)
 
         self.btn2 = QPushButton("Terminer le paramétrage")
@@ -59,6 +60,7 @@ class SoftwareView(QMainWindow):
         self.btn2.clicked.connect(self.endConfigGrid)
 
         self.btn3 = QPushButton("Placer les produits")
+        self.btn3.setEnabled(False)
         self.btn3.clicked.connect(self.beginPlacement)
 
         self.min = QLabel("1")

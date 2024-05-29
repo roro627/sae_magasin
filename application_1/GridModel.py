@@ -8,7 +8,7 @@ class GridModel:
     #Constructeur
     def __init__(self):
         self.gridMoved = False
-        self.gridStart = (0,0)
+        self.gridStart = [0,0]
         self.square_size = 50
         self.grid_position = []
     
@@ -20,7 +20,8 @@ class GridModel:
         Paramètres : self, pos : tuple de forme (x : int, y : int)
         Return : tuple de forme (x : int, y : int)
         """
-        return (int(pos[1]//self.square_size),int(pos[0]//self.square_size))
+        print("start",self.gridStart)
+        return ((int(pos[1]-self.gridStart[1])//self.square_size),(int(pos[0]-self.gridStart[0])//self.square_size))
 
     def getCase(self, pos : tuple) -> (int|list) :
         """
@@ -58,7 +59,7 @@ class GridModel:
         """
         self.square_size = size
     
-    def updateGrid(self, pixmap_height : int, pixmap_width : int):
+    def updateGrid(self, pixmap_height : int, pixmap_width : int) -> None :
         self.pixmap_height = pixmap_height
         self.pixmap_width = pixmap_width
 

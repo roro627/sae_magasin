@@ -17,14 +17,14 @@ class GridView(QGraphicsView):
     
     mouseClicked = pyqtSignal(tuple)
 
-    def mousePressEvent(self, event):
+    def mouseReleaseEvent(self, event):
         items = self.items(event.pos())
         for item in items:
             if type(item) is QGraphicsPixmapItem:
                 pos = item.mapFromScene(self.mapToScene(event.pos()))
                 pos = (int(pos.x()),int(pos.y()))
                 self.mouseClicked.emit(pos)
-        super().mousePressEvent(event)
+        super().mouseReleaseEvent(event)
 
     def setPixmap(self,fname):
         self.pixmap = QPixmap(fname)
@@ -40,7 +40,7 @@ class GridView(QGraphicsView):
     def gridIsNotMovable(self):
         self.group.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsMovable, False)
 
-    def createGrid(self,square_size : int, gridIsMovable : bool):
+    def createGrid(self,square_size : int, gridIsMovable : bool, gridBegin : tuple):
         self.scene.clear()
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)
@@ -53,7 +53,7 @@ class GridView(QGraphicsView):
 
         for i in range(nb_square1):
             for j in range(nb_square2):
-                square = QGraphicsRectItem(0+j*square_size,0+i*square_size,square_size,square_size) 
+                square = QGraphicsRectItem(gridBegin[0]+j*square_size,gridBegin[1]+i*square_size,square_size,square_size) 
                 square.setPen(QColor("black"))
                 self.group.addToGroup(square)
         self.scene.addItem(self.group)

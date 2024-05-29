@@ -18,8 +18,10 @@ class SoftwareModel:
         self.nom: str = ""
         self.magasin: str = ""
         self.liste: list[str] = []
-        self.position_produit: dict = {}
-        self.position_grille: dict = {}
+
+        self.position_produit : list = []
+        self.position_grille : list = [0,0]
+        self.case_taille : int = 50
 
         self.filePathPlan : str = ""
         self.filePath: str = ""
@@ -41,8 +43,10 @@ class SoftwareModel:
                 "nom": self.nom,
                 "magasin": self.magasin,
                 "liste": self.liste,
+
                 "position_produit": self.position_produit,
                 "position_grille": self.position_grille,
+                "case_taille": self.case_taille,
 
                 "fichier_plan_chemin": self.filePathPlan,
                 "fichier_chemin": self.filePath,
@@ -65,6 +69,8 @@ class SoftwareModel:
             self.magasin = content["magasin"]
             self.liste = content["liste"]
             self.position_produit = content["position_produit"]
+            self.position_grille = content["position_grille"]
+            self.case_taille = content["case_taille"]
             self.filePathPlan = content["fichier_plan_chemin"]
             self.gridConfigured = content["grille_configure"]
             self.gridConfiguredFinish = content["grille_configure_finit"]
