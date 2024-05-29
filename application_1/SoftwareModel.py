@@ -119,6 +119,16 @@ class SoftwareModel:
         full_path = self.parent_directory + "//Exemples de plans//" + self.filePathPlan
         return full_path
        
+    def getPlacedProducts(self):
+        listProducts = []
+        for i in range(len(self.position_produit)):
+            for j in range(len(self.position_produit[i])):
+                testProduct = self.position_produit[i][j]
+                if testProduct != 0:
+                    for j in testProduct:
+                        listProducts.append(j)
+        return listProducts
+       
     def toString(self) -> str:
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n"
         return string

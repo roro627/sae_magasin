@@ -56,7 +56,7 @@ class GridView(QGraphicsView):
                 square = QGraphicsRectItem(0+j*square_size,0+i*square_size,square_size,square_size) 
                 square.setPen(QColor("black"))
                 self.group.addToGroup(square)
-            self.scene.addItem(self.group)
+        self.scene.addItem(self.group)
 
 
 
