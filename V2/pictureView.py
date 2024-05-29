@@ -28,12 +28,3 @@ class pictureView(QGraphicsView):
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)
         
-    # fonctionne mais pas très bien
-    # def resizeEvent(self, event):
-    #     if self.fpath != "":
-    #         self.scene.clear()
-    #         self.pixmap = QPixmap(self.fpath)
-    #         self.pixmap = self.pixmap.scaled(int(self.width()), int(self.height()), Qt.AspectRatioMode.KeepAspectRatio)
-            
-    #         image_item = QGraphicsPixmapItem(self.pixmap)
-    #         self.scene.addItem(image_item)

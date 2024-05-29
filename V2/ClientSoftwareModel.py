@@ -10,8 +10,9 @@ class ClientSoftwareModel():
         self.nom: str = ""
         self.magasin: str = ""
         self.liste: list[str] = []
-        self.position_produit: dict = {}
+        self.position_produit: list = []
         self.position_grille: dict = {}
+        
 
         self.filePathPlan : str = ""
         self.filePath: str = ""
@@ -28,6 +29,7 @@ class ClientSoftwareModel():
             self.nom = content["nom"]
             self.magasin = content["magasin"]
             self.liste = content["liste"]
+            self.position_produit = content["position_produit"]
             self.filePathPlan = content["fichier_plan_chemin"]
             
     
@@ -63,6 +65,13 @@ class ClientSoftwareModel():
     def getFullPathImage(self):
         full_path = self.parent_directory + "//Exemples de plans//" + self.filePathPlan
         return full_path
+    
+    def detectPositionProduct(self,product):
+        for i in range(len(self.position_produit)):
+            for j in range(len(self.position_produit[i])):
+                testProduct = self.position_produit[i][j]
+                if testProduct != 0 and product in testProduct:
+                    return (i,j)
        
     def __str__(self):
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n" + "Liste des produits : " + str(self.liste) + "\n" + "Position des produits : " + str(self.position_produit) + "\n" + "Position de la grille : " + str(self.position_grille) + "\n" + "Chemin du plan : " + self.filePathPlan + "\n" + "Chemin du fichier : " + self.filePath + "\n"
@@ -71,18 +80,21 @@ class ClientSoftwareModel():
     
 if __name__ == "__main__":
     model = ClientSoftwareModel()
-    model.update({"nom_projet":"test","auteur":"test","date":"2021-10-10","nom":"test","magasin":"test"})
-    print(model)
+    # model.update({"nom_projet":"test","auteur":"test","date":"2021-10-10","nom":"test","magasin":"test"})
+    # print(model)
+    # model.ouvrirProjet()
+    # print(model)
+    # model.addProduct("test")
+    # print(model.getProducts())
+    # model.removeProduct("test")
+    # print(model.getProducts())
+    # model.setFilePathPlan("test")
+    # print(model.getFullPathImage())
+    # model.setFilePath("test")
+    # print(model.getFullPathImage())
+    # model.setFilePath(r"C:\Users\romai\Documents\MEGA\ecole\semestre_2\sae\sae_magasin\github\sae_magasin\Espace_de_travail\test_multi_pc.json")
+    # model.ouvrirProjet()
+    model.setFilePath(r"C:\Users\romai\Documents\MEGA\ecole\semestre_2\sae\sae_magasin\github\sae_magasin\Espace_de_travail\Test1.json")
     model.ouvrirProjet()
     print(model)
-    model.addProduct("test")
-    print(model.getProducts())
-    model.removeProduct("test")
-    print(model.getProducts())
-    model.setFilePathPlan("test")
-    print(model.getFullPathImage())
-    model.setFilePath("test")
-    print(model.getFullPathImage())
-    model.setFilePath(r"C:\Users\romai\Documents\MEGA\ecole\semestre_2\sae\sae_magasin\github\sae_magasin\Espace_de_travail\test_multi_pc.json")
-    model.ouvrirProjet()
-    print(model)
+    print(model.detectPositionProduct("Aiguillette de poulet"))

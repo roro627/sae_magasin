@@ -39,6 +39,8 @@ class productListWidget(QWidget):
 
     def checkboxChanged(self, item, column):
         # le bouton est checké
+        
+        
         if item.checkState(column) == Qt.CheckState.Checked:
             self.itemAdded.emit(item.text(column))
         else:
@@ -46,6 +48,7 @@ class productListWidget(QWidget):
 
     def updateCheckbox(self, products):
         # parcourir les items de l'arbre pour trouver et checker les item de la liste products
+        self.tree.clear()
         for i in range(self.tree.topLevelItemCount()):
             parent = self.tree.topLevelItem(i)
             for j in range(parent.childCount()):

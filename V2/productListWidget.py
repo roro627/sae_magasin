@@ -8,20 +8,24 @@ class productListWidget(QWidget):
     def __init__(self) -> None:
         super().__init__()
         
-        self.liste_produits_disponibles = []
-        
-        self.upadateWorking = False
-        
-        self.tree  = QTreeWidget()
+        # attributs
         current_directory = sys.path[0]
         self.parent_directory = os.path.dirname(current_directory)
+        
+        self.liste_produits_disponibles = []
+        self.upadateWorking = False
+        
+        
+        self.tree  = QTreeWidget()
+        self.tree.setMouseTracking(True)
 
         self.tree.setHeaderLabels(["Liste des produits"])
 
         self.updateAvailableProducts([])
 
-        # Connecter le signal itemChanged à la méthode checkboxChanged
+        # signaux
         self.tree.itemChanged.connect(self.checkboxChanged)
+        self.tree.itemEntered.connect(self.itemHover)
 
         mainlayout = QVBoxLayout()
         mainlayout.addWidget(self.tree)
@@ -29,6 +33,7 @@ class productListWidget(QWidget):
 
     itemAdded = pyqtSignal(str)
     itemDelet = pyqtSignal(str)
+    itemHovered = pyqtSignal(str)
 
     def add_tree_item(self, parent_name, children_names):
                
@@ -76,6 +81,11 @@ class productListWidget(QWidget):
             for key in data.keys():
                 self.add_tree_item(key, data[key])
         self.upadateWorking = False
+
+
+    def itemHover(self, item, column):
+        if item.parent() is not None:
+            self.itemHovered.emit(item.text(column))
 
 
 if __name__ == "__main__":  

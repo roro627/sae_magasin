@@ -1,4 +1,3 @@
-from PyQt6.QtCore import QObject, pyqtSlot
 from PyQt6.QtWidgets import QApplication
 
 import sys,os
@@ -15,8 +14,10 @@ TODO Pour tout les fichier:
 - afficher un point sur chaque position de produit sélectionné dans la liste de course
 - supprimer un point sur chaque position de produit désélectionné dans la liste de course
 - implémenter dijkstra pour trouver le plus court chemin
-
-- si le temps le permet, détecter le changement de taille de la fenetre pour redimensionner l'image. plus ou moins fait
+- afficher le chemin sur l'image
+- Detecter le survol d'un produit. fait
+- Trouver la position du produit survolé.
+- Afficher un point sur l'image lors du survol d'un produit.
 """
 
 class ClientSoftwareController():
@@ -30,7 +31,7 @@ class ClientSoftwareController():
       self.view.openProjectDialog.openClicked.connect(self.openProject)
       self.view.productList.itemAdded.connect(self.newItem)
       self.view.productList.itemDelet.connect(self.itemRemove)
-      
+      self.view.productList.itemHovered.connect(self.itemHover)
       
       
    def openProject(self,fpath):
@@ -49,6 +50,8 @@ class ClientSoftwareController():
    def updateProductList(self):
       self.view.productList.updateAvailableProducts(self.model.getProducts())
    
+   def itemHover(self, item):
+      pass
    
    def dijkstra():
       pass
