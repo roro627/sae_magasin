@@ -86,7 +86,6 @@ class SoftwareController():
         self.model.update(info)
         self.view.grid.setPixmap(self.model.getFullPathImage())
         self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
-        self.grid_model.grid_position = self.model.position_produit
         self.view.grid.createGrid(self.view.slider.value()*10,self.grid_model.gridMoved)
         self.enregistrerProjet()
 
@@ -108,11 +107,12 @@ class SoftwareController():
         elif self.model.gridConfigured : self.confGridBegin()
 
         products = self.model.getProducts()
-        self.view.product.update_Product(products)
+        self.view.product.update_Product(products,self.model.getPlacedProducts())
+        self.grid_model.grid_position = self.model.position_produit
         self.view.pr.updateCheckbox(products)
     
     def mouseItemGrid(self,pos):
-        if self.model.gridConfigured:
+        if self.model.gridConfigured and not self.model.gridConfiguredFinish:
             print("Bougement de la grille")
             self.grid_model.gridMoved = True
         self.grid_model.addItems(self.view.product.list_checked_items,pos)
