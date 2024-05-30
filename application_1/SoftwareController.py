@@ -5,6 +5,9 @@ from GridModel import GridModel
 from PyQt6.QtWidgets import QApplication
 import sys
 
+# -----------------------------------------------------------------------------
+# --- class Controller
+# -----------------------------------------------------------------------------
 
 class SoftwareController():
     def __init__(self):
@@ -41,15 +44,25 @@ class SoftwareController():
 
         # -------------- Signaux de View.grid -------------- #
         self.view.grid.mouseClicked.connect(self.mouseItemGrid)
-
+    
     # --- Méthodes pour View --- #
     def updateGrid(self,size):
+        """
+        Cette méthode permet de mettre à jour la taille de la grille
+        Paramètres : self, size -> Integer
+        Return : None
+        """
         if self.model.filePathPlan != "":
             self.grid_model.updateSquareSize(size)
             self.grid_model.updateGrid(self.view.grid.pixmap_height,self.view.grid.pixmap_width)
             self.view.grid.createGrid(size,self.model.gridConfigured,self.grid_model.gridStart)
             
     def confGridBegin(self):
+        """
+        Cette méthode permet de passer en mode "configuration de la grille"
+        Paramètre : self
+        Return : None
+        """
         self.view.slider.setEnabled(True)
         self.view.btn2.setEnabled(True)
         self.view.btn3.setEnabled(False)
@@ -58,6 +71,11 @@ class SoftwareController():
         self.view.grid.gridIsMovable()
     
     def confGridEnd(self):
+        """
+        Cette méthode permet d'enlever le mode "configuration de la grille"
+        Paramètre : self
+        Return : None
+        """
         self.view.btn1.setEnabled(False)
         self.view.btn2.setEnabled(False)
         self.view.btn3.setEnabled(True)
@@ -66,25 +84,41 @@ class SoftwareController():
         self.view.grid.gridIsNotMovable()
     
     def productListEnabled(self):
+        """
+        Cette méthode permet d'activer la liste des produits et de désactiver le bouton "placement".
+        Paramètre : self 
+        Retour : None
+        """
         self.model.itemsPlaced = True
         self.view.btn1.setEnabled(False)
         self.view.pr.setEnabled(True)
 
     # --- Méthodes pour View.pr --- #
     def newItem(self, item):
+        """
+        Cette méthode permet d'ajouter un nouvel élément à la liste des produits.
+        Paramètres : self, item -> String
+        Retour : None
+        """
         self.model.addProduct(item)
         self.updateProductList()
 
     def itemRemove(self, item):
+        """
+        Cette méthode permet de supprimer un élément de la liste des produits.
+        Paramètres : self , item -> String
+        Return : None
+        """
         self.model.removeProduct(item)
         self.updateProductList()
-    
-    def updateProductList(self):
-        products = self.model.getProducts()
-        self.view.product.update_Product(products)
 
     # --- Méthodes pour View.dial --- #
     def nouveauProjet(self):
+        """
+        Cette méthode permet de créer un nouveau projet
+        Paramètre : self
+        Return : None
+        """
         # Gérer l'action nouveau projet
         info = self.view.dial.getAllInfo()
         self.model.update(info)
@@ -97,10 +131,21 @@ class SoftwareController():
         self.enregistrerProjet()
 
     def nouveauPlanProjet(self,fname):
+        """
+        Cette méthode permet d'avoir un nouveau plan pour le projet.
+        Paramètres : self , fname -> String
+        Return : None
+        """
         self.model.setFilePathPlan(fname)
     
     # --- Méthodes pour View.openProjectDialog --- #
     def ouvrirProjet(self, fname):
+        """
+        Cette méthode charge les informations du projet en cours depuis un fichier JSON.
+        Paramètres : self , fname -> String
+        Return : None
+        """
+        
         # Gérer l'action ouvrir projet
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
@@ -123,26 +168,13 @@ class SoftwareController():
         self.view.product.update_Product(products,self.model.getPlacedProducts())
         self.grid_model.grid_position = self.model.position_produit
         self.view.pr.updateCheckbox(products)
-
-    # --- Méthodes pour View.deletProjectDialog --- #
-    def enregistrerProjet(self):
-        # Gérer l'action enregistrer projet
-
-        self.model.position_produit = self.grid_model.grid_position
-        self.model.position_grille = self.grid_model.gridStart
-        self.model.case_taille = self.grid_model.square_size
-
-        self.model.enregistrerProjet()
     
-    # --- Méthodes pour View.deletProjectDialog --- #
-    def supprimerProjet(self, fname):
-        # Gérer l'action supprimer projet
-        self.model.setFilePath(fname)
-        self.model.supprimerProjet()
-        self.updateProductList()
-    
-    # --- Méthodes pour View.grid --- #
     def mouseItemGrid(self,pos):
+        """
+        Cette méthode est appelée lorsque l'utilisateur fait un clic sur la grille.
+        Paramètres : self , pos -> tuples de forme (x : int , y: int)
+        Return : None
+        """
         if self.model.gridConfigured and not self.model.gridConfiguredFinish:
             print("Bougement de la grille")
             self.grid_model.gridMoved = True
@@ -151,10 +183,51 @@ class SoftwareController():
         self.model.position_produit = self.grid_model.grid_position
         self.view.product.set_Unchecked_Items()
         self.view.product.clear_Checked_Items()
+
+
+    def supprimerProjet(self, fname):
+        """
+        Cette méthode supprime le fichier JSON du projet en cours en vérifiant s'il existe.
+        Paramètres : self , fname -> String
+        Return : None
+        """
+        # Gérer l'action supprimer projet
+        self.model.setFilePath(fname)
+        self.model.supprimerProjet()
+        self.updateProductList()
+
+    def enregistrerProjet(self):
+        """
+        Cette méthode enregistre les informations du projet en cours dans un fichier écrit en JSON.
+        Paramètres : self
+        Return : None
+        """
+        
+        # Gérer l'action enregistrer projet
+
+        self.model.position_produit = self.grid_model.grid_position
+        self.model.position_grille = self.grid_model.gridStart
+        self.model.case_taille = self.grid_model.square_size
+
+        self.model.enregistrerProjet()
+
+    def updateProductList(self):
+        """
+        Cette méthode met à jour la liste des produits dans la vue en utilisant les données du modèle.
+        Paramètre : self
+        Return : None
+        """
+        products = self.model.getProducts()
+        self.view.product.update_Product(products)
     
     def show(self):
-        # Afficher la vue
+        """
+        Cette méthode affiche la vue.
+        Paramètre : self
+        Return : None
+        """
         self.view.show()
+
 
 if __name__ == "__main__":
 

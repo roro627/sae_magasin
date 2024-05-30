@@ -12,6 +12,10 @@ from GridView import GridView
 from productListWidget import productListWidget
 from placement_Product import placement_Product
 
+# -----------------------------------------------------------------------------
+# --- class View
+# -----------------------------------------------------------------------------
+
 class SoftwareView(QMainWindow):
     
     # Constructeur
