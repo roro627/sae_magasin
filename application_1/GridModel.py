@@ -60,6 +60,12 @@ class GridModel:
         self.square_size = size
     
     def updateGrid(self, pixmap_height : int, pixmap_width : int) -> None :
+        """
+        Cette méthode permet de mettre à jour la hauteur et la largeur de notre pixmap puis de mettre à
+        jour la grille self.grid_position.
+        Paramètres : self, pixmap_height : int, pixmap_width : int
+        Return : None 
+        """
         self.pixmap_height = pixmap_height
         self.pixmap_width = pixmap_width
 

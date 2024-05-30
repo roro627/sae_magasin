@@ -12,10 +12,9 @@ from GridView import GridView
 from productListWidget import productListWidget
 from placement_Product import placement_Product
 
-
 class SoftwareView(QMainWindow):
     
-    # Constructor
+    # Constructeur
     def __init__(self):
         super().__init__()
         
@@ -71,6 +70,8 @@ class SoftwareView(QMainWindow):
         self.slider.setMaximum(5)
         self.max = QLabel("5")
         self.slider.valueChanged.connect(self.sliderValue)
+
+        # Ajout de widgets dans le layout layout_tools
         layout_tools.addWidget(self.btn1)
         layout_tools.addWidget(self.btn2)
         layout_tools.addWidget(self.btn3)
@@ -79,16 +80,16 @@ class SoftwareView(QMainWindow):
         layout_tools.addWidget(self.max)
         mainlayout.addLayout(layout_tools)
 
+        # Ajout de widgets dans le layout layout_menu
         layout_menu.addWidget(self.product,alignment=Qt.AlignmentFlag.AlignLeft)
         layout_menu.addWidget(self.grid)
         layout_menu.addWidget(self.pr,alignment=Qt.AlignmentFlag.AlignRight)
         mainlayout.addLayout(layout_menu)
 
-        
-        # affiche en plein écran
+        # Affiche en plein écran
         self.showMaximized()
     
-    # Signals
+    # Signaux
     newClicked = pyqtSignal()
     saveClicked = pyqtSignal()
     sliderMoved = pyqtSignal(int)
@@ -97,30 +98,72 @@ class SoftwareView(QMainWindow):
     confGridFinishClicked = pyqtSignal()
     placementClicked = pyqtSignal()
 
-    # Methods
-    def newProject(self):
+    # Methodes
+    def newProject(self) -> None :
+        """
+        Cette méthode permet d'afficher le menu pour créer un nouveau projet.
+        Paramètres : self
+        Return : None
+        """
         self.dial.exec() 
 
-    def openProject(self):
+    def openProject(self) -> None :
+        """
+        Cette méthode permet d'afficher le menu pour ouvrir un projet.
+        Paramètres : self
+        Return : None
+        """
         self.openProjectDialog.exec()
         
-    def deletProject(self):
+    def deletProject(self) -> None :
+        """
+        Cette méthode permet d'afficher le menu pour supprimer un projet.
+        Paramètres : self
+        Return : None
+        """
         self.deletProjectDialog.exec()
 
-    def saveProject(self):
+    def saveProject(self) -> None :
+        """
+        Cette méthode permet d'émettre un signal quand dans le menu le bouton 'Enregistrer' est
+        cliqué.
+        Paramètres : self
+        Return : None
+        """
         self.saveClicked.emit()
     
-    def sliderValue(self):
+    def sliderValue(self) -> None :
+        """
+        Cette méthode permet d'émettre un signal quand la valeur du slider changer. Le signal va 
+        émettre cette valeur.
+        Paramètres : self
+        Return : None
+        """
         val = 10*(self.slider.value())
         self.sliderMoved.emit(val)
     
-    def beginConfigGrid(self):
+    def beginConfigGrid(self) -> None :
+        """
+        Cette méthode permet d'émettre un signal quand le boutton btn1 est cliqué.
+        Paramètres : self
+        Return : None
+        """
         self.confGridClicked.emit()
     
-    def endConfigGrid(self):
+    def endConfigGrid(self) -> None  :
+        """
+        Cette méthode permet d'émettre un signal quand le boutton btn2 est cliqué.
+        Paramètres : self
+        Return : None
+        """
         self.confGridFinishClicked.emit()
 
-    def beginPlacement(self):
+    def beginPlacement(self) -> None :
+        """
+        Cette méthode permet d'émettre un signal quand le boutton btn3 est cliqué.
+        Paramètres : self
+        Return : None
+        """
         self.placementClicked.emit()
 
 # Main

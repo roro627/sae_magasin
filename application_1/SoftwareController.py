@@ -41,7 +41,7 @@ class SoftwareController():
 
         # -------------- Signaux de View.grid -------------- #
         self.view.grid.mouseClicked.connect(self.mouseItemGrid)
-    
+
     # --- Méthodes pour View --- #
     def updateGrid(self,size):
         if self.model.filePathPlan != "":
@@ -78,6 +78,10 @@ class SoftwareController():
     def itemRemove(self, item):
         self.model.removeProduct(item)
         self.updateProductList()
+    
+    def updateProductList(self):
+        products = self.model.getProducts()
+        self.view.product.update_Product(products)
 
     # --- Méthodes pour View.dial --- #
     def nouveauProjet(self):
@@ -119,7 +123,25 @@ class SoftwareController():
         self.view.product.update_Product(products,self.model.getPlacedProducts())
         self.grid_model.grid_position = self.model.position_produit
         self.view.pr.updateCheckbox(products)
+
+    # --- Méthodes pour View.deletProjectDialog --- #
+    def enregistrerProjet(self):
+        # Gérer l'action enregistrer projet
+
+        self.model.position_produit = self.grid_model.grid_position
+        self.model.position_grille = self.grid_model.gridStart
+        self.model.case_taille = self.grid_model.square_size
+
+        self.model.enregistrerProjet()
     
+    # --- Méthodes pour View.deletProjectDialog --- #
+    def supprimerProjet(self, fname):
+        # Gérer l'action supprimer projet
+        self.model.setFilePath(fname)
+        self.model.supprimerProjet()
+        self.updateProductList()
+    
+    # --- Méthodes pour View.grid --- #
     def mouseItemGrid(self,pos):
         if self.model.gridConfigured and not self.model.gridConfiguredFinish:
             print("Bougement de la grille")
@@ -129,31 +151,10 @@ class SoftwareController():
         self.model.position_produit = self.grid_model.grid_position
         self.view.product.set_Unchecked_Items()
         self.view.product.clear_Checked_Items()
-
-
-    def supprimerProjet(self, fname):
-        # Gérer l'action supprimer projet
-        self.model.setFilePath(fname)
-        self.model.supprimerProjet()
-        self.updateProductList()
-
-    def enregistrerProjet(self):
-        # Gérer l'action enregistrer projet
-
-        self.model.position_produit = self.grid_model.grid_position
-        self.model.position_grille = self.grid_model.gridStart
-        self.model.case_taille = self.grid_model.square_size
-
-        self.model.enregistrerProjet()
-
-    def updateProductList(self):
-        products = self.model.getProducts()
-        self.view.product.update_Product(products)
     
     def show(self):
         # Afficher la vue
         self.view.show()
-
 
 if __name__ == "__main__":
 
