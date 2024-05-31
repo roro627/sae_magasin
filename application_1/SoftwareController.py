@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QApplication
 import sys
 
 # -----------------------------------------------------------------------------
-# --- class Controller
+# --- classe Controller
 # -----------------------------------------------------------------------------
 
 class SoftwareController():

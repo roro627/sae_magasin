@@ -4,6 +4,10 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtGui import QIcon
 
+# -----------------------------------------------------------------------------
+# --- classe newProjectDialog
+# -----------------------------------------------------------------------------
+
 class newProjectDialog(QDialog):
 
     # Constructor
@@ -59,7 +63,7 @@ class newProjectDialog(QDialog):
         self.shopPlanButton.clicked.connect(self.openPlan)
         self.projectFinishButton.clicked.connect(self.finishProject)
 
-        # Add the widgets and layouts
+        # ajout des widgets et layouts
         horizontalLayoutName.addWidget(self.projectNameText)
         horizontalLayoutName.addWidget(self.projectNameLine)
         verticalLayout.addLayout(horizontalLayoutName)
@@ -94,8 +98,13 @@ class newProjectDialog(QDialog):
     planButtonClicked = pyqtSignal(str)
     finishButtonClicked = pyqtSignal()
 
-    # Methods
+    # Methodes
     def getAllInfo(self) -> dict:
+        """
+        Cette méthode permet d'avoir toutes les informations du projet dans un dictionnaire
+        Paramètres : self
+        Return : dictionary -> dictionnaire
+        """
         dictionary = {}
         dictionary["nom_projet"] = self.projectNameLine.text()
         dictionary["auteur"] = self.autorNameLine.text()
@@ -105,13 +114,25 @@ class newProjectDialog(QDialog):
         return dictionary
 
     def openPlan(self) -> None:
+        """
+        Cette méthode permet d'ouvrir une boîte de dialogue de sélection de fichier pour choisir un plan.
+        Paramètres : self
+        Return : None
+        """
         fpath = QFileDialog.getOpenFileName(self, 'Open file',self.parent_directory+"//Exemples de plans","*.png *.jpg *.gif *.jpeg")[0]
-        if fpath != "": # If the user don't open any files.
+        if fpath != "": # Si l'utilisateur ne sélectionne aucun fichier.
             fname = os.path.basename(fpath)
             self.shopPlanText.setText(fname)
             self.planButtonClicked.emit(fname)
     
     def finishProject(self) -> None:
+        """
+        Cette méthode permet de vérifier si tous les champs du formulaire sont complétés et si un plan a été sélectionné.
+        Si tous les champs sont complétés et qu'un plan a été sélectionné, elle émet un signal `finishButtonClicked` et ferme la boîte de dialogue.
+        Si au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné, elle affiche une boîte de dialogue d'erreur.
+        Paramètres : self
+        Return : None
+        """
         if self.projectNameLine.text() == "" or self.autorNameLine.text() == "" or self.shopNameLine.text() == "" or self.shopAddLine.text() == "" or self.shopPlanText.text() == "Pas de plan sélectionné":
             invalid_box = QMessageBox(QMessageBox.Icon.Critical,"Erreur","Erreur, au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné.")
             invalid_box.exec()

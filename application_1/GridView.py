@@ -4,6 +4,10 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtCore import pyqtSignal
 
+# -----------------------------------------------------------------------------
+# --- classe GridView
+# -----------------------------------------------------------------------------
+
 class GridView(QGraphicsView):
     def __init__(self):
         super().__init__()
@@ -18,6 +22,11 @@ class GridView(QGraphicsView):
     mouseClicked = pyqtSignal(tuple)
 
     def mouseReleaseEvent(self, event):
+        """
+        Cette méthode permet 
+        Paramètres : self , event -> QShowEvent
+        Return : None
+        """
         items = self.items(event.pos())
         for item in items:
             if type(item) is QGraphicsPixmapItem:

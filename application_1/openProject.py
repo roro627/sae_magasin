@@ -3,6 +3,10 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import pyqtSignal
 
+# -----------------------------------------------------------------------------
+# --- classe openProject
+# -----------------------------------------------------------------------------
+
 class openProject(QDialog):
     def __init__(self) -> None:
         super().__init__()
@@ -39,6 +43,11 @@ class openProject(QDialog):
     openClicked = pyqtSignal(str)
 
     def search_files(self):
+        """
+        Cette méthode permet de chercher le fichier json que l'on veut.
+        Paramètres : self
+        Return : None
+        """
         self.tree.clear()
         
         search_text = self.search.text()
@@ -49,15 +58,24 @@ class openProject(QDialog):
                 
 
     def open_selected_file(self):
+        """
+        Cette méthode permet d'ouvrir le fichier json qu'on a selectionné précédement.
+        Paramètres : self
+        Return : None
+        """
         selected_item = self.tree.selectedItems()
         if selected_item:
             selected_file = f"{self.parent_directory}//Espace_de_travail//{selected_item[0].text(0)}"
-            self.openClicked.emit(selected_file)
+            self.openClicked.emit(selected_file) 
             self.close()
             
             
-    # fonction de Qdialog qui permet de lancer la fonction search_files() dès que la fenêtre est affichée
     def showEvent(self, event):
+        """
+        Cette méthode permet de lancer la fonction search_files() dès que la fenêtre est affichée, vient de QDialog.
+        Paramètres : self , event -> QShowEvent
+        Return : None
+        """
         self.search_files()
 
 

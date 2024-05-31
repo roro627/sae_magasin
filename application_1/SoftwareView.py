@@ -13,7 +13,7 @@ from productListWidget import productListWidget
 from placement_Product import placement_Product
 
 # -----------------------------------------------------------------------------
-# --- class View
+# --- classe View
 # -----------------------------------------------------------------------------
 
 class SoftwareView(QMainWindow):

@@ -4,6 +4,10 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import pyqtSignal
 
+# -----------------------------------------------------------------------------
+# --- classe productListWidget
+# -----------------------------------------------------------------------------
+
 class productListWidget(QWidget):
     def __init__(self) -> None:
         super().__init__()
@@ -32,6 +36,11 @@ class productListWidget(QWidget):
     itemDelet = pyqtSignal(str)
 
     def add_tree_item(self, parent_name, children_names):
+        """
+        Cette méthode permet d'ajouter dans le QTreeWidgetItem une catégorie de produit avec les produits liées à cette catégorie.
+        Paramètres : self, parent_name -> String , children_names -> Une liste[String]
+        Return : None
+        """
         parent_item = QTreeWidgetItem(self.tree, [parent_name])
         for child_name in children_names:
             child_item = QTreeWidgetItem(parent_item, [child_name])
@@ -41,6 +50,11 @@ class productListWidget(QWidget):
             parent_item.addChild(child_item)
 
     def checkboxChanged(self, item, column):
+        """
+        Cette méthode est appelée lorsqu'un bouton de case à cocher (checkbox) est cliqué.
+        Paramètres : self, item -> QTreeWidgetItem, colunm -> int 
+        Return : None
+        """
         # le bouton est checké
         if self.upadateWorking:
             return
@@ -50,6 +64,11 @@ class productListWidget(QWidget):
             self.itemDelet.emit(item.text(column))
 
     def updateCheckbox(self, products):
+        """
+        Cette méthode permet de mettre à jour les cases à cocher (checkbox) dans l'arbre en fonction de la liste des produits.
+        Paramètres : self, products -> une liste[String]
+        Return : None
+        """
         # parcourir les items de l'arbre pour trouver et checker les item de la liste products
         self.upadateWorking = True
         
