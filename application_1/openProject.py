@@ -8,7 +8,9 @@ from PyQt6.QtCore import pyqtSignal
 # -----------------------------------------------------------------------------
 
 class openProject(QDialog):
+    # Constructeur
     def __init__(self) -> None:
+        
         super().__init__()
         self.setWindowTitle("Ouvrir projet")
         
@@ -44,9 +46,9 @@ class openProject(QDialog):
 
     def search_files(self):
         """
-        Cette méthode permet de chercher le fichier json que l'on veut.
-        Paramètres : self
-        Return : None
+        Cette méthode permet de chercher les fichiers JSON correspondant à la recherche effectuée dans le champ de recherche.
+        Paramètres :self (openProject): L'instance de la classe.
+        Return :None
         """
         self.tree.clear()
         
@@ -60,8 +62,9 @@ class openProject(QDialog):
     def open_selected_file(self):
         """
         Cette méthode permet d'ouvrir le fichier json qu'on a selectionné précédement.
-        Paramètres : self
-        Return : None
+
+        Paramètres :self (openProject): L'instance de la classe.
+        Return :None
         """
         selected_item = self.tree.selectedItems()
         if selected_item:
@@ -72,9 +75,11 @@ class openProject(QDialog):
             
     def showEvent(self, event):
         """
-        Cette méthode permet de lancer la fonction search_files() dès que la fenêtre est affichée, vient de QDialog.
-        Paramètres : self , event -> QShowEvent
-        Return : None
+        Cette méthode permet de lancer la fonction `search_files()` dès que la fenêtre est affichée, vient de `QDialog`.
+
+        Paramètres :self (openProject): L'instance de la classe.
+                    event (QShowEvent): L'événement de QShowEvent.
+        Return :None
         """
         self.search_files()
 

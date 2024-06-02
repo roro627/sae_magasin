@@ -9,6 +9,7 @@ from PyQt6.QtCore import pyqtSignal
 # -----------------------------------------------------------------------------
 
 class GridView(QGraphicsView):
+    # Constructeur
     def __init__(self):
         super().__init__()
         self.setMouseTracking(True)
@@ -23,9 +24,12 @@ class GridView(QGraphicsView):
 
     def mouseReleaseEvent(self, event):
         """
-        Cette méthode permet 
-        Paramètres : self , event -> QShowEvent
-        Return : None
+        Cette méthode est appelée lorsque le bouton de la souris est relâché.
+        Elle parcourt les éléments visuels à la position de l'événement et émet un signal si un élément de type QGraphicsPixmapItem est trouvé.
+        
+        Paramètres :self (GridView) : L'instance de la classe GridView.
+                    event (QMouseEvent) : L'événement de souris qui s'est produit.
+        Return :None
         """
         items = self.items(event.pos())
         for item in items:
@@ -36,6 +40,12 @@ class GridView(QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def setPixmap(self,fname):
+        """
+        Définit l'image pour la vue.
+        
+        Paramètres : fname (str) : Le nom du fichier de l'image à définir comme image de la vue.
+        Return : None
+        """
         self.pixmap = QPixmap(fname)
         self.pixmap = self.pixmap.scaled(int(self.width()), int(self.height()), Qt.AspectRatioMode.KeepAspectRatio)
         self.pixmap_height = self.pixmap.height()
@@ -44,12 +54,35 @@ class GridView(QGraphicsView):
         self.scene.addItem(image_item)
 
     def gridIsMovable(self):
+        """
+        Cette méthode permet de rendre le groupe d'éléments de la grille déplaçable.
+        
+        Paramètre : self (GridView) : L'instance de la classe GridView.
+        Return : None
+        """
         self.group.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsMovable, True)
     
     def gridIsNotMovable(self):
+        """
+        Cette méthode permet de rendre le groupe d'éléments de la grille non déplaçable.
+        
+        Paramètre : self (GridView) : L'instance de la classe GridView.
+        Return : None
+        """
         self.group.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsMovable, False)
 
     def createGrid(self,square_size : int, gridIsMovable : bool, gridBegin : tuple):
+        """
+        Crée une grille dans la vue de graphique.
+        Elle efface la scène actuelle, ajoute une image à la scène, crée un groupe d'éléments pour la grille,
+        et ajoute des rectangles à ce groupe pour former la grille.
+    
+        Paramètres :self (GridView) : L'instance de la classe GridView.
+                    square_size (int) : La taille des carrés de la grille.
+                    gridIsMovable (bool) : Si True, le groupe d'éléments de la grille est déplaçable.
+                    gridBegin (tuple) : La position de départ de la grille dans la vue de graphique.
+        Retour :None
+        """
         self.scene.clear()
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)

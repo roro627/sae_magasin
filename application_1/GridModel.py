@@ -4,6 +4,10 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtCore import pyqtSignal
 
+# -----------------------------------------------------------------------------
+# --- classe GridModel
+# -----------------------------------------------------------------------------
+
 class GridModel:
     #Constructeur
     def __init__(self):
@@ -15,10 +19,11 @@ class GridModel:
     # Methodes
     def getIndex(self, pos : tuple) -> tuple :
         """
-        Cette méthode permet de convertir un point de QGraphicsView en une position de la grille 
-        self.grid_position.
-        Paramètres : self, pos : tuple de forme (x : int, y : int)
-        Return : tuple de forme (x : int, y : int)
+        Cette méthode permet de convertir un point de QGraphicsView en une position de la grille self.grid_position.
+        
+        Paramètres :self (GridModel) : L'instance de la classe GridModel.
+                    pos (tuple) : Un tuple de forme (x : int, y : int) représentant la position dans la vue de graphique.
+        Return :Un tuple de forme (x : int, y : int) représentant la position dans la grille self.grid_position.
         """
         print("start",self.gridStart)
         return ((int(pos[1]-self.gridStart[1])//self.square_size),(int(pos[0]-self.gridStart[0])//self.square_size))
@@ -34,10 +39,12 @@ class GridModel:
 
     def addItems(self,items_list : list ,pos : tuple) -> None :
         """
-        Cette méthode permet d'ajouter le ou les élèments de items_list dans une case de la grille
-        self.grid_position.
-        Paramètres : self, items_list : list, pos : tuple de forme (x : int, y : int)
-        Return : None
+        Cette méthode permet d'ajouter le ou les éléments de items_list dans une case de la grille self.grid_position.
+        
+        Paramètres :self (GridModel) : L'instance de la classe GridModel.
+                    items_list (list) : Une liste d'éléments à ajouter à la grille.
+                    pos (tuple) : Une tuple de forme (x : int, y : int) représentant la position dans la grille self.grid_position.
+        Return :None
         """
         if items_list != []:
             (x,y) = self.getIndex(pos)
@@ -54,17 +61,19 @@ class GridModel:
     def updateSquareSize(self, size : int) -> None :
         """
         Cette méthode permet de mettre à jour la taille des carrés de la grille. 
-        Paramètres : self, size : int 
+        Paramètres : self, size : int : La taille des carrés de la grille.
         Return : None
         """
         self.square_size = size
     
     def updateGrid(self, pixmap_height : int, pixmap_width : int) -> None :
         """
-        Cette méthode permet de mettre à jour la hauteur et la largeur de notre pixmap puis de mettre à
-        jour la grille self.grid_position.
-        Paramètres : self, pixmap_height : int, pixmap_width : int
-        Return : None 
+        Cette méthode permet de mettre à jour la hauteur et la largeur de notre pixmap puis de mettre à jour la grille self.grid_position.
+        
+        Paramètres :self (GridModel) : L'instance de la classe GridModel.
+                    pixmap_height (int) : L'hauteur de la pixmap.
+                    pixmap_width (int) : La largeur de la pixmap.
+        Return :None
         """
         self.pixmap_height = pixmap_height
         self.pixmap_width = pixmap_width

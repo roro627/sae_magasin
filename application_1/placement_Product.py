@@ -16,6 +16,7 @@ import sys, os
 
 
 class placement_Product(QWidget):
+    # Constructeur
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Placement Product")
@@ -37,8 +38,10 @@ class placement_Product(QWidget):
         """
         Cette méthode est appelée lorsque l'état d'un élément de la liste change.
         Elle permet d'ajouter ou de supprimer les éléments sélectionnés dans la liste des produits.
-        Paramètres : item -> QListWidgetItem
-        Return : None
+
+        Paramètres :self (placement_Product): L'instance de la classe.
+                    item (QListWidgetItem): L'élément de la liste qui a été modifié.
+        Return :None
         """
         if item.checkState() == Qt.CheckState.Checked:
             self.list_checked_items.append(item)
@@ -49,7 +52,8 @@ class placement_Product(QWidget):
         """
         Cette méthode permet d'initialiser les cases à cocher en non coché
         Elle vérifie chaque élément de la liste et désactive les éléments qui sont déjà cochés.
-        Paramètres : self
+        
+        Paramètres : self (placement_Product): L'instance de la classe.
         Return : None
         """
         for index in range(self.list_widget.count()):
@@ -60,30 +64,37 @@ class placement_Product(QWidget):
     def clear_Checked_Items(self):
         """
         Cette méthode permet de vider la liste des produits qui ont été cochés.
-        Paramètres : self
+        Paramètres : self (placement_Product): L'instance de la classe.
         Return : None
         """
         self.list_checked_items = []     
 
-    def update_Product(self, products, placed_products = []):
+    def update_Product(self, products, placed_products=[]):
         """
         Cette méthode permet d'initialiser les cases à cocher en non coché et de mettre à jour la liste des produits.
-        Paramètres : self , products -> une liste[String] , placed_products -> liste des produits déjà utilisés qui est une liste[String]
+
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    products (list[String]) : Une liste des produits.
+                    placed_products (list[String], optionnel) : Une liste des produits déjà utilisés.
+        Return :None
         """
         self.list_items = products
         self.update_Product_List(placed_products)
-    
-    def update_Product_List(self, placed_products = []):
+
+    def update_Product_List(self, placed_products=[]):
         """
-        Cette méthode permet de mettre à jour la liste des produits en effaçant la liste des produits existants et de les ajouter à nouveau.
-        Elle permet également de griser les produits déjà utilisés.
-        Paramètres : self, placed_products -> liste des produits déjà utilisés qui est une liste[String]
-        Return : None
+        Cette méthode permet de mettre à jour la liste des produits en effaçant la liste existante et en ajoutant les nouveaux produits.
+        Elle permet également de griser les produits déjà utilisés et d'initialiser les cases à cocher en non coché.
+
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    placed_products (list[String], optionnel) : Une liste des produits déjà utilisés.
+
+        Return :None
         """
         self.list_widget.clear()
         self.list_widget.addItems(self.list_items)
         
-        # mettre les checkbox pour chaque item et griser les items utilisés
+        # Mettre les checkbox pour chaque item et griser les items utilisés
         for index in range(self.list_widget.count()):
             item = self.list_widget.item(index)
             item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)

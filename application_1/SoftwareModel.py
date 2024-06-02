@@ -35,9 +35,10 @@ class SoftwareModel:
 
     def enregistrerProjet(self) -> None:
         '''
-        Cette méthode permet de sauvegarder les information du projet en cours dans un fichier écrit en json.
-        Paramètre : self
-        Return : None
+        Cette méthode permet de sauvegarder les informations du projet en cours dans un fichier écrit en JSON.
+    
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :None
         '''
         with open(self.filePath, "w", encoding="utf-8") as f:
             content = {
@@ -64,9 +65,10 @@ class SoftwareModel:
 
     def ouvrirProjet(self) -> None:
         '''
-        Cette méthode permet de charger les informations du projet en cours depuis un fichier json.
-        Paramètre : self
-        Return : None
+        Cette méthode permet de charger les informations du projet en cours depuis un fichier JSON.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :None
         '''
         with open(self.filePath, "r", encoding="utf-8") as f:
             content = json.load(f)
@@ -85,13 +87,13 @@ class SoftwareModel:
             self.itemsPlaced = content["elements_places"]
         
 
-    # supprimer le fichier du projet en cours en vérifiant qu'il existe.
+         
     def supprimerProjet(self) -> None:
         '''
-        Cette méthode permet de supprimer le fichier json du projet en cours en vérifiant 
-        qu'il existe.
-        Paramètre : self
-        Return : None
+        Cette méthode permet de supprimer le fichier JSON du projet en cours en vérifiant qu'il existe.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :None
         '''
         if self.filePath != "" and os.path.exists(self.filePath):
             os.remove(self.filePath)
@@ -109,25 +111,31 @@ class SoftwareModel:
     def addProduct(self, product: str) -> None:
         """
         Cette méthode permet d'ajouter un produit à la liste des produits du projet en cours.
-        Paramètres : self, product -> String
-        Return : None
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    product (String) : Le nom du produit à ajouter.
+        Return :None
         """
         self.liste.append(product)
 
     def removeProduct(self, product: str) -> None:
         """
         Cette méthode permet de supprimer un produit de la liste des produits du projet en cours.
-        Paramètres : self , product -> String 
-        Return : None
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    product (String) : Le nom du produit à supprimer.
+        Return :None
         """
         self.liste.remove(product)
 
     def update(self, objet):
         '''
         Cette méthode permet de mettre à jour toutes les informations du projet en cours.
-        Paramètres : self , objet -> dictionnaire qui prend 5 paramètres (Clés) : 
-                            nom_projet -> String ; auteur -> String ; date -> String ; nom -> String ; magisin -> String 
-        Return : None
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    objet (dict) : Dictionnaire contenant les informations du projet avec les clés :
+                    nom_projet (String), auteur (String), date (String), nom (String), magasin (String).
+        Return :None
         '''
         self.nom_projet = objet['nom_projet']
         self.auteur = objet['auteur']
@@ -138,33 +146,39 @@ class SoftwareModel:
     
     def setFilePathPlan(self,fname):
         '''
-        Cette méthode permet de mettre à jour le chemin vers le plan
-        Paramètre : self , fname -> String
-        Return : None
+        Cette méthode permet de mettre à jour le chemin vers le plan.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    fname (String) : Le nom du fichier du plan.
+        Return :None
         '''
         self.filePathPlan = fname
         
     def setFilePath(self,fname):
         '''
-        Cette méthode permet de mettre à jour le chemin vers le fichier json
-        Paramètre : self , fname -> String
-        Return : None
+        Cette méthode permet de mettre à jour le chemin vers le fichier JSON.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    fname (String) : Le nom du fichier JSON.
+        Return :None
         '''
         self.filePath = fname
        
     def getProducts(self):
         '''
         Cette méthode permet de récupérer la liste des produits du projet en cours.
-        Paramètre : self
-        Return : self.liste -> une liste [String]
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Retourne :list : La liste des produits (list[String]).
         '''
         return self.liste
        
     def getFullPathImage(self):
         '''
-        Cette méthode permet d'afficher le chemin vers l'image du projet
-        Paramètre : self
-        Return : full_path -> String
+        Cette méthode permet de récupérer le chemin complet vers l'image du projet.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :String : Le chemin complet vers l'image du projet.
         '''
         full_path = self.parent_directory + "//Exemples de plans//" + self.filePathPlan
         return full_path
@@ -172,8 +186,9 @@ class SoftwareModel:
     def getPlacedProducts(self):
         """
         Cette méthode permet de récupérer la liste des produits placés dans le projet.
-        Paramètres : self 
-        Return : listProducts -> une liste [String]
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :list : La liste des produits placés (list[String]).
         """
         listProducts = []
         for i in range(len(self.position_produit)):
@@ -186,13 +201,14 @@ class SoftwareModel:
        
     def toString(self) -> str:
         """
-        Cette méthode permet d'afficher les principaux attributs
-        Paramètre : self
-        Return: String
+        Cette méthode permet d'afficher les principaux attributs du projet.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :String : Les principaux attributs du projet sous forme de chaîne de caractères.
         """
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n"
         return string
-        
+          
 if __name__ == "__main__":
     # test de la classe SoftwareModel
     print("TEST: class SoftwareModel")

@@ -12,11 +12,7 @@ class newProjectDialog(QDialog):
 
     # Constructor
     def __init__(self) -> None:
-        """
-        This constructor is use for create widgets and layouts. 
-        Params : self
-        Return : None
-        """
+        
         super().__init__()
         self.setWindowTitle("Nouveau projet")
         
@@ -101,9 +97,10 @@ class newProjectDialog(QDialog):
     # Methodes
     def getAllInfo(self) -> dict:
         """
-        Cette méthode permet d'avoir toutes les informations du projet dans un dictionnaire
-        Paramètres : self
-        Return : dictionary -> dictionnaire
+        Cette méthode permet d'avoir toutes les informations du projet dans un dictionnaire.
+
+        Paramètres :self (newProjectDialog): L'instance de la classe.
+        Return : dict: Un dictionnaire contenant toutes les informations du projet.
         """
         dictionary = {}
         dictionary["nom_projet"] = self.projectNameLine.text()
@@ -116,7 +113,7 @@ class newProjectDialog(QDialog):
     def openPlan(self) -> None:
         """
         Cette méthode permet d'ouvrir une boîte de dialogue de sélection de fichier pour choisir un plan.
-        Paramètres : self
+        Paramètres :self (newProjectDialog): L'instance de la classe.
         Return : None
         """
         fpath = QFileDialog.getOpenFileName(self, 'Open file',self.parent_directory+"//Exemples de plans","*.png *.jpg *.gif *.jpeg")[0]
@@ -130,7 +127,8 @@ class newProjectDialog(QDialog):
         Cette méthode permet de vérifier si tous les champs du formulaire sont complétés et si un plan a été sélectionné.
         Si tous les champs sont complétés et qu'un plan a été sélectionné, elle émet un signal `finishButtonClicked` et ferme la boîte de dialogue.
         Si au moins l'un des champs n'est pas complété ou aucun plan n'est sélectionné, elle affiche une boîte de dialogue d'erreur.
-        Paramètres : self
+        
+        Paramètres :self (newProjectDialog): L'instance de la classe.
         Return : None
         """
         if self.projectNameLine.text() == "" or self.autorNameLine.text() == "" or self.shopNameLine.text() == "" or self.shopAddLine.text() == "" or self.shopPlanText.text() == "Pas de plan sélectionné":
