@@ -38,7 +38,9 @@ class ClientSoftwareController():
       self.model.setFilePath(fpath)
       self.model.ouvrirProjet()
       self.updateProductList()
+      self.view.listShopping.list_widget.clear()
       self.view.picture.setPixmap(self.model.getFullPathImage())
+      
       
    
    def newItem(self, item):
