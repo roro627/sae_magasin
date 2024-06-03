@@ -27,4 +27,12 @@ class pictureView(QGraphicsView):
         
         image_item = QGraphicsPixmapItem(self.pixmap)
         self.scene.addItem(image_item)
-        
+    
+    def drawPath(self,line_tab,square_size):
+        self.group = QGraphicsItemGroup()
+        for elt in line_tab:
+            line = QGraphicsRectItem(elt[1]*square_size+20,elt[0]*square_size+20,square_size,square_size)
+            line.setPen(QColor("red"))
+            self.group.addToGroup(line)
+        #self.group.setRotation(180)
+        self.scene.addItem(self.group)

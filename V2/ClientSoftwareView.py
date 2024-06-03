@@ -55,14 +55,14 @@ class ClientSoftwareView(QMainWindow):
     
     # Signals
     openClicked = pyqtSignal(str)
-    dijkstraClicked = pyqtSignal()
+    pathClicked = pyqtSignal()
 
     # Methods
     def openProject(self):
         self.openProjectDialog.exec()
     
     def path(self) -> None:
-        self.dijkstraClicked.emit()
+        self.pathClicked.emit()
 
 # Main
 if __name__ == "__main__":  

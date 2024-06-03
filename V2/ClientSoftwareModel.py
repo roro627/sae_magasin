@@ -12,8 +12,9 @@ class ClientSoftwareModel():
         self.liste: list[str] = []
         self.position_produit: list = []
         self.position_grille: dict = {}
-        
 
+        self.case_taille : int = 0
+        
         self.filePathPlan : str = ""
         self.filePath: str = ""
         
@@ -30,6 +31,7 @@ class ClientSoftwareModel():
             self.magasin = content["magasin"]
             self.liste = content["liste"]
             self.position_produit = content["position_produit"]
+            self.case_taille = content["case_taille"]
             self.filePathPlan = content["fichier_plan_chemin"]
             
     
