@@ -1,5 +1,7 @@
 import os, json, sys, PyQt6.QtCore
 
+from PlateauToGraph import main as PlateauToGraph
+
 class ClientSoftwareModel():
     
     def __init__(self) -> None:
@@ -80,6 +82,9 @@ class ClientSoftwareModel():
                 testProduct = self.position_produit[i][j]
                 if testProduct != 0 and product in testProduct:
                     return (i,j)
+                
+    def getFinalPath(self,start,end):
+        return PlateauToGraph(self.position_produit,self.liste,start,end)
        
     def __str__(self):
         string = "Nom du projet : " + self.nom_projet + "\n" + "Auteur(s) : " + self.auteur + "\n" + "Date : " + str(self.date) + "\n" + "Nom du magasin : " + self.nom + "\n" + "Addresse du magasin : " + self.magasin + "\n" + "Liste des produits : " + str(self.liste) + "\n" + "Position des produits : " + str(self.position_produit) + "\n" + "Position de la grille : " + str(self.position_grille) + "\n" + "Chemin du plan : " + self.filePathPlan + "\n" + "Chemin du fichier : " + self.filePath + "\n"

@@ -30,12 +30,22 @@ class ClientSoftwareView(QMainWindow):
         # Layouts
         layout_left = QVBoxLayout()
         layout_right = QVBoxLayout()
+        layout_getPoint = QGridLayout()
 
         # Widgets
         self.picture = pictureView()
         self.productList = productListWidget()
         self.listShopping = shoppingList()
         self.openProjectDialog = openProject()
+
+
+        self.button_start = QPushButton("Pointer le départ")
+        self.label_show_start = QLabel("Aucun départ défini")
+        self.button_start.clicked.connect(self.getStartPoint)
+        
+        self.button_end = QPushButton("Pointer l'arrivée")
+        self.label_show_end = QLabel("Aucune arrivée définie")
+        self.button_end.clicked.connect(self.getEndPoint)
 
         self.button_path = QPushButton("Afficher le plus court chemin")
         self.button_path.clicked.connect(self.path)
@@ -44,6 +54,13 @@ class ClientSoftwareView(QMainWindow):
         layout_left.addWidget(self.picture)
         layout_right.addWidget(self.productList,alignment=Qt.AlignmentFlag.AlignRight)
         layout_right.addWidget(self.listShopping,alignment=Qt.AlignmentFlag.AlignRight)
+        
+        layout_getPoint.addWidget(self.button_start,0,0)
+        layout_getPoint.addWidget(self.label_show_start,1,0)
+        layout_getPoint.addWidget(self.button_end,0,1)
+        layout_getPoint.addWidget(self.label_show_end,1,1)
+        layout_right.addLayout(layout_getPoint)
+        
         layout_right.addWidget(self.button_path)
 
         # Add layouts in the mainlayout 
@@ -63,6 +80,19 @@ class ClientSoftwareView(QMainWindow):
     
     def path(self) -> None:
         self.pathClicked.emit()
+        
+    def getStartPoint(self):
+        self.label_show_start.setText("Sélectionnez un point sur la carte")
+        # TODO:
+        # au prochain clic sur la carte, on récupère les coordonnées du point
+        # et on les affiche dans le label
+        
+    def getEndPoint(self):
+        self.label_show_end.setText("Sélectionnez un point sur la carte")
+        # faire la même chose que pour getStartPoint
+    
+    def setEndPoint(self,point):
+        self.label_show_end.setText(point)
 
 # Main
 if __name__ == "__main__":  

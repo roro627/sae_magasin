@@ -230,26 +230,17 @@ def makeFinalPath(plateau, path):
         finalPath += segment
     return finalPath
 
-def detectTurn(path):
+
+def main(plateau, produits, depart, arrivee):
     """
-    Détecte les virages dans le chemin
+    Trouve le chemin le plus court pour passer par tous les produits
     """
-    turnList = []
-
-
-    for i in range(1,len(path)-1):
-        if path[i-1][0] != path[i][0] and path[i][0] != path[i+1][0]:
-            if len(turnList) == 0:
-                turnList.append([path[0],path[i]])
-            else:
-                turnList.append([turnList[-1][1],path[i]])
-
-        if path[i-1][1] != path[i][1] and path[i][1] != path[i+1][1]:
-            if len(turnList) == 0:
-                turnList.append([path[0],path[i]])
-            else:
-                turnList.append([turnList[-1][1],path[i]])
-    return turnList
+    coordonneProducts = findPostionsProducts(produits, plateau)
+    produit_regrouper = regroupProducts(coordonneProducts)
+    sortGroupProduct(produit_regrouper)
+    optimizedPath = sortGroup(produit_regrouper, depart, arrivee)
+    finalPath = makeFinalPath(plateau, optimizedPath)
+    return finalPath
 
 if __name__ == '__main__':
     plateau2 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, ["C\u00e9leri"], ["Champignons"], ["Chou", "Chou de Bruxelles"], 0, 0, ["Chou-rouge", "Ciboulette"], ["Citrouille", "Coeur de palmier", "Courge"], 0, 0, ["\u00c9chalote"], ["Courgette"], 0, 0, ["Fenouil", "Cresson"], 0, 0, 0, 0, 0, 0, 0, 0, ["Figues s\u00e8ches"], 0, 0, ["Bi\u00e8re", "Eau min\u00e9rale", "Alcools fort"], ["Bougies"], 0, 0, ["Cure dents"], 0], [0, 0, ["Asperges"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["D\u00e9tachant", "Gants de m\u00e9nage", "Mouchoirs"]], [0, 0, 0, 0, 0, ["M\u00e2che"], ["Mac\u00e9doine"], 0, ["Germe de soja", "Gingembre"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, ["Lentilles"], ["Haricot"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Gingembre confit"], 0, 0, 0, 0, 0, 0, 0, 0, ["Compote", "Gaspacho", "Haricots vert", "Ma\u00efs", "Chips"]], [0, 0, ["Ma\u00efs"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, ["Menthe", "Navet", "Oignons"], ["Pois gourmand"], 0, 0, ["Pois mangetout", "Pomme de terre", "Potimarron"], 0, 0, 0, 0, 0, 0, ["Oyster sauce"], 0, 0, 0, 0, 0, 0, ["Cannelle"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, ["Pousses de bambou"], ["Salsifis", "Poissons pan\u00e9s", "Moules", "Maquereaux"], 0, ["Crabe"], 0, 0, 0, 0, ["Paprika"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Encornet", "\u00c9crevisses", "Andouille"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Bl\u00e9 dur", "Riz", "Pois chiches"], 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Cacao"], 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Andouillette", "Bavette (boeuf)"], ["Canard"], 0, ["Chair \u00e0 saucisse", "Origan"], 0, 0, 0, 0, ["Boulgour"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Hareng fum\u00e9", "Gambas"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Groseille"], 0, 0, 0], [0, ["Amandes"], 0, 0, 0, ["Quinoa"], 0, 0, 0, 0, 0, 0, 0, ["Cervelas"], 0, 0, ["Cro\u00fbton"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, ["Beurre de cacahu\u00e8te"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Encre Imprimante", "Crayons de couleur", "Colle", "Ciseau \u00e0 papier"], 0, 0, 0, 0, 0, 0, 0, ["Brioche"], 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, ["Dattes"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Couches b\u00e9b\u00e9", "Cr\u00e8me main"]], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Cr\u00e8me dessert"], 0, 0, 0, 0], [0, ["Brugnon"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Quenelles"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Caf\u00e9 en grains"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, ["Biscuite"], 0, 0, 0, 0, ["Margarine"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Foins", "Papier \u00e0 lettre"]], [0, ["Framboise"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["D\u00e9maquillant", "Dentifrice", "Fil dentaire", "Gel douche", "Gel spray", "Calculatrice"]], [["Pi\u00e9montaise"], 0, 0, ["P\u00e2tes \u00e0 tarte"], ["Foie gras", "Galettes", "Fromage blanc"], 0, 0, 0, 0, 0, 0, 0, 0, ["Fruits secs"], 0, 0, ["Pizzas"], 0, 0, 0, 0, 0, 0, ["Cassis", "Cl\u00e9mentine"], 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ["Abricots secs"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
@@ -267,4 +258,3 @@ if __name__ == '__main__':
     
     graphe = create_graph_dict(plateau2)
     printPath(plateau2, finalPath, coordonneProducts, optimizedPath[0], optimizedPath[-1])
-    detectTurn(finalPath)
