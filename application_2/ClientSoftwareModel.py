@@ -12,8 +12,11 @@ class ClientSoftwareModel():
         self.liste: list[str] = []
         self.position_produit: list = []
         self.position_grille: dict = {}
+        self.productHovered: str = ""
 
         self.case_taille : int = 0
+        self.nombre_cases_x : int = 0
+        self.nombre_cases_y : int = 0
         
         self.filePathPlan : str = ""
         self.filePath: str = ""
@@ -33,6 +36,9 @@ class ClientSoftwareModel():
             self.position_produit = content["position_produit"]
             self.case_taille = content["case_taille"]
             self.filePathPlan = content["fichier_plan_chemin"]
+            self.position_grille = content["position_grille"]
+            self.nombre_cases_x = len(self.position_produit[0])
+            self.nombre_cases_y = len(self.position_produit)
             
     
     def addProduct(self, product: str) -> None:
@@ -47,13 +53,6 @@ class ClientSoftwareModel():
         """
         self.liste.remove(product)
 
-    def update(self, objet):
-        self.nom_projet = objet['nom_projet']
-        self.auteur = objet['auteur']
-        self.date = objet['date']
-        self.nom = objet['nom']
-        self.magasin = objet['magasin']
-        self.filePath = self.parent_directory + "//Espace_de_travail//" + self.nom_projet+".json"
     
     def setFilePathPlan(self,fname):
         self.filePathPlan = fname
@@ -69,6 +68,13 @@ class ClientSoftwareModel():
         return full_path
     
     def detectPositionProduct(self,product):
+        for i in range(len(self.position_produit)):
+            for j in range(len(self.position_produit[i])):
+                testProduct = self.position_produit[i][j]
+                if testProduct != 0 and product in testProduct:
+                    return (i,j)
+                
+    def getProductPosition(self,product):
         for i in range(len(self.position_produit)):
             for j in range(len(self.position_produit[i])):
                 testProduct = self.position_produit[i][j]

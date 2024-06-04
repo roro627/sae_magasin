@@ -214,8 +214,7 @@ def sortGroup(groupes, startingpoint, endingpoint):
     return path
 
 
-# les produits disparraissent dans cette fonction
-def makeFinalPath(plateau, path,coordonneProducts):
+def makeFinalPath(plateau, path):
     """
     Crée le chemin final en passant par tous les groupes de produits
     """
@@ -250,8 +249,6 @@ def detectTurn(path):
                 turnList.append([path[0],path[i]])
             else:
                 turnList.append([turnList[-1][1],path[i]])
-            
-    print(turnList)
     return turnList
 
 if __name__ == '__main__':
@@ -265,7 +262,7 @@ if __name__ == '__main__':
     
     optimizedPath = sortGroup(produit_regrouper, (0, 0), (30, 1))
     
-    finalPath = makeFinalPath(plateau2, optimizedPath,coordonneProducts)
+    finalPath = makeFinalPath(plateau2, optimizedPath)
 
     
     graphe = create_graph_dict(plateau2)
