@@ -39,21 +39,11 @@ class ClientSoftwareController:
       self.view.productList.itemHovered.connect(self.itemHover)
       
    
-<<<<<<< HEAD
    def openProject(self, fpath: str) -> None:
       """
       Ouvre un projet.
       Args:
          fpath (str): Le chemin du fichier du projet.
-=======
-   def openProject(self,fpath):
-      """
-      Cette méthode permet d'ouvrir un projet, met à jour le modèle et la vue.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-                  fpath (str) : Le chemin du fichier projet à ouvrir.
-      Return :None
->>>>>>> 9cc8c83ed9f27f5f73bf2c47bc0c910c99752554
       """
       self.model.setFilePath(fpath)
       self.model.ouvrirProjet()
@@ -62,7 +52,6 @@ class ClientSoftwareController:
       self.view.picture.setPixmap(self.model.getFullPathImage(),self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
       
    
-<<<<<<< HEAD
    def newItem(self, item: str) -> None:
       """
       Ajoute un nouvel élément.
@@ -99,55 +88,6 @@ class ClientSoftwareController:
       Args:
          start (tuple[int, int]): Le point de départ.
          end (tuple[int, int]): Le point d'arrivée.
-=======
-   def newItem(self, item):
-      """
-      Cette méthode permet d'ajouter un nouvel article à la liste des courses.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-                  item (str) : Le nom de l'article à ajouter.
-      Return :None
-      """
-      self.view.listShopping.add_product(item)
-
-   def itemRemove(self, item):
-      """
-      Cette méthode permet de supprimer un article de la liste des courses.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-                  item (str) : Le nom de l'article à supprimer.
-      Return :None
-      """
-      self.view.listShopping.remove_product(item)
-   
-   def updateProductList(self):
-      """
-      Cette méthode permet de mettre à jour la liste des produits disponibles dans la vue.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-      Return :None
-      """
-      self.view.productList.updateAvailableProducts(self.model.getProducts())
-   
-   def itemHover(self, item):
-      """
-      Cette méthode permet d'afficher une image du produit spécifié lorsque la souris survole l'article.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-                  item (str) : Le nom de l'article survolé.
-      Return :None
-      """
-      self.view.picture.drawProduct(self.model.getProductPosition(item),self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
-   
-   def drawPath(self,start,end):
-      """
-      Cette méthode permet de dessiner le chemin optimal entre deux points.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-                  start (tuple) : Coordonnées de départ (x, y).
-                  end (tuple) : Coordonnées de destination (x, y).
-      Return :None
->>>>>>> 9cc8c83ed9f27f5f73bf2c47bc0c910c99752554
       """
       path = self.model.getFinalPath(start,end)
       self.view.picture.drawPath(path,self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
@@ -175,18 +115,9 @@ class ClientSoftwareController:
 
       self.view.picture.drawPath(finalPath,self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
    
-<<<<<<< HEAD
    def show(self) -> None:
       """
       Affiche la vue.
-=======
-   def show(self):
-      """
-      Cette méthode permet d'afficher la vue.
-        
-      Paramètres :self (ClientSoftwareController) : L'instance de la classe.
-      Return :None
->>>>>>> 9cc8c83ed9f27f5f73bf2c47bc0c910c99752554
       """
       self.view.show()
       
