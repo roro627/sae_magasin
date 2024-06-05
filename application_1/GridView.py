@@ -81,7 +81,7 @@ class GridView(QGraphicsView):
                     square_size (int) : La taille des carrés de la grille.
                     gridIsMovable (bool) : Si True, le groupe d'éléments de la grille est déplaçable.
                     gridBegin (tuple) : La position de départ de la grille dans la vue de graphique.
-        Retour :None
+        Return :None
         """
         self.scene.clear()
         image_item = QGraphicsPixmapItem(self.pixmap)

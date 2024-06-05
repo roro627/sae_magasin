@@ -27,6 +27,12 @@ class ClientSoftwareModel():
         self.parent_directory = os.path.dirname(current_directory)
         
     def ouvrirProjet(self) -> None:
+        """
+        Cette méthode permet d'ouvrir un projet à partir du fichier JSON spécifié et met à jour les données du modèle.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+        Return:None
+        """
         with open(self.filePath, "r", encoding="utf-8") as f:
             content = json.load(f)
             self.nom_projet = content["nom_projet"]
@@ -45,31 +51,72 @@ class ClientSoftwareModel():
     
     def addProduct(self, product: str) -> None:
         """
-        Ajoute un produit à la liste des produits du projet en cours.
+        Cette méthode permet d'ajouter un produit à la liste des produits du projet en cours.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    product (str) : Le nom du produit à ajouter.
+        Return:None
         """
         self.liste.append(product)
 
     def removeProduct(self, product: str) -> None:
         """
-        Supprime un produit de la liste des produits du projet en cours.
+        Cette méthode permet de supprimer un produit de la liste des produits du projet en cours.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    product (str) : Le nom du produit à supprimer.
+        Return:None
         """
         self.liste.remove(product)
 
     
     def setFilePathPlan(self,fname):
+        """
+        Cette méthode permet de définir le chemin du fichier de plan.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    fname (str) : Le chemin du fichier de plan.
+        Return:None
+        """
         self.filePathPlan = fname
         
     def setFilePath(self,fname):
+        """
+        Cette méthode permet de définir le chemin du fichier.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    fname (str) : Le chemin du fichier.
+        Return:None
+        """
         self.filePath = fname
        
     def getProducts(self):
+        """
+        Cette méthode permet de récupérer la liste des produits du projet en cours.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+        Return:list[str] : La liste des produits.
+        """
         return self.liste
        
     def getFullPathImage(self):
+        """
+        Cette méthode permet de récupérer le chemin complet de l'image du plan.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+        Return:full_path (str) : Le chemin complet de l'image.
+        """
         full_path = self.parent_directory + "//Exemples de plans//" + self.filePathPlan
         return full_path
     
     def detectPositionProduct(self,product):
+        """
+        Cette méthode permet de déterminer la position d'un produit dans la grille.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    product (str) : Le nom du produit à localiser.
+        Return:tuple[int, int] : Les coordonnées (x, y) du produit dans la grille.
+        """
         for i in range(len(self.position_produit)):
             for j in range(len(self.position_produit[i])):
                 testProduct = self.position_produit[i][j]
@@ -77,6 +124,13 @@ class ClientSoftwareModel():
                     return (i,j)
                 
     def getProductPosition(self,product):
+        """
+        Cette méthode permet de récupérer la position d'un produit dans la grille.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    product (str) : Le nom du produit.
+        Return:tuple[int, int] : Les coordonnées (x, y) du produit dans la grille.
+        """
         for i in range(len(self.position_produit)):
             for j in range(len(self.position_produit[i])):
                 testProduct = self.position_produit[i][j]
@@ -84,6 +138,14 @@ class ClientSoftwareModel():
                     return (i,j)
                 
     def getFinalPath(self,start,end):
+        """
+        Cette méthode permet de calculer le chemin final à partir du point de départ et du point d'arrivée dans la grille.
+        
+        Paramètres :self (ClientSoftwareModel) : L'instance de la classe.
+                    start (tuple[int, int]) : Les coordonnées (x, y) du point de départ.
+                    end (tuple[int, int]) : Les coordonnées (x, y) du point d'arrivée.
+        Return:str : Le chemin final calculé.
+        """
         return PlateauToGraph(self.position_produit,self.liste,start,end)
        
     def __str__(self):
