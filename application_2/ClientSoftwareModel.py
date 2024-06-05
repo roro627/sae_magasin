@@ -17,7 +17,7 @@ class ClientSoftwareModel:
         self.liste: list[str] = []
         self.position_produit: list = []
         self.position_grille: dict = {}
-        self.productHovered: str = ""
+        self.old_graphic_item = None
 
         self.case_taille: int = 0
         self.nombre_cases_x: int = 0
@@ -113,7 +113,7 @@ class ClientSoftwareModel:
                 
     def getProductPosition(self, product: str) -> tuple[int, int]:
         """
-        Obtient la position d'un produit.
+        Retourne la position d'un produit.
         Args:
             product (str): Le produit dont on veut obtenir la position.
         Returns:
@@ -127,7 +127,7 @@ class ClientSoftwareModel:
                 
     def getFinalPath(self, start: tuple[int, int], end: tuple[int, int]) -> list[tuple[int, int]]:
         """
-        Obtient le chemin final.
+        Retourne le chemin final.
         Args:
             start (tuple[int, int]): Le point de départ.
             end (tuple[int, int]): Le point d'arrivée.
@@ -136,6 +136,12 @@ class ClientSoftwareModel:
         """
         return PlateauToGraph(self.position_produit, self.liste, start, end)
        
+    def getOldGraphicItem(self):
+        return self.old_graphic_item
+
+    def setOldGraphicItem(self, item):
+        self.old_graphic_item = item   
+    
     def __str__(self) -> str:
         """
         Renvoie une représentation sous forme de chaîne de caractères du modèle.

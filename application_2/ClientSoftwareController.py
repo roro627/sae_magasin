@@ -75,13 +75,22 @@ class ClientSoftwareController:
       self.view.productList.updateAvailableProducts(self.model.getProducts())
    
    def itemHover(self, item: str) -> None:
-      """
-      Gère l'événement de survol d'un élément.
-      Args:
-         item (str): L'élément survolé.
-      """
-      self.view.picture.drawProduct(self.model.getProductPosition(item),self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
-   
+        """
+        Gère l'événement de survol d'un élément.
+        Args:
+           item (str): L'élément survolé.
+        """
+        # Effacer l'ancien produit
+        old_graphic_item = self.model.getOldGraphicItem()
+        if old_graphic_item is not None:
+            self.view.picture.clearProduct(old_graphic_item)
+        
+        # Dessiner le nouveau produit
+        new_graphic_item = self.view.picture.drawProduct(self.model.getProductPosition(item),self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
+        
+        # Mettre à jour l'ancien élément 
+        self.model.setOldGraphicItem(new_graphic_item)
+        
    def drawPath(self, start: tuple[int, int], end: tuple[int, int]) -> None:
       """
       Dessine le chemin.

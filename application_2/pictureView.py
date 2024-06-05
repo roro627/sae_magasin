@@ -85,7 +85,13 @@ class pictureView(QGraphicsView):
             for j in range(nombre_cases_x):
                 if (i + position_debut_grille[0], j + position_debut_grille[1]) == positionProduct:
                     point = QGraphicsRectItem(j*square_size, i*square_size, square_size, square_size)
-                    point.setPen(QColor("red"))
+                    pen = QPen(QColor("red"))
+                    pen.setWidth(2) #change la largeur du contour
+                    point.setPen(pen)
                     group.addToGroup(point)
                 
         self.scene.addItem(group) 
+        return group
+        
+    def clearProduct(self, graphic_item):
+        self.scene.removeItem(graphic_item)
