@@ -4,6 +4,9 @@ from PyQt6.QtCore import *
 
 class pictureView(QGraphicsView):
     def __init__(self):
+        """
+        Initialise la vue de l'image.
+        """
         super().__init__()
         
         self.fpath = ""
@@ -16,7 +19,15 @@ class pictureView(QGraphicsView):
         self.setScene(self.scene)
         self.setWindowTitle("QGraphicsView")
 
-    def setPixmap(self, fname, case_taille, nombre_cases_x, nombre_cases_y):
+    def setPixmap(self, fname: str, case_taille: int, nombre_cases_x: int, nombre_cases_y: int):
+        """
+        Définit le pixmap pour l'image.
+        Args:
+            fname (str): Le nom du fichier de l'image.
+            case_taille (int): La taille de la case.
+            nombre_cases_x (int): Le nombre de cases en x.
+            nombre_cases_y (int): Le nombre de cases en y.
+        """
         self.scene.clear()
         self.fpath = fname
         
@@ -30,7 +41,16 @@ class pictureView(QGraphicsView):
     
 
 
-    def drawPath(self, line_tab, position_debut_grille, case_taille, nombre_cases_x, nombre_cases_y):
+    def drawPath(self, line_tab: list, position_debut_grille: tuple, case_taille: int, nombre_cases_x: int, nombre_cases_y: int):
+        """
+        Dessine le chemin sur l'image.
+        Args:
+            line_tab (list): Une liste de tuples représentant le chemin.
+            position_debut_grille (tuple): Un tuple représentant la position de début de la grille.
+            case_taille (int): La taille de la case.
+            nombre_cases_x (int): Le nombre de cases en x.
+            nombre_cases_y (int): Le nombre de cases en y.
+        """
         group = QGraphicsItemGroup()
 
         square_size = case_taille
@@ -46,7 +66,16 @@ class pictureView(QGraphicsView):
         self.scene.addItem(group)
 
     
-    def drawProduct(self, positionProduct,position_debut_grille, case_taille, nombre_cases_x, nombre_cases_y):
+    def drawProduct(self, positionProduct: tuple, position_debut_grille: tuple, case_taille: int, nombre_cases_x: int, nombre_cases_y: int):
+        """
+        Dessine le produit sur l'image.
+        Args:
+            positionProduct (tuple): Un tuple représentant la position du produit.
+            position_debut_grille (tuple): Un tuple représentant la position de début de la grille.
+            case_taille (int): La taille de la case.
+            nombre_cases_x (int): Le nombre de cases en x.
+            nombre_cases_y (int): Le nombre de cases en y.
+        """
         group = QGraphicsItemGroup()
 
         square_size = case_taille

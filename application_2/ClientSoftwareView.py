@@ -1,7 +1,6 @@
 import sys
 from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt
-from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal
 
 from productListWidget import productListWidget
 from shoppingList import shoppingList
@@ -9,9 +8,10 @@ from pictureView import pictureView
 from openProject import openProject
 
 class ClientSoftwareView(QMainWindow):
-    
-    # Constructor
     def __init__(self) -> None:
+        """
+        Initialise la vue du logiciel client.
+        """
         super().__init__()
         
         # Central widget
@@ -37,7 +37,6 @@ class ClientSoftwareView(QMainWindow):
         self.productList = productListWidget()
         self.listShopping = shoppingList()
         self.openProjectDialog = openProject()
-
 
         self.button_start = QPushButton("Pointer le départ")
         self.label_show_start = QLabel("Aucun départ défini")
@@ -69,32 +68,47 @@ class ClientSoftwareView(QMainWindow):
 
         # Show the software in full screen
         self.showMaximized()
-    
-    # Signals
+
     openClicked = pyqtSignal(str)
     pathClicked = pyqtSignal()
 
-    # Methods
     def openProject(self):
+        """
+        Ouvre le projet.
+        """
         self.openProjectDialog.exec()
     
     def path(self) -> None:
+        """
+        Affiche le chemin.
+        """
         self.pathClicked.emit()
         
     def getStartPoint(self):
+        """
+        Obtient le point de départ.
+        """
         self.label_show_start.setText("Sélectionnez un point sur la carte")
         # TODO:
         # au prochain clic sur la carte, on récupère les coordonnées du point
         # et on les affiche dans le label
         
     def getEndPoint(self):
+        """
+        Obtient le point d'arrivée.
+        """
         self.label_show_end.setText("Sélectionnez un point sur la carte")
         # faire la même chose que pour getStartPoint
     
-    def setEndPoint(self,point):
+    def setEndPoint(self, point: str):
+        """
+        Définit le point d'arrivée.
+        Args:
+            point (str): Le point d'arrivée.
+        """
         self.label_show_end.setText(point)
 
-# Main
+
 if __name__ == "__main__":  
     print(' ----- Execution du logiciel ----- ')
     app = QApplication(sys.argv)

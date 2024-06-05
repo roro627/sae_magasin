@@ -1,13 +1,16 @@
-import sys,os
+import sys
+import os
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import pyqtSignal
 
 class openProject(QDialog):
     def __init__(self) -> None:
+        """
+        Initialise la boîte de dialogue pour ouvrir un projet.
+        """
         super().__init__()
         self.setWindowTitle("Ouvrir Magasin")
-        
         
         current_directory = sys.path[0]
         self.parent_directory = os.path.dirname(current_directory)
@@ -24,7 +27,6 @@ class openProject(QDialog):
         self.tree.setHeaderLabels(["Liste des projet existants"])
         self.search_files()
         
-                
         mainlayout = QVBoxLayout()
         mainlayout.addWidget(self.search)
         mainlayout.addWidget(self.tree)
@@ -35,10 +37,12 @@ class openProject(QDialog):
         self.tree.itemDoubleClicked.connect(self.open_selected_file)
         self.button.clicked.connect(self.open_selected_file)
 
-        
     openClicked = pyqtSignal(str)
 
     def search_files(self):
+        """
+        Recherche les fichiers dans le répertoire de travail.
+        """
         self.tree.clear()
         
         search_text = self.search.text()
@@ -46,18 +50,23 @@ class openProject(QDialog):
             if file.endswith(".json") and search_text.lower() in file.lower():
                 item = QTreeWidgetItem(self.tree, [file])
                 self.tree.addTopLevelItem(item)
-                
 
     def open_selected_file(self):
+        """
+        Ouvre le fichier sélectionné.
+        """
         selected_item = self.tree.selectedItems()
         if selected_item:
             selected_file = f"{self.parent_directory}//Espace_de_travail//{selected_item[0].text(0)}"
             self.openClicked.emit(selected_file)
             self.close()
-            
-            
-    # fonction de Qdialog qui permet de lancer la fonction search_files() dès que la fenêtre est affichée
+
     def showEvent(self, event):
+        """
+        Gère l'événement d'affichage de la fenêtre.
+        Args:
+            event: L'événement.
+        """
         self.search_files()
 
 

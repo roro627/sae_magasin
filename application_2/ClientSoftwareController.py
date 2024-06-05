@@ -21,8 +21,11 @@ TODO Pour tout les fichier:
 - Afficher un point sur l'image lors du survol d'un produit. fait
 """
 
-class ClientSoftwareController():
-   def __init__(self):
+class ClientSoftwareController:
+   def __init__(self) -> None:
+      """
+      Initialise le contrôleur du logiciel client.
+      """
 
       # Initialiser la vue et le modèle
       self.view = ClientSoftwareView()
@@ -36,7 +39,12 @@ class ClientSoftwareController():
       self.view.productList.itemHovered.connect(self.itemHover)
       
    
-   def openProject(self,fpath):
+   def openProject(self, fpath: str) -> None:
+      """
+      Ouvre un projet.
+      Args:
+         fpath (str): Le chemin du fichier du projet.
+      """
       self.model.setFilePath(fpath)
       self.model.ouvrirProjet()
       self.updateProductList()
@@ -44,19 +52,43 @@ class ClientSoftwareController():
       self.view.picture.setPixmap(self.model.getFullPathImage(),self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
       
    
-   def newItem(self, item):
+   def newItem(self, item: str) -> None:
+      """
+      Ajoute un nouvel élément.
+      Args:
+         item (str): L'élément à ajouter.
+      """
       self.view.listShopping.add_product(item)
 
-   def itemRemove(self, item):
+   def itemRemove(self, item: str) -> None:
+      """
+      Supprime un élément.
+      Args:
+         item (str): L'élément à supprimer.
+      """
       self.view.listShopping.remove_product(item)
    
-   def updateProductList(self):
+   def updateProductList(self) -> None:
+      """
+      Met à jour la liste des produits.
+      """
       self.view.productList.updateAvailableProducts(self.model.getProducts())
    
-   def itemHover(self, item):
+   def itemHover(self, item: str) -> None:
+      """
+      Gère l'événement de survol d'un élément.
+      Args:
+         item (str): L'élément survolé.
+      """
       self.view.picture.drawProduct(self.model.getProductPosition(item),self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
    
-   def drawPath(self,start,end):
+   def drawPath(self, start: tuple[int, int], end: tuple[int, int]) -> None:
+      """
+      Dessine le chemin.
+      Args:
+         start (tuple[int, int]): Le point de départ.
+         end (tuple[int, int]): Le point d'arrivée.
+      """
       path = self.model.getFinalPath(start,end)
       self.view.picture.drawPath(path,self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
       
@@ -77,11 +109,31 @@ class ClientSoftwareController():
 
       self.view.picture.drawPath(finalPath,self.model.position_grille,self.model.case_taille,self.model.nombre_cases_x,self.model.nombre_cases_y)
    
-   def show(self):
+   def show(self) -> None:
+      """
+      Affiche la vue.
+      """
       self.view.show()
       
 if __name__ == '__main__':
+   
+   with_Test = False
+   
    app = QApplication(sys.argv)
    controller = ClientSoftwareController()
+   
+   if with_Test:
+      # Création d’une liste de course alétoire (minimum 20 produits) pour effectuer les tests
+      # (ne coche pas les éléments de la liste de produit dispo du magasin)
+      import random
+      test_liste_course = []
+      controller.openProject(r"c:\Users\romai\Documents\MEGA\ecole\semestre_2\sae\sae_magasin\github\sae_magasin//Espace_de_travail//Test Mag 1.json")
+      test_liste_course = controller.model.liste
+      random.shuffle(test_liste_course)
+      test_liste_course = test_liste_course[:20]
+      for item in test_liste_course:
+         controller.newItem(item)
+   
+   
    controller.show()
    sys.exit(app.exec())

@@ -5,6 +5,9 @@ import sys, os
 
 class shoppingList(QWidget):
     def __init__(self) -> None:
+        """
+        Initialise l'objet shoppingList avec une liste vide et configure l'interface utilisateur.
+        """
         super().__init__()
         
         layout = QVBoxLayout()
@@ -22,17 +25,32 @@ class shoppingList(QWidget):
         layout.addWidget(self.list_widget)
         self.setLayout(layout)
 
-    def Box_Change(self, item):
+    def Box_Change(self, item: QListWidgetItem) -> None:
+        """
+        Affiche si un élément est coché ou non.
+
+        Paramètres :
+        item (QListWidgetItem) : L'élément qui a été modifié.
+        """
         if item.checkState() == Qt.CheckState.Checked:
             print(f"Item {item.text()} is checked")
         else:
             print(f"Item {item.text()} is unchecked")
             
-    def update_Product(self, products):
+    def update_Product(self, products: list[str]) -> None:
+        """
+        Met à jour la liste des produits et rafraîchit l'affichage.
+
+        Paramètres :
+        products (list) : La nouvelle liste de produits.
+        """
         self.list_items = products
         self.update_Product_List()
         
-    def update_Product_List(self):
+    def update_Product_List(self) -> None:
+        """
+        Rafraîchit l'affichage de la liste de produits.
+        """
         self.list_widget.clear()
         self.list_widget.addItems(self.list_items)
         
@@ -41,11 +59,23 @@ class shoppingList(QWidget):
             self.list_widget.item(index)
 
 
-    def add_product(self, product):
+    def add_product(self, product: str) -> None:
+        """
+        Ajoute un produit à la liste et rafraîchit l'affichage.
+
+        Paramètres :
+        product (str) : Le produit à ajouter.
+        """
         self.list_items.append(product)
         self.update_Product_List()
         
-    def remove_product(self, product):
+    def remove_product(self, product: str) -> None:
+        """
+        Supprime un produit de la liste et rafraîchit l'affichage.
+
+        Paramètres :
+        product (str) : Le produit à supprimer.
+        """
         self.list_items.remove(product)
         self.update_Product_List()
 

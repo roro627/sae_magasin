@@ -6,6 +6,9 @@ from PyQt6.QtCore import pyqtSignal
 
 class productListWidget(QWidget):
     def __init__(self) -> None:
+        """
+        Initialise le widget de la liste des produits.
+        """
         super().__init__()
         
         # attributs
@@ -35,7 +38,13 @@ class productListWidget(QWidget):
     itemDelet = pyqtSignal(str)
     itemHovered = pyqtSignal(str)
 
-    def add_tree_item(self, parent_name, children_names):
+    def add_tree_item(self, parent_name: str, children_names: list):
+        """
+        Ajoute un élément à l'arbre.
+        Args:
+            parent_name (str): Le nom du parent.
+            children_names (list): Une liste des noms des enfants.
+        """
                
         parent_item = QTreeWidgetItem(self.tree, [parent_name])
         for child_name in children_names:
@@ -51,7 +60,13 @@ class productListWidget(QWidget):
         if parent_item.childCount() == 0:
             parent_item.setText(0, parent_name + " (aucun produit disponible)")
 
-    def checkboxChanged(self, item, column):
+    def checkboxChanged(self, item: QTreeWidgetItem, column: int):
+        """
+        Gère le changement d'état de la case à cocher.
+        Args:
+            item (QTreeWidgetItem): L'élément de l'arbre.
+            column (int): La colonne.
+        """
         # le bouton est checké
         if self.upadateWorking:
             return
@@ -60,7 +75,12 @@ class productListWidget(QWidget):
         else:
            self.itemDelet.emit(item.text(column))
 
-    def updateCheckbox(self, products):
+    def updateCheckbox(self, products: list):
+        """
+        Met à jour les cases à cocher.
+        Args:
+            products (list): Une liste des produits.
+        """
         # parcourir les items de l'arbre pour trouver et checker les item de la liste products
         for i in range(self.tree.topLevelItemCount()):
             parent = self.tree.topLevelItem(i)
@@ -69,7 +89,12 @@ class productListWidget(QWidget):
                 if child.text(0) in products:
                     child.setCheckState(0, Qt.CheckState.Checked)
                     
-    def updateAvailableProducts(self, products):
+    def updateAvailableProducts(self, products: list):
+        """
+        Met à jour les produits disponibles.
+        Args:
+            products (list): Une liste des produits.
+        """
         
         self.upadateWorking = True
         
@@ -83,7 +108,13 @@ class productListWidget(QWidget):
         self.upadateWorking = False
 
 
-    def itemHover(self, item, column):
+    def itemHover(self, item: QTreeWidgetItem, column: int):
+        """
+        Gère le survol d'un élément.
+        Args:
+            item (QTreeWidgetItem): L'élément de l'arbre.
+            column (int): La colonne.
+        """
         if item.parent() is not None:
             self.itemHovered.emit(item.text(column))
 
