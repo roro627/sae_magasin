@@ -18,6 +18,17 @@ class pictureView(QGraphicsView):
 
         self.setScene(self.scene)
         self.setWindowTitle("QGraphicsView")
+    
+    mouseClicked = pyqtSignal(tuple)
+    
+    def mousePressEvent(self, event):
+        items = self.items(event.pos())
+        for item in items:
+            if type(item) is QGraphicsPixmapItem:
+                pos = item.mapFromScene(self.mapToScene(event.pos()))
+                pos = (int(pos.x()),int(pos.y()))
+                self.mouseClicked.emit(pos)
+        super().mousePressEvent(event)
 
     def setPixmap(self, fname: str, case_taille: int, nombre_cases_x: int, nombre_cases_y: int):
         """

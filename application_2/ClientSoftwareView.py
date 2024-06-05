@@ -1,4 +1,5 @@
 import sys
+from PyQt6.QtGui import QMouseEvent
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt, pyqtSignal
 
@@ -41,10 +42,12 @@ class ClientSoftwareView(QMainWindow):
         self.button_start = QPushButton("Pointer le départ")
         self.label_show_start = QLabel("Aucun départ défini")
         self.button_start.clicked.connect(self.getStartPoint)
+        self.start_point = False
         
         self.button_end = QPushButton("Pointer l'arrivée")
         self.label_show_end = QLabel("Aucune arrivée définie")
         self.button_end.clicked.connect(self.getEndPoint)
+        self.end_point = False
 
         self.button_path = QPushButton("Afficher le plus court chemin")
         self.button_path.clicked.connect(self.path)
@@ -89,16 +92,29 @@ class ClientSoftwareView(QMainWindow):
         Obtient le point de départ.
         """
         self.label_show_start.setText("Sélectionnez un point sur la carte")
-        # TODO:
+        self.start_point = True
         # au prochain clic sur la carte, on récupère les coordonnées du point
-        # et on les affiche dans le label
         
     def getEndPoint(self):
         """
         Obtient le point d'arrivée.
         """
         self.label_show_end.setText("Sélectionnez un point sur la carte")
-        # faire la même chose que pour getStartPoint
+        self.end_point = True
+    
+    def resetPoint(self):
+        if self.start_point : 
+            self.start_point = False
+        elif self.end_point : 
+            self.end_point = False
+    
+    def setStartPoint(self, point: str):
+        """
+        Définit le point de départ.
+        Args:
+            point (str): Le point de départ.
+        """
+        self.label_show_start.setText(point)
     
     def setEndPoint(self, point: str):
         """

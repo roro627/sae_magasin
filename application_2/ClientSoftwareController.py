@@ -37,6 +37,7 @@ class ClientSoftwareController:
       self.view.productList.itemAdded.connect(self.newItem)
       self.view.productList.itemDelet.connect(self.itemRemove)
       self.view.productList.itemHovered.connect(self.itemHover)
+      self.view.picture.mouseClicked.connect(self.setPoint)
       
    
    def openProject(self, fpath: str) -> None:
@@ -90,6 +91,14 @@ class ClientSoftwareController:
         
         # Mettre à jour l'ancien élément 
         self.model.setOldGraphicItem(new_graphic_item)
+      
+   def setPoint(self,pos):
+      pos = self.model.getIndex(pos)
+      if self.view.start_point:
+         self.view.setStartPoint(str(pos))
+      elif self.view.end_point:
+         self.view.setEndPoint(str(pos))
+      self.view.resetPoint()
         
    def drawPath(self, start: tuple[int, int], end: tuple[int, int]) -> None:
       """

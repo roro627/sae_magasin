@@ -142,6 +142,9 @@ class ClientSoftwareModel:
     def setOldGraphicItem(self, item):
         self.old_graphic_item = item   
     
+    def getIndex(self,pos):
+        return ((int(pos[1]-self.position_grille[1])//self.case_taille),(int(pos[0]-self.position_grille[0])//self.case_taille)) 
+    
     def __str__(self) -> str:
         """
         Renvoie une représentation sous forme de chaîne de caractères du modèle.
