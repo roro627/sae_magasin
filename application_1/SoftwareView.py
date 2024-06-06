@@ -91,7 +91,7 @@ class SoftwareView(QMainWindow):
         mainlayout.addLayout(layout_menu)
 
         # Affiche en plein écran
-        self.showMaximized()
+        # self.showMaximized()
     
     # Signaux
     newClicked = pyqtSignal()

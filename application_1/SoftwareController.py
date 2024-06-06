@@ -1,6 +1,7 @@
 from SoftwareModel import SoftwareModel
 from SoftwareView import SoftwareView
 from GridModel import GridModel
+from loginDialog import loginDialog
 from PyQt6.QtWidgets import QApplication
 import sys
 
@@ -12,11 +13,15 @@ class SoftwareController():
     def __init__(self):
 
         # Initialiser la vue et le modèle
+        self.login = loginDialog()
         self.view = SoftwareView()
         self.model = SoftwareModel()
         self.grid_model = GridModel()
 
         # Connecter les signaux de la vue aux slots du contrôleur
+
+        # -------------- Signaux de Login -------------- #
+        self.login.loginClicked.connect(self.loginToSoftware)
 
         # -------------- Signaux de View -------------- #
         self.view.sliderMoved.connect(self.updateGrid)
@@ -44,6 +49,13 @@ class SoftwareController():
         # -------------- Signaux de View.grid -------------- #
         self.view.grid.mouseClicked.connect(self.mouseItemGrid)
     
+    # --- Méthodes pour Login --- #
+
+    def loginToSoftware(self,info):
+        if info["username"] == "admin" and info["password"] == "motdepasse":
+            self.show()
+            self.login.close()
+
     # --- Méthodes pour View --- #
     def updateGrid(self,size):
         """
@@ -244,14 +256,13 @@ class SoftwareController():
         Paramètres :self (PlacementProduct) : L'instance de la classe.
         Return :None
         """
-        self.view.show()
-
+        self.view.showMaximized()
 
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
     controller = SoftwareController()
-    controller.show()
+    controller.login.show()
 
     sys.exit(app.exec())
