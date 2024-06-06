@@ -14,6 +14,8 @@ class ClientSoftwareView(QMainWindow):
         Initialise la vue du logiciel client.
         """
         super().__init__()
+        self.stratPoint = None
+        self.endPoint = None
         
         # Central widget
         central_widget = QWidget()
@@ -36,6 +38,7 @@ class ClientSoftwareView(QMainWindow):
         # Widgets
         self.picture = pictureView()
         self.productList = productListWidget()
+        self.productList.leaveEvent = self.productListUnfocus
         self.listShopping = shoppingList()
         self.openProjectDialog = openProject()
 
@@ -74,6 +77,7 @@ class ClientSoftwareView(QMainWindow):
 
     openClicked = pyqtSignal(str)
     pathClicked = pyqtSignal()
+    unfocus = pyqtSignal()
 
     def openProject(self):
         """
@@ -83,9 +87,18 @@ class ClientSoftwareView(QMainWindow):
     
     def path(self) -> None:
         """
-        Affiche le chemin.
+        Affiche le chemin le plus court.
         """
-        self.pathClicked.emit()
+        startPoint = self.label_show_start.text()
+        endPoint = self.label_show_end.text()
+        
+        # si le texte est "Aucun(e) départ/arrivée défini(e)" ou "Sélectionnez un point sur la carte ", on affiche une fenêtre d'information
+        if startPoint[0] == 'A' or startPoint[0] == 'S' or endPoint[0] == 'A' or endPoint[0] == 'S':  
+            self.noPointsSet()
+        elif len(self.listShopping.list_items) < 2:
+            self.emptyShoppingList()
+        else:
+            self.pathClicked.emit()
         
     def getStartPoint(self):
         """
@@ -123,7 +136,35 @@ class ClientSoftwareView(QMainWindow):
             point (str): Le point d'arrivée.
         """
         self.label_show_end.setText(point)
+        
+    def productListUnfocus(self,_):
+        """
+        Envoie un signal pour indiquer que la souris n'est plus dans le widget productList.
 
+        Args:
+            _ : Paramètre inutile.
+        """
+        self.unfocus.emit()
+        
+    def noPointsSet(self):
+        """
+        Affiche une fenètre d'information demandant de sélectionner les points de départ et d'arrivée.
+        """
+        msg = QMessageBox()
+        msg.setWindowTitle("Information")
+        msg.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxInformation))
+        msg.setText("Veuillez sélectionner un point de départ et un point d'arrivée.")
+        msg.exec()
+
+    def emptyShoppingList(self):
+        """
+        Affiche une fenètre d'information demandant de sélectionner au moins 2 produits.
+        """
+        msg = QMessageBox()
+        msg.setWindowTitle("Information")
+        msg.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxInformation))
+        msg.setText("Veuillez sélectionner au moins 2 produits dans votre liste de course.")
+        msg.exec()
 
 if __name__ == "__main__":  
     print(' ----- Execution du logiciel ----- ')

@@ -52,7 +52,7 @@ class pictureView(QGraphicsView):
     
 
 
-    def drawPath(self, line_tab: list, position_debut_grille: tuple, case_taille: int, nombre_cases_x: int, nombre_cases_y: int):
+    def drawPath(self, line_tab: list, position_debut_grille: tuple, case_taille: int, nombre_cases_x: int, nombre_cases_y: int) -> QGraphicsItemGroup:
         """
         Dessine le chemin sur l'image.
         Args:
@@ -75,6 +75,8 @@ class pictureView(QGraphicsView):
                     group.addToGroup(point)
                 
         self.scene.addItem(group)
+        
+        return group
 
     
     def drawProduct(self, positionProduct: tuple, position_debut_grille: tuple, case_taille: int, nombre_cases_x: int, nombre_cases_y: int):

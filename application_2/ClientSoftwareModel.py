@@ -18,6 +18,9 @@ class ClientSoftwareModel:
         self.position_produit: list = []
         self.position_grille: dict = {}
         self.old_graphic_item = None
+        self.old_path_item = None
+        self.strat_point = None
+        self.end_point = None
 
         self.case_taille: int = 0
         self.nombre_cases_x: int = 0
@@ -86,7 +89,16 @@ class ClientSoftwareModel:
         Returns:
             list[str]: La liste des produits.
         """
-        return self.liste
+        liste = []
+        
+        for i in self.position_produit:
+            for j in i:
+                if j != 0:
+                    for k in j:
+                        liste.append(k)
+                        
+        print(liste)
+        return liste
        
     def getFullPathImage(self) -> str:
         """
@@ -125,7 +137,7 @@ class ClientSoftwareModel:
                 if testProduct != 0 and product in testProduct:
                     return (i, j)
                 
-    def getFinalPath(self, start: tuple[int, int], end: tuple[int, int]) -> list[tuple[int, int]]:
+    def getFinalPath(self, start: tuple[int, int], end: tuple[int, int],shoppingList: list[str]) -> list[tuple[int, int]]:
         """
         Retourne le chemin final.
         Args:
@@ -134,16 +146,38 @@ class ClientSoftwareModel:
         Returns:
             list[tuple[int, int]]: Le chemin final.
         """
-        return PlateauToGraph(self.position_produit, self.liste, start, end)
+        return PlateauToGraph(self.position_produit, shoppingList, start, end)
        
     def getOldGraphicItem(self):
         return self.old_graphic_item
 
     def setOldGraphicItem(self, item):
-        self.old_graphic_item = item   
+        self.old_graphic_item = item  
+        
+    def getOldpathItem(self):
+        return self.old_path_item
+
+    def setOldpathItem(self, item):
+        self.old_path_item = item   
     
     def getIndex(self,pos):
         return ((int(pos[1]-self.position_grille[1])//self.case_taille),(int(pos[0]-self.position_grille[0])//self.case_taille)) 
+    
+    def setStartPoint(self, point: tuple[int, int]) -> None:
+        """
+        Définit le point de départ.
+        Args:
+            point (tuple[int, int]): Le point de départ.
+        """
+        self.start_point = point
+        
+    def setEndPoint(self, point: tuple[int, int]) -> None:
+        """
+        Définit le point d'arrivée.
+        Args:
+            point (tuple[int, int]): Le point d'arrivée.
+        """
+        self.end_point = point
     
     def __str__(self) -> str:
         """

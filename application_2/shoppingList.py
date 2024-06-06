@@ -19,23 +19,11 @@ class shoppingList(QWidget):
         
         self.updateWorking = False    
 
-        self.list_widget.itemChanged.connect(self.Box_Change)
 
         layout.addWidget(self.title)
         layout.addWidget(self.list_widget)
         self.setLayout(layout)
 
-    def Box_Change(self, item: QListWidgetItem) -> None:
-        """
-        Affiche si un élément est coché ou non.
-
-        Paramètres :
-        item (QListWidgetItem) : L'élément qui a été modifié.
-        """
-        if item.checkState() == Qt.CheckState.Checked:
-            print(f"Item {item.text()} is checked")
-        else:
-            print(f"Item {item.text()} is unchecked")
             
     def update_Product(self, products: list[str]) -> None:
         """
@@ -78,6 +66,15 @@ class shoppingList(QWidget):
         """
         self.list_items.remove(product)
         self.update_Product_List()
+
+    def get_products(self) -> list[str]:
+        """
+        Renvoie la liste des produits.
+
+        Returns :
+        list : La liste des produits.
+        """
+        return self.list_items
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
