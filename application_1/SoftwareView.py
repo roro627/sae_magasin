@@ -74,7 +74,7 @@ class SoftwareView(QMainWindow):
         self.slider.setMaximum(5)
         self.max = QLabel("5")
         self.slider.valueChanged.connect(self.sliderValue)
-
+        
         # Ajout de widgets dans le layout layout_tools
         layout_tools.addWidget(self.btn1)
         layout_tools.addWidget(self.btn2)
@@ -169,6 +169,34 @@ class SoftwareView(QMainWindow):
         Return : None
         """
         self.placementClicked.emit()
+
+    def messageClose(self):
+        """
+        Cette méthode permet d'afficher un message de confirmation avant de fermer la fenêtre permettant de sauvegarder.
+        """
+        msg = QMessageBox()
+        msg.setWindowTitle("Information")
+        msg.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxInformation))
+        msg.setText("Voulez vous sauvegarder avant de quitter ?")
+        
+        msg.addButton("Sauvegarder puis quitter", QMessageBox.ButtonRole.YesRole)
+        msg.addButton("Quitter sans sauvegarder", QMessageBox.ButtonRole.NoRole)
+        
+        return msg.exec()
+    def closeEvent(self, event):
+        """
+        Intercepte le signal de fermeture de la fenêtre.
+        Args:
+            event (QCloseEvent): L'événement de fermeture.
+        """
+        # personalisation l'evennement de fermeture
+        response = self.messageClose()
+        
+        if response == 0:
+            self.saveClicked.emit()           
+        
+        # appel de la classe parente pour fermer la fenêtre
+        super().closeEvent(event)
 
 # Main
 if __name__ == "__main__":  

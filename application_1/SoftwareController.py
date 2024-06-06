@@ -1,4 +1,3 @@
-from PyQt6.QtCore import QObject, pyqtSlot
 from SoftwareModel import SoftwareModel
 from SoftwareView import SoftwareView
 from GridModel import GridModel
@@ -163,7 +162,6 @@ class SoftwareController():
         self.model.setFilePath(fname)
         self.model.ouvrirProjet()
         self.view.grid.setPixmap(self.model.getFullPathImage())
-
         self.grid_model.grid_position = self.model.position_produit
         self.grid_model.gridStart = self.model.position_grille
         self.grid_model.square_size = self.model.case_taille

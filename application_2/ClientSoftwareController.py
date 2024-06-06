@@ -6,20 +6,6 @@ from ClientSoftwareModel import ClientSoftwareModel
 from ClientSoftwareView import ClientSoftwareView
 from PlateauToGraph import *
 
-"""
-TODO Pour tout les fichier:
-- ouvir un fichier json grace à openproject et update le model
-   - implémenter la méthode openProject et supprimer le systeme actuel. fait
-   - dans l'update mettre à jour le model.fait et les widgets. fait
-- relier la liste de course à chaque sélection de produit dans la liste de produit dispo du magasin. fait
-- afficher un point sur chaque position de produit sélectionné dans la liste de course
-- supprimer un point sur chaque position de produit désélectionné dans la liste de course
-- implémenter dijkstra pour trouver le plus court chemin. plus ou moins fait
-- afficher le chemin sur l'image.
-- Detecter le survol d'un produit. fait
-- Trouver la position du produit survolé. fait
-- Afficher un point sur l'image lors du survol d'un produit. fait
-"""
 
 class ClientSoftwareController:
    def __init__(self) -> None:

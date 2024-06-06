@@ -25,7 +25,7 @@ class GridModel:
                     pos (tuple) : Un tuple de forme (x : int, y : int) représentant la position dans la vue de graphique.
         Return :Un tuple de forme (x : int, y : int) représentant la position dans la grille self.grid_position.
         """
-        print("start",self.gridStart)
+
         return ((int(pos[1]-self.gridStart[1])//self.square_size),(int(pos[0]-self.gridStart[0])//self.square_size))
 
     def getCase(self, pos : tuple) -> (int|list) :
@@ -56,7 +56,6 @@ class GridModel:
                 for item in items_list:
                     items.append(item.text())
                 self.grid_position[x][y] = items
-        print(self.grid_position)
 
     def updateSquareSize(self, size : int) -> None :
         """
