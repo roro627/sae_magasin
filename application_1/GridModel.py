@@ -48,6 +48,7 @@ class GridModel:
         """
         if items_list != []:
             (x,y) = self.getIndex(pos)
+            # Cas ou un produit est déjà présent dans la case.
             if type(self.grid_position[x][y]) == list:
                 for item in items_list:
                     self.grid_position[x][y].append(item.text())

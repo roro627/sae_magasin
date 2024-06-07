@@ -179,6 +179,14 @@ class SoftwareView(QMainWindow):
         Return : None
         """
         self.placementClicked.emit()
+    
+    def loginError(self) -> None :
+        msg = QMessageBox()
+        msg.setWindowTitle("Information")
+        msg.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxWarning))
+        msg.setText("Erreur, le nom d'utilisateur ou le mot de passe est incorrect !")
+
+        msg.exec()
 
     def messageClose(self):
         """

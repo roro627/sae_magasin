@@ -13,7 +13,6 @@ class loginDialog(QDialog):
         
         super().__init__()
         self.setWindowTitle("Login")
-        self.canLog = False
 
         # Layouts
         mainLayout = QVBoxLayout()
@@ -55,9 +54,6 @@ class loginDialog(QDialog):
     def login(self):
         dict = self.getLogin()
         self.loginClicked.emit(dict)
-    
-    def setCanLog(self,b):
-        self.canLog = b
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)  

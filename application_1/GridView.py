@@ -34,6 +34,7 @@ class GridView(QGraphicsView):
         items = self.items(event.pos())
         for item in items:
             if type(item) is QGraphicsPixmapItem:
+                # Convertion de la postion pour correspondre à la postion du plan.
                 pos = item.mapFromScene(self.mapToScene(event.pos()))
                 pos = (int(pos.x()),int(pos.y()))
                 self.mouseClicked.emit(pos)
