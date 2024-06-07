@@ -43,12 +43,12 @@ class ClientSoftwareView(QMainWindow):
         self.openProjectDialog = openProject()
 
         self.button_start = QPushButton("Pointer le départ")
-        self.label_show_start = QLabel("Aucun départ défini")
+        self.label_show_start = QLabel("Aucun départ défini",alignment=Qt.AlignmentFlag.AlignCenter)
         self.button_start.clicked.connect(self.getStartPoint)
         self.start_point = False
         
         self.button_end = QPushButton("Pointer l'arrivée")
-        self.label_show_end = QLabel("Aucune arrivée définie")
+        self.label_show_end = QLabel("Aucune arrivée définie",alignment=Qt.AlignmentFlag.AlignCenter)
         self.button_end.clicked.connect(self.getEndPoint)
         self.end_point = False
 

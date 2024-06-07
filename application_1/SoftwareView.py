@@ -169,6 +169,14 @@ class SoftwareView(QMainWindow):
         Return : None
         """
         self.placementClicked.emit()
+    
+    def loginError(self) -> None :
+        msg = QMessageBox()
+        msg.setWindowTitle("Information")
+        msg.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxWarning))
+        msg.setText("Erreur, le nom d'utilisateur ou le mot de passe est incorrect !")
+
+        msg.exec()
 
     def messageClose(self):
         """
@@ -182,7 +190,8 @@ class SoftwareView(QMainWindow):
         msg.addButton("Sauvegarder puis quitter", QMessageBox.ButtonRole.YesRole)
         msg.addButton("Quitter sans sauvegarder", QMessageBox.ButtonRole.NoRole)
         
-        return msg.exec()
+        msg.exec()
+    
     def closeEvent(self, event):
         """
         Intercepte le signal de fermeture de la fenêtre.

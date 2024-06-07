@@ -55,6 +55,8 @@ class SoftwareController():
         if info["username"] == "admin" and info["password"] == "motdepasse":
             self.show()
             self.login.close()
+        else :
+            self.view.loginError()
 
     # --- Méthodes pour View --- #
     def updateGrid(self,size):
