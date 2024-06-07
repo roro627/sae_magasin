@@ -13,8 +13,8 @@
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Fonctionnalités](#fonctionnalités)
-  - [Gestion du Plan du Magasin](#gestion-du-Plan-du-Magasin-(Application-1))
-  - [Optimisation du Chemin](#optimisation-du-Chemin-(Application-2))
+  - [Gestion du Plan du Magasin](#gestion-du-Plan-du-Magasin)
+  - [Optimisation du Chemin](#optimisation-du-Chemin)
 - [Contributeurs](#contributeurs)
 
 ## Prérequis
@@ -62,7 +62,7 @@ Pour lancer la deuxième application, exécutez le fichier `.\application_2\Clie
 python .\application_2\ClientSoftwareController.py
 ```
 
-### Gestion du Plan du Magasin (Application 1)
+### Gestion du Plan du Magasin
 
 Cette application sécurisé permet de :
 - Définir les informations du projet (nom, auteur, date, etc.).
@@ -73,7 +73,7 @@ Cette application sécurisé permet de :
 - Enregistrer le projet avec toutes les données associées.
 - Supprimer un projet.
 
-### Optimisation du Chemin (Application 2)
+### Optimisation du Chemin
 
 Cette application permet de :
 - Choisir un magasin.
@@ -83,7 +83,7 @@ Cette application permet de :
 
 ## Fonctionnalités
 
-### Gestion du Plan du Magasin (Application 1)
+### Gestion du Plan du Magasin
 
 - **Création d'un Projet** :
   - Définir les détails du projet.
@@ -98,7 +98,7 @@ Cette application permet de :
 - **Sécurité de l'application** :
   - Accès via nom d'utilisateur et mot de passe à l'application.
 
-### Optimisation du Chemin (Application 2)
+### Optimisation du Chemin
 
 - **Affichage des Produits** :
   - Sélectionner un magasin.
