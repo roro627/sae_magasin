@@ -7,13 +7,6 @@ import sys, os
 # --- classe placement_Product
 # -----------------------------------------------------------------------------
 
-# TODO restant:
-# - Connecter le fichier avec le model pour charger toute la liste des produits
-# - Mettre en place la fonctionnalité de recherche
-# - Mettre en place la fonctionnalité de placement des produits dans la grille (FAIT)
-# - Mettre en place la fonctionnalité de suppression des produits de la grille
-# - Mettre en place la fonctionnalité de grisage des produits non disponibles (FAIT)
-
 
 class placement_Product(QWidget):
     # Constructeur

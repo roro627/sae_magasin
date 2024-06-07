@@ -1,5 +1,5 @@
-import sys
-from PyQt6.QtGui import QMouseEvent
+import sys,os
+from PyQt6.QtGui import QMouseEvent, QIcon
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt, pyqtSignal
 
@@ -14,6 +14,12 @@ class ClientSoftwareView(QMainWindow):
         Initialise la vue du logiciel client.
         """
         super().__init__()
+        current_directory = sys.path[0]
+        parent_directory = os.path.dirname(current_directory)
+        
+        self.setWindowTitle("Logiciel client")
+        self.setWindowIcon(QIcon(parent_directory+"//icons//iconApp2.png"))
+        
         self.stratPoint = None
         self.endPoint = None
         
@@ -102,7 +108,7 @@ class ClientSoftwareView(QMainWindow):
         
     def getStartPoint(self):
         """
-        Obtient le point de départ.
+        Retourne le point de départ.
         """
         self.label_show_start.setText("Sélectionnez un point sur la carte")
         self.start_point = True
@@ -110,7 +116,7 @@ class ClientSoftwareView(QMainWindow):
         
     def getEndPoint(self):
         """
-        Obtient le point d'arrivée.
+        Retourne le point d'arrivée.
         """
         self.label_show_end.setText("Sélectionnez un point sur la carte")
         self.end_point = True

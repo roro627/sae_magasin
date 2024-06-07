@@ -97,7 +97,6 @@ class ClientSoftwareModel:
                     for k in j:
                         liste.append(k)
                         
-        print(liste)
         return liste
        
     def getFullPathImage(self) -> str:

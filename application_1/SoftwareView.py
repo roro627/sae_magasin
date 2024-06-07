@@ -1,6 +1,7 @@
-import sys
+import sys,os
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon, QAction
 from PyQt6.QtCore import pyqtSignal
 
 from newProjectDialog import newProjectDialog
@@ -22,6 +23,12 @@ class SoftwareView(QMainWindow):
     def __init__(self):
         super().__init__()
         
+        current_directory = sys.path[0]
+        parent_directory = os.path.dirname(current_directory)
+        
+        self.setWindowTitle("Logiciel administrateur")
+        self.setWindowIcon(QIcon(parent_directory+"//icons//iconApp1.png"))
+        
         # Central widget
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -37,7 +44,10 @@ class SoftwareView(QMainWindow):
         menu_file.addAction('Ouvrir',self.openProject)
         menu_file.addAction('Supprimer',self.deletProject)
         menu_file.addSeparator()
-        menu_file.addAction('Enregistrer',self.saveProject)
+        save = QAction('Enregistrer', self)
+        save.triggered.connect(self.saveProject)
+        save.setShortcut('Ctrl+S')
+        menu_file.addAction(save)
 
         # Layouts
         layout_tools = QHBoxLayout()
@@ -183,6 +193,8 @@ class SoftwareView(QMainWindow):
         msg.addButton("Quitter sans sauvegarder", QMessageBox.ButtonRole.NoRole)
         
         return msg.exec()
+    
+    
     def closeEvent(self, event):
         """
         Intercepte le signal de fermeture de la fenêtre.
@@ -203,4 +215,5 @@ if __name__ == "__main__":
     print(' ----- Execution du logiciel ----- ')
     app = QApplication(sys.argv)
     fenetre = SoftwareView()
+    fenetre.showMaximized()
     sys.exit(app.exec())

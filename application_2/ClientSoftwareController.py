@@ -137,6 +137,9 @@ if __name__ == '__main__':
    app = QApplication(sys.argv)
    controller = ClientSoftwareController()
    
+   controller.openProject(r"C:\Users\romai\Documents\MEGA\ecole\semestre_2\sae\sae_magasin\github\sae_magasin\Espace_de_travail\demonstration ajout map.json")
+   
+   
    if with_Test:
       # Création d’une liste de course alétoire (minimum 20 produits) pour effectuer les tests
       # (ne coche pas les éléments de la liste de produit dispo du magasin)
