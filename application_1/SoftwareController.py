@@ -12,7 +12,7 @@ import sys
 class SoftwareController():
     def __init__(self):
 
-        # Initialiser la vue et le modèle
+        # Initialiser les vues et les modèles
         self.login = loginDialog()
         self.view = SoftwareView()
         self.model = SoftwareModel()
@@ -50,8 +50,14 @@ class SoftwareController():
         self.view.grid.mouseClicked.connect(self.mouseItemGrid)
     
     # --- Méthodes pour Login --- #
-
-    def loginToSoftware(self,info):
+    def loginToSoftware(self,info : dict ) -> None :
+        """
+        Cette méthode permet à l'utilisateur de rentrer son login et son mot de passe pour se connecter
+        à l'application. En cas d'erreur, un messaege s'affiche.
+        Paramètres : self
+                     info (dict) : Les informations entrées par l'utilisateur
+        Return :None
+        """
         if info["username"] == "admin" and info["password"] == "motdepasse":
             self.show()
             self.login.close()
@@ -194,6 +200,48 @@ class SoftwareController():
         self.grid_model.grid_position = self.model.position_produit
         self.view.pr.updateCheckbox(products)
 
+    def updateProductList(self):
+        """
+        Cette méthode permet de mettre à jour la liste des produits dans la vue en utilisant les données du modèle.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :None
+        """
+        products = self.model.getProducts()
+        self.view.product.update_Product(products)
+
+    # --- Méthodes pour View.saveClicked --- #
+    def enregistrerProjet(self):
+        """
+        Cette méthode permet d'enregistrer les informations du projet en cours dans un fichier écrit en JSON.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+        Return :None
+        """
+        
+        # Gérer l'action enregistrer projet
+
+        self.model.position_produit = self.grid_model.grid_position
+        self.model.position_grille = self.grid_model.gridStart
+        self.model.case_taille = self.grid_model.square_size
+
+        self.model.enregistrerProjet()
+    
+    # --- Méthodes pour View.deletProjectDialog --- #
+    def supprimerProjet(self, fname):
+        """
+        Cette méthode permet de supprimer le fichier JSON du projet en cours en vérifiant s'il existe.
+        
+        Paramètres :self (PlacementProduct) : L'instance de la classe.
+                    fname (String) : Le nom du fichier du projet à supprimer.
+        Return :None
+        """
+        # Gérer l'action supprimer projet
+        self.model.setFilePath(fname)
+        self.model.supprimerProjet()
+        self.updateProductList()
+    
+    # --- Méthodes pour View.grid --- #
     def mouseItemGrid(self,pos):
         """
         Cette méthode permet de gérer l'événement lorsque l'utilisateur fait un clic sur la grille.
@@ -210,46 +258,6 @@ class SoftwareController():
         self.model.position_produit = self.grid_model.grid_position
         self.view.product.set_Unchecked_Items()
         self.view.product.clear_Checked_Items()
-
-
-    def supprimerProjet(self, fname):
-        """
-        Cette méthode permet de supprimer le fichier JSON du projet en cours en vérifiant s'il existe.
-        
-        Paramètres :self (PlacementProduct) : L'instance de la classe.
-                    fname (String) : Le nom du fichier du projet à supprimer.
-        Return :None
-        """
-        # Gérer l'action supprimer projet
-        self.model.setFilePath(fname)
-        self.model.supprimerProjet()
-        self.updateProductList()
-
-    def enregistrerProjet(self):
-        """
-        Cette méthode permet d'enregistrer les informations du projet en cours dans un fichier écrit en JSON.
-        
-        Paramètres :self (PlacementProduct) : L'instance de la classe.
-        Return :None
-        """
-        
-        # Gérer l'action enregistrer projet
-
-        self.model.position_produit = self.grid_model.grid_position
-        self.model.position_grille = self.grid_model.gridStart
-        self.model.case_taille = self.grid_model.square_size
-
-        self.model.enregistrerProjet()
-
-    def updateProductList(self):
-        """
-        Cette méthode permet de mettre à jour la liste des produits dans la vue en utilisant les données du modèle.
-        
-        Paramètres :self (PlacementProduct) : L'instance de la classe.
-        Return :None
-        """
-        products = self.model.getProducts()
-        self.view.product.update_Product(products)
 
     def show(self):
         """
