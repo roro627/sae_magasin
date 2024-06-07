@@ -115,7 +115,12 @@ class ClientSoftwareView(QMainWindow):
         self.label_show_end.setText("Sélectionnez un point sur la carte")
         self.end_point = True
     
-    def resetPoint(self):
+    def resetPoint(self) -> None :
+        """
+        Permet de mettre à jour les attributs self.start_point et self.end_point.
+        Args : self
+        Return : None
+        """
         if self.start_point : 
             self.start_point = False
         elif self.end_point : 
