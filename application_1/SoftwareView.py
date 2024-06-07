@@ -181,6 +181,11 @@ class SoftwareView(QMainWindow):
         self.placementClicked.emit()
     
     def loginError(self) -> None :
+        """
+        Permet d'afficher un message d'erreur lors de la tentative de connexion.
+        Paramètres : self
+        Return : None
+        """
         msg = QMessageBox()
         msg.setWindowTitle("Information")
         msg.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxWarning))
@@ -191,6 +196,8 @@ class SoftwareView(QMainWindow):
     def messageClose(self):
         """
         Cette méthode permet d'afficher un message de confirmation avant de fermer la fenêtre permettant de sauvegarder.
+        Paramètres : self
+        Return : int
         """
         msg = QMessageBox()
         msg.setWindowTitle("Information")
@@ -208,6 +215,9 @@ class SoftwareView(QMainWindow):
         Intercepte le signal de fermeture de la fenêtre.
         Args:
             event (QCloseEvent): L'événement de fermeture.
+        
+        Return:
+            None
         """
         # personalisation l'evennement de fermeture
         response = self.messageClose()

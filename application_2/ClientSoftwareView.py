@@ -61,7 +61,7 @@ class ClientSoftwareView(QMainWindow):
         self.button_path = QPushButton("Afficher le plus court chemin")
         self.button_path.clicked.connect(self.path)
 
-        # Add widgets in the layouts
+        # ajoutes les widgets dans les layouts
         layout_left.addWidget(self.picture)
         layout_right.addWidget(self.productList,alignment=Qt.AlignmentFlag.AlignRight)
         layout_right.addWidget(self.listShopping,alignment=Qt.AlignmentFlag.AlignRight)
@@ -74,11 +74,11 @@ class ClientSoftwareView(QMainWindow):
         
         layout_right.addWidget(self.button_path)
 
-        # Add layouts in the mainlayout 
+        # ajoute les layouts dans le layout principal 
         mainlayout.addLayout(layout_left)
         mainlayout.addLayout(layout_right)
 
-        # Show the software in full screen
+        # met la view en fullscreen
         self.showMaximized()
 
     openClicked = pyqtSignal(str)

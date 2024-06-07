@@ -65,7 +65,7 @@ class openProject(QDialog):
         """
         Gère l'événement d'affichage de la fenêtre.
         Args:
-            event: L'événement.
+            event (QShowEvent): L'événement.
         """
         self.search_files()
 

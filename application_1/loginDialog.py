@@ -46,6 +46,12 @@ class loginDialog(QDialog):
     loginClicked = pyqtSignal(dict)
 
     def getLogin(self):
+        """
+        Cette fonction permet d'avoir le nom d'utilisateur et le mot de passe dans un dictionnaire.
+
+        Paramètres :self (loginDialog): L'instance de la classe.
+        Return :dict: Un dictionnaire contenant le nom d'utilisateur et le mot de passe.
+        """
         dictionary = {}
         dictionary["username"] = self.userLine.text()
         dictionary["password"] = self.passLine.text()

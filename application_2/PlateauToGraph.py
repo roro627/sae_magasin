@@ -3,6 +3,8 @@ def create_graph_dict(plateau: list) -> dict:
     Crée un graphe à partir du plateau.
     Args:
         plateau (list): Une liste de listes représentant le plateau.
+    Returns:
+        dict: Un dictionnaire implémentant le graphe.
     """
     graph_dict = {}
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # droite, bas, gauche, haut
@@ -45,6 +47,8 @@ def from_A_To_B(graphe: dict, depart: tuple, arrivee: tuple) -> list:
         graphe (dict): Un dictionnaire représentant le graphe.
         depart (tuple): Un tuple représentant le point de départ.
         arrivee (tuple): Un tuple représentant le point d'arrivée.
+    Returns:
+        list: Le chemin le plus court
     """
     
     # Créez une copie du graphe pour ne pas modifier l'original
@@ -116,6 +120,8 @@ def findPostionsProducts(produits: list, plateau: list) -> list:
     Args:
         produits (list): Une liste de produits.
         plateau (list): Une liste de listes représentant le plateau.
+    Returns:
+        list: Une liste de tuples spécant les coordonnées des produits.
     """ 
 
     positions = []
@@ -135,6 +141,8 @@ def regroupProducts(coordoneesProducts: list) -> list:
     de plus si les produits ont les mêmes coordonnées, ils sont regroupés dans le même groupe.
     Args:
         coordoneesProducts (list): Une liste de tuples représentant les coordonnées des produits.
+    Returns:
+        list: Une liste de groupes de coordonnées des produits.
     """
     groupes = []
     for coordonee in coordoneesProducts:
@@ -162,6 +170,8 @@ def manhattan_distance(point1: tuple, point2: tuple) -> int:
     Args:
         point1 (tuple): Un tuple représentant le premier point.
         point2 (tuple): Un tuple représentant le deuxième point.
+    Returns:
+        int: La distance de Manhattan.
     """
     return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
 
@@ -172,6 +182,8 @@ def min_distance(startingpoint: tuple, group: list) -> int:
     Args:
         startingpoint (tuple): Un tuple représentant le point de départ.
         group (list): Une liste de tuples représentant le groupe.
+    Returns:
+        int: La distance minimale.
     """
     return min(manhattan_distance(startingpoint, group[0]), manhattan_distance(startingpoint, group[-1]))
 
@@ -181,6 +193,8 @@ def sort_by_distance(groupe: list, coord1: tuple) -> list:
     Args:
         groupe (list): Une liste de tuples représentant le groupe.
         coord1 (tuple): Un tuple représentant la première coordonnée.
+    Returns:
+        groupe (list): Une liste de tuples tries en fonction de la distance.
     """
     for i in range(len(groupe)):
         min_index = i
@@ -197,6 +211,8 @@ def find_min_group(groupes: list, startingpoint: tuple) -> list:
     Args:
         groupes (list): Une liste de listes de tuples représentant les groupes.
         startingpoint (tuple): Un tuple représentant le point de départ.
+    Returns:
+        list: Le groupe le plus proche du point de depart.
     """
     
     min_group = groupes[0]
@@ -231,6 +247,8 @@ def sortGroup(groupes: list, startingpoint: tuple, endingpoint: tuple) -> list:
         groupes (list): Une liste de listes de tuples représentant les groupes.
         startingpoint (tuple): Un tuple représentant le point de départ.
         endingpoint (tuple): Un tuple représentant le point d'arrivée.
+    Returns:
+        list: Renvoie le chemin final.
     """
     
     # Trouver le premier groupe
@@ -258,6 +276,8 @@ def makeFinalPath(plateau: list, path: list) -> list:
     Args:
         plateau (list): Une liste de listes représentant le plateau.
         path (list): Une liste de listes de tuples représentant le chemin.
+    Returns:
+        list: Le chemin final.
     """
     listPath = []
     
@@ -280,6 +300,8 @@ def main(plateau: list, produits: list, depart: tuple, arrivee: tuple) -> list:
         produits (list): Une liste de produits.
         depart (tuple): Un tuple représentant le point de départ.
         arrivee (tuple): Un tuple représentant le point d'arrivée.
+    Returns:
+        list: Le chemin final.
     """
     coordonneProducts = findPostionsProducts(produits, plateau)
     produit_regrouper = regroupProducts(coordonneProducts)

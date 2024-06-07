@@ -22,6 +22,11 @@ class pictureView(QGraphicsView):
     mouseClicked = pyqtSignal(tuple)
     
     def mousePressEvent(self, event):
+        """
+        Affiche le pixmap au clic de la souris.
+        Args:
+            event (QMouseEvent): L'evenement de clic de la souris.
+        """
         items = self.items(event.pos())
         for item in items:
             if type(item) is QGraphicsPixmapItem:
@@ -107,4 +112,9 @@ class pictureView(QGraphicsView):
         return group
         
     def clearProduct(self, graphic_item):
+        """
+        Efface le produit sur l'image.
+        Args:
+            graphic_item (QGraphicsItem): L'item du produit à effacer.
+        """
         self.scene.removeItem(graphic_item)
