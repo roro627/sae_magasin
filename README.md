@@ -112,6 +112,6 @@ Cette application permet de :
 
 Ce projet a été réalisé par :
 
-- **Lambert Romain**
-- **Cocquerel Alexis**
-- **Siame Romain**
+- **Lambert Romain** (roro627) 
+- **Cocquerel Alexis** (aleksyc) 
+- **Siame Romain** (rommick59) 
